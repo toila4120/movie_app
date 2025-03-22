@@ -1,0 +1,51 @@
+name: movie_app
+description: "A new Flutter project."
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  logger:
+    path: logger
+
+  carousel_slider: ^5.0.0
+  cupertino_icons: ^1.0.8
+  better_player_plus: ^1.0.8
+  floating: ^6.0.0
+  chewie: ^1.10.0
+  flutter_bloc: ^9.1.0
+  equatable: ^2.0.7
+  go_router: ^14.8.1
+  dio: ^5.8.0+1
+  dartz: ^0.10.1
+  get_it: ^8.0.3
+  loading_animation_widget: ^1.2.0+4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: SFProDisplay
+      fonts:
+        - asset: fonts/SF-Pro-Display-Regular.otf
+        - asset: fonts/SF-Pro-Display-Medium.otf
+          weight: 500
+        - asset: fonts/SF-Pro-Display-Semibold.otf
+          weight: 600
+        - asset: fonts/SF-Pro-Display-Bold.otf
+          weight: 700

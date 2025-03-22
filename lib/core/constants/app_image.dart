@@ -1,0 +1,29 @@
+abstract class AppImage {
+  const AppImage();
+
+  static const String posterMovie = "assets/images/poster_movie.jpg";
+  static const String avatarDefault = "assets/images/avatar_default.png";
+  static const String bannerDefault = "assets/images/banner_default.png";
+  static const String icPlay = "assets/images/ic_play.png";
+  static const String icPlay1 = "assets/images/ic_play_1.png";
+  static const String imageAnime = "assets/images/image_anime.jpg";
+  static const String imageHanhDong = "assets/images/image_hanh_dong.jpg";
+  static const String imageTinhCam = "assets/images/image_tinh_cam.jpg";
+  static const String imageCoTrang = "assets/images/image_co_trang.jpg";
+  static const String icBack = "assets/images/ic_back.png";
+  static const String icRight = "assets/images/ic_right.png";
+  static const String icHomeTab = "assets/images/ic_home.png";
+  static const String icSearchTab = "assets/images/ic_search.png";
+  static const String icActivityTab = "assets/images/ic_activity.png";
+  static const String icProfileTab = "assets/images/ic_profile.png";
+  static const String imageNotFound = "assets/images/image_not_found.jpg";
+  static const String icBack1 = "assets/images/ic_back_1.png";
+  static const String icHeart = "assets/images/ic_heart.png";
+  static const String icStar = "assets/images/ic_star.png";
+  static const String movieLogo = "assets/images/movie_logo.jpg";
+  static const String icEmail = "assets/images/ic_email.png";
+  static const String icKey = "assets/images/ic_key.png";
+  static const String icEye = "assets/images/ic_eye.png";
+  static const String icEyeOff = "assets/images/ic_eye_off.png";
+  static const String icGoogle = "assets/images/ic_gg.png";
+}
