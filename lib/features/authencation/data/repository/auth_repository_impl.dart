@@ -16,4 +16,43 @@ class AuthRepositoryImpl implements AuthRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<UserEntity> registerWithEmail(String email, String password) async {
+    try {
+      final userModel =
+          await remoteDataSource.registerWithEmail(email, password);
+      return userModel;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> forgotPassword(String email) async {
+    try {
+      await remoteDataSource.forgotPassword(email);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<UserEntity> loginWithGoogle() async {
+    try {
+      final userModel = await remoteDataSource.loginWithGoogle();
+      return userModel;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateDisplayName(String name) async {
+    try {
+      await remoteDataSource.updateDisplayName(name);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
