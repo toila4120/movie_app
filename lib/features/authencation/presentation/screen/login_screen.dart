@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state.isLoading.isError) {
-          showToast(context, message: state.error);
+          showToast(context, message: state.error!);
         } else if (state.isLoading.isFinished) {
           context.go(AppRouter.homeTabPath);
         }
@@ -243,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(width: AppPadding.superTiny),
                   CustomAppButton(
                     onPressed: () {
-                      context.go(AppRouter.registerScreenPath);
+                      context.push(AppRouter.registerScreenPath);
                     },
                     text: 'Sign up',
                     textStyle: const TextStyle(
