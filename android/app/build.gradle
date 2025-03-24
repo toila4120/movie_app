@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.movie_app"
-        minSdk = 21
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth' // Xác thực
     implementation 'com.google.firebase:firebase-firestore' // Firestore
     // implementation 'com.google.firebase:firebase-storage' // Storage
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
 
 flutter {
