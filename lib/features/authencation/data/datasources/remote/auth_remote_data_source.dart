@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/features/authencation/data/model/user_model.dart';
@@ -8,12 +9,14 @@ abstract class AuthRemoteDataSource {
   Future<void> forgotPassword(String email);
   Future<UserModel> loginWithGoogle();
   Future<void> updateDisplayName(String name);
+  Future<void> updateUser(UserModel user);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth _auth;
+  final FirebaseFirestore _firestore;
 
-  AuthRemoteDataSourceImpl(this._auth);
+  AuthRemoteDataSourceImpl(this._auth) : _firestore = FirebaseFirestore.instance;
 
   @override
   Future<UserModel> loginWithEmail(String email, String password) async {
@@ -24,10 +27,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (userCredential.user == null) {
       throw Exception('Failed to sign in: No user data returned.');
     }
-    return UserModel(
-      uid: userCredential.user!.uid,
-      email: userCredential.user!.email ?? '',
-    );
+    final userModel = UserModel.fromFirebaseUser(userCredential.user!);
+
+    // Lưu hoặc cập nhật thông tin người dùng vào Firestore
+    await _firestore.collection('users').doc(userModel.uid).set(
+          userModel.toJson(),
+          SetOptions(merge: true), // Ghi đè nếu đã tồn tại, nhưng giữ các trường không thay đổi
+        );
+
+    return userModel;
   }
 
   @override
@@ -39,10 +47,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (userCredential.user == null) {
       throw Exception('Failed to register: No user data returned.');
     }
-    return UserModel(
-      uid: userCredential.user!.uid,
-      email: userCredential.user!.email ?? '',
-    );
+    final userModel = UserModel.fromFirebaseUser(userCredential.user!);
+
+    // Lưu thông tin người dùng vào Firestore
+    await _firestore.collection('users').doc(userModel.uid).set(
+          userModel.toJson(),
+          SetOptions(merge: true),
+        );
+
+    return userModel;
   }
 
   @override
@@ -57,8 +70,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('Google Sign-In cancelled.');
     }
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
@@ -68,10 +80,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (userCredential.user == null) {
       throw Exception('Failed to sign in with Google: No user data returned.');
     }
-    return UserModel(
-      uid: userCredential.user!.uid,
-      email: userCredential.user!.email ?? '',
-    );
+    final userModel = UserModel.fromFirebaseUser(userCredential.user!);
+
+    // Lưu thông tin người dùng vào Firestore
+    await _firestore.collection('users').doc(userModel.uid).set(
+          userModel.toJson(),
+          SetOptions(merge: true),
+        );
+
+    return userModel;
   }
 
   @override
@@ -82,5 +99,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
     await user.updateDisplayName(name);
     await user.reload();
+
+    // Cập nhật tên trong Firestore
+    await _firestore.collection('users').doc(user.uid).update({
+      'name': name,
+    });
+  }
+
+  @override
+  Future<void> updateUser(UserModel user) async {
+    await _firestore.collection('users').doc(user.uid).set(
+          user.toJson(),
+          SetOptions(merge: true),
+        );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:movie_app/features/authencation/data/datasources/remote/auth_remote_data_source.dart';
+import 'package:movie_app/features/authencation/data/model/user_model.dart';
 import 'package:movie_app/features/authencation/domain/entities/user_entity.dart';
 import 'package:movie_app/features/authencation/domain/repository/auth_repository.dart';
 
@@ -51,6 +52,15 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> updateDisplayName(String name) async {
     try {
       await remoteDataSource.updateDisplayName(name);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateUser(UserEntity user) async {
+    try {
+      await remoteDataSource.updateUser(user as UserModel);
     } catch (e) {
       rethrow;
     }

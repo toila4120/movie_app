@@ -6,6 +6,7 @@ import 'package:movie_app/features/authencation/domain/usecase/login_usecase.dar
 import 'package:movie_app/features/authencation/domain/usecase/login_with_google_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/register_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/update_display_name_usecase.dart';
+import 'package:movie_app/features/authencation/domain/usecase/update_user_usecase.dart';
 import 'package:movie_app/features/authencation/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/injection_container.dart';
 
@@ -17,6 +18,7 @@ void setupAuthenticationDi() {
   // getIt.registerLazySingleton(() => ForgotPasswordUseCase(getIt()));
   getIt.registerLazySingleton(() => LoginWithGoogleUsecase(getIt()));
   getIt.registerLazySingleton(() => UpdateDisplayNameUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
 
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(getIt()),

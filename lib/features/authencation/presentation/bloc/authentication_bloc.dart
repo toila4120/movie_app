@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/core/utils/app_utils.dart';
+import 'package:movie_app/features/authencation/data/model/user_model.dart';
+import 'package:movie_app/features/authencation/domain/entities/subscription_plan.dart';
 import 'package:movie_app/features/authencation/domain/entities/user_entity.dart';
 import 'package:movie_app/features/authencation/domain/usecase/login_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/login_with_google_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/register_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/update_display_name_usecase.dart';
+import 'package:movie_app/features/authencation/domain/usecase/update_user_usecase.dart';
 import 'package:movie_app/injection_container.dart';
 
 part 'authentication_event.dart';
@@ -17,8 +20,12 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationState.init()) {
     on<AuthenticationLoginEvent>(_onAuthencationLoginEvent);
-    on<AuthenticationGoogleLoginEvent>(_onAuthenticationGoogleLoginEvent);
     on<AuthenticationRegisterEvent>(_onAuthencationRegisterEvent);
+    // on<AuthenticationForgotPasswordEvent>(_onAuthencationForgotPasswordEvent);
+    on<AuthenticationGoogleLoginEvent>(_onAuthenticationGoogleLoginEvent);
+    on<LikeMovieEvent>(_onLikeMovieEvent);
+    on<UpdateWatchedMovieEvent>(_onUpdateWatchedMovieEvent);
+    on<UpdateSubscriptionPlanEvent>(_onUpdateSubscriptionPlanEvent);
   }
 
   Future<void> _onAuthencationLoginEvent(
@@ -99,14 +106,6 @@ class AuthenticationBloc
     final passwordConfirm = event.passwordConfirm.trim();
     final name = event.name.trim();
 
-    if (name.isEmpty) {
-      emit(state.copyWith(
-        isLoading: LoadingState.error,
-        error: "Name can't be empty.",
-      ));
-      return;
-    }
-
     if (email.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
@@ -119,6 +118,14 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: "Invalid email format.",
+      ));
+      return;
+    }
+
+    if (name.isEmpty) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: "Name can't be empty.",
       ));
       return;
     }
@@ -142,6 +149,8 @@ class AuthenticationBloc
     try {
       final registerUseCase = getIt<RegisterUseCase>();
       final user = await registerUseCase(email, password);
+
+      // Cập nhật tên người dùng
       final updateDisplayNameUseCase = getIt<UpdateDisplayNameUseCase>();
       await updateDisplayNameUseCase(name);
 
@@ -167,6 +176,58 @@ class AuthenticationBloc
       ));
     }
   }
+
+  // Future<void> _onAuthencationForgotPasswordEvent(
+  //   AuthenticationForgotPasswordEvent event,
+  //   Emitter<AuthenticationState> emit,
+  // ) async {
+  //   if (state.isLoading == LoadingState.loading) {
+  //     return;
+  //   }
+
+  //   emit(state.copyWith(isLoading: LoadingState.loading, error: null));
+
+  //   final email = event.email.trim();
+
+  //   if (email.isEmpty) {
+  //     emit(state.copyWith(
+  //       isLoading: LoadingState.error,
+  //       error: "Email can't be empty.",
+  //     ));
+  //     return;
+  //   }
+
+  //   if (!validateEmail(email)) {
+  //     emit(state.copyWith(
+  //       isLoading: LoadingState.error,
+  //       error: "Invalid email format.",
+  //     ));
+  //     return;
+  //   }
+
+  //   try {
+  //     final forgotPasswordUseCase = getIt<ForgotPasswordUseCase>();
+  //     await forgotPasswordUseCase(email);
+  //     emit(state.copyWith(
+  //       isLoading: LoadingState.finished,
+  //       isPasswordResetEmailSent: true,
+  //     ));
+  //   } on FirebaseAuthException catch (e) {
+  //     emit(state.copyWith(
+  //       isLoading: LoadingState.error,
+  //       error: e.code == 'user-not-found'
+  //           ? 'No user found for that email.'
+  //           : e.code == 'invalid-email'
+  //               ? 'Invalid email provided.'
+  //               : e.code,
+  //     ));
+  //   } catch (e) {
+  //     emit(state.copyWith(
+  //       isLoading: LoadingState.error,
+  //       error: e.toString(),
+  //     ));
+  //   }
+  // }
 
   Future<void> _onAuthenticationGoogleLoginEvent(
     AuthenticationGoogleLoginEvent event,
@@ -199,6 +260,128 @@ class AuthenticationBloc
         isLoading: LoadingState.error,
         error: e.toString(),
       ));
+    }
+  }
+
+  Future<void> _onLikeMovieEvent(
+    LikeMovieEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.user == null) {
+      emit(state.copyWith(
+        error: 'User not logged in.',
+      ));
+      return;
+    }
+
+    final updatedLikedMovies = List<String>.from(state.user!.likedMovies);
+    if (updatedLikedMovies.contains(event.movieId)) {
+      updatedLikedMovies.remove(event.movieId); // Bỏ thả tim
+    } else {
+      updatedLikedMovies.add(event.movieId); // Thả tim
+    }
+
+    final updatedUser = UserModel(
+      uid: state.user!.uid,
+      email: state.user!.email,
+      name: state.user!.name,
+      subscriptionPlan: state.user!.subscriptionPlan,
+      likedMovies: updatedLikedMovies,
+      watchedMovies: state.user!.watchedMovies,
+    );
+
+    try {
+      final updateUserUseCase = getIt<UpdateUserUseCase>();
+      await updateUserUseCase(updatedUser);
+      emit(state.copyWith(user: updatedUser));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateWatchedMovieEvent(
+    UpdateWatchedMovieEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.user == null) {
+      emit(state.copyWith(
+        error: 'User not logged in.',
+      ));
+      return;
+    }
+
+    final updatedWatchedMovies =
+        List<WatchedMovie>.from(state.user!.watchedMovies);
+    final movieIndex =
+        updatedWatchedMovies.indexWhere((m) => m.movieId == event.movieId);
+
+    if (movieIndex == -1) {
+      // Phim chưa được xem, thêm mới
+      final newWatchedMovie = WatchedMovie(
+        movieId: event.movieId,
+        isSeries: event.isSeries,
+        watchedEpisodes: {event.episode: event.watchedDuration},
+      );
+      updatedWatchedMovies.add(newWatchedMovie);
+    } else {
+      // Phim đã được xem, cập nhật thời gian xem
+      final existingMovie = updatedWatchedMovies[movieIndex];
+      final updatedEpisodes =
+          Map<int, Duration>.from(existingMovie.watchedEpisodes);
+      updatedEpisodes[event.episode] = event.watchedDuration;
+
+      final updatedMovie = WatchedMovie(
+        movieId: existingMovie.movieId,
+        isSeries: existingMovie.isSeries,
+        watchedEpisodes: updatedEpisodes,
+      );
+      updatedWatchedMovies[movieIndex] = updatedMovie;
+    }
+
+    final updatedUser = UserModel(
+      uid: state.user!.uid,
+      email: state.user!.email,
+      name: state.user!.name,
+      subscriptionPlan: state.user!.subscriptionPlan,
+      likedMovies: state.user!.likedMovies,
+      watchedMovies: updatedWatchedMovies,
+    );
+
+    try {
+      final updateUserUseCase = getIt<UpdateUserUseCase>();
+      await updateUserUseCase(updatedUser);
+      emit(state.copyWith(user: updatedUser));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateSubscriptionPlanEvent(
+    UpdateSubscriptionPlanEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.user == null) {
+      emit(state.copyWith(
+        error: 'User not logged in.',
+      ));
+      return;
+    }
+
+    final updatedUser = UserModel(
+      uid: state.user!.uid,
+      email: state.user!.email,
+      name: state.user!.name,
+      subscriptionPlan: event.subscriptionPlan,
+      likedMovies: state.user!.likedMovies,
+      watchedMovies: state.user!.watchedMovies,
+    );
+
+    try {
+      final updateUserUseCase = getIt<UpdateUserUseCase>();
+      await updateUserUseCase(updatedUser);
+      emit(state.copyWith(user: updatedUser));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
     }
   }
 }

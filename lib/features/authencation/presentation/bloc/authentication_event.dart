@@ -44,3 +44,38 @@ class AuthenticationForgotPasswordEvent extends AuthenticationEvent {
 }
 
 class AuthenticationGoogleLoginEvent extends AuthenticationEvent {}
+
+class LikeMovieEvent extends AuthenticationEvent {
+  final String movieId;
+
+  const LikeMovieEvent({required this.movieId});
+
+  @override
+  List<Object?> get props => [movieId];
+}
+
+class UpdateWatchedMovieEvent extends AuthenticationEvent {
+  final String movieId;
+  final bool isSeries;
+  final int episode;
+  final Duration watchedDuration;
+
+  const UpdateWatchedMovieEvent({
+    required this.movieId,
+    required this.isSeries,
+    required this.episode,
+    required this.watchedDuration,
+  });
+
+  @override
+  List<Object?> get props => [movieId, isSeries, episode, watchedDuration];
+}
+
+class UpdateSubscriptionPlanEvent extends AuthenticationEvent {
+  final SubscriptionPlan subscriptionPlan;
+
+  const UpdateSubscriptionPlanEvent({required this.subscriptionPlan});
+
+  @override
+  List<Object?> get props => [subscriptionPlan];
+}
