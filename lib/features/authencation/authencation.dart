@@ -9,3 +9,4 @@ import 'package:movie_app/features/authencation/presentation/bloc/authentication
 
 part 'presentation/screen/login_screen.dart';
 part 'presentation/screen/register_screen.dart';
+part 'presentation/widget/button_login_with_google.dart';

@@ -3,6 +3,7 @@ import 'package:movie_app/features/authencation/data/datasources/remote/auth_rem
 import 'package:movie_app/features/authencation/data/repository/auth_repository_impl.dart';
 import 'package:movie_app/features/authencation/domain/repository/auth_repository.dart';
 import 'package:movie_app/features/authencation/domain/usecase/login_usecase.dart';
+import 'package:movie_app/features/authencation/domain/usecase/login_with_google_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/register_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/update_display_name_usecase.dart';
 import 'package:movie_app/features/authencation/presentation/bloc/authentication_bloc.dart';
@@ -14,7 +15,7 @@ void setupAuthenticationDi() {
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
   getIt.registerLazySingleton(() => RegisterUseCase(getIt()));
   // getIt.registerLazySingleton(() => ForgotPasswordUseCase(getIt()));
-  // getIt.registerLazySingleton(() => GoogleLoginUseCase(getIt()));
+  getIt.registerLazySingleton(() => LoginWithGoogleUsecase(getIt()));
   getIt.registerLazySingleton(() => UpdateDisplayNameUseCase(getIt()));
 
   getIt.registerLazySingleton<AuthRepository>(

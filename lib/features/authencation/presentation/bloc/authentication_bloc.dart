@@ -5,6 +5,7 @@ import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/core/utils/app_utils.dart';
 import 'package:movie_app/features/authencation/domain/entities/user_entity.dart';
 import 'package:movie_app/features/authencation/domain/usecase/login_usecase.dart';
+import 'package:movie_app/features/authencation/domain/usecase/login_with_google_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/register_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/update_display_name_usecase.dart';
 import 'package:movie_app/injection_container.dart';
@@ -16,7 +17,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationState.init()) {
     on<AuthenticationLoginEvent>(_onAuthencationLoginEvent);
-    // on<AuthencationLogoutEvent>(_onAuthencationLogoutEvent);
+    on<AuthenticationGoogleLoginEvent>(_onAuthenticationGoogleLoginEvent);
     on<AuthenticationRegisterEvent>(_onAuthencationRegisterEvent);
   }
 
@@ -158,6 +159,40 @@ class AuthenticationBloc
                 : e.code == 'invalid-email'
                     ? 'Invalid email provided.'
                     : e.code,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _onAuthenticationGoogleLoginEvent(
+    AuthenticationGoogleLoginEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.isLoading == LoadingState.loading) {
+      return;
+    }
+
+    emit(state.copyWith(isLoading: LoadingState.loading, error: null));
+
+    try {
+      final googleLoginUseCase = getIt<LoginWithGoogleUsecase>();
+      final user = await googleLoginUseCase();
+      emit(state.copyWith(
+        isLoading: LoadingState.finished,
+        user: user,
+      ));
+    } on FirebaseAuthException catch (e) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: e.code == 'account-exists-with-different-credential'
+            ? 'Account exists with a different credential.'
+            : e.code == 'invalid-credential'
+                ? 'Invalid credential provided.'
+                : e.code,
       ));
     } catch (e) {
       emit(state.copyWith(

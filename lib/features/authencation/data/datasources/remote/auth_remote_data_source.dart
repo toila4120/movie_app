@@ -81,6 +81,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('No user is currently signed in.');
     }
     await user.updateDisplayName(name);
-    await user.reload(); // Cập nhật lại thông tin người dùng
+    await user.reload();
   }
 }
