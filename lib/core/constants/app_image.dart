@@ -26,4 +26,5 @@ abstract class AppImage {
   static const String icEye = "assets/images/ic_eye.png";
   static const String icEyeOff = "assets/images/ic_eye_off.png";
   static const String icGoogle = "assets/images/ic_gg.png";
+  static const String icPerson = "assets/images/ic_person.png";
 }

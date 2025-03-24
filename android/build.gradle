@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:4.4.1' // Plugin Google Services
+        classpath 'com.android.tools.build:gradle:8.1.0'  // Plugin Android Gradle (có thể thay đổi phiên bản tùy dự án)
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0' // Plugin Kotlin (nếu dùng Kotlin)
+    }
+}
+
 allprojects {
     repositories {
         google()

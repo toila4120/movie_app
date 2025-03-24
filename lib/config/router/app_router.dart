@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/router/app_navigator_observer.dart';
-import 'package:movie_app/features/authencation/presentation/login/login_screen.dart';
+import 'package:movie_app/features/authencation/authencation.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
@@ -23,8 +23,11 @@ abstract class AppRouter {
   static const String _movieDetailName = "movie_detail";
   static const String movieDetailPath = "/home_tab/movie_detail";
 
-  static const String _loginScreen = 'login_screen';
+  static const String _loginScreenName = 'login_screen';
   static const String loginScreenPath = '/login_screen';
+
+  static const String _registerScreenName = 'register_screen';
+  static const String registerScreenPath = '/register_screen';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -120,12 +123,18 @@ abstract class AppRouter {
         ],
       ),
       GoRoute(
-        name: _loginScreen,
+        name: _loginScreenName,
         path: loginScreenPath,
         builder: (context, state) {
           return const LoginScreen();
         },
       ),
+      GoRoute(
+          name: _registerScreenName,
+          path: registerScreenPath,
+          builder: (context, state) {
+            return const RegisterScreen();
+          }),
     ],
   );
 }

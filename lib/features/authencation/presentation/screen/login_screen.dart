@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:movie_app/config/router/app_router.dart';
-import 'package:movie_app/config/theme/theme.dart';
-import 'package:movie_app/core/constants/app_image.dart';
-import 'package:movie_app/core/widget/widget.dart';
+part of '../../authencation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -125,9 +120,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const Text(
                 'Login',
                 style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: AppColor.white),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: AppColor.white,
+                ),
               ),
             ),
             const SizedBox(height: AppPadding.medium),
@@ -163,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: AppPadding.medium),
             CustomAppButton(
               padding: const EdgeInsets.symmetric(vertical: AppPadding.medium),
+              splashColor: AppColor.greyScale200,
               onPressed: () {},
               radius: AppBorderRadius.r8,
               decoration: BoxDecoration(
@@ -206,7 +203,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(width: AppPadding.superTiny),
                 CustomAppButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go(AppRouter.registerScreenPath);
+                  },
                   text: 'Sign up',
                   textStyle: const TextStyle(
                     fontSize: 14,

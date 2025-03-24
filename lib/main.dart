@@ -5,11 +5,17 @@ import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/config/router/app_router.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Bloc.observer = const AppBlocObserver();
   setup();
-  runApp(const MyApp());
+
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatefulWidget {
