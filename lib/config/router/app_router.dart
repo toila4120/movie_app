@@ -6,6 +6,7 @@ import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
 import 'package:movie_app/features/movie/movie.dart';
+import 'package:movie_app/features/profile/profile.dart';
 import 'package:movie_app/features/splash/splash_screen.dart';
 
 abstract class AppRouter {
@@ -28,6 +29,9 @@ abstract class AppRouter {
 
   static const String _registerScreenName = 'register_screen';
   static const String registerScreenPath = '/register_screen';
+
+  static const String _profileTabName = 'profile_tab';
+  static const String profileTabPath = '/profile_tab';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -116,6 +120,17 @@ abstract class AppRouter {
                 path: categoriesTabPath,
                 builder: (context, state) {
                   return const CategoriesScreen();
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: _profileTabName,
+                path: profileTabPath,
+                builder: (context, state) {
+                  return const ProfileScreen();
                 },
               ),
             ],
