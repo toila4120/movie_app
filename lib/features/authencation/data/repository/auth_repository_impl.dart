@@ -65,4 +65,14 @@ class AuthRepositoryImpl implements AuthRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<UserEntity> getUser(String uid) async {
+    try {
+      final userModel = await remoteDataSource.getUser(uid);
+      return userModel;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

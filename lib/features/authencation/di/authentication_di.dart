@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movie_app/features/authencation/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:movie_app/features/authencation/data/repository/auth_repository_impl.dart';
 import 'package:movie_app/features/authencation/domain/repository/auth_repository.dart';
+import 'package:movie_app/features/authencation/domain/usecase/get_user_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/login_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/login_with_google_usecase.dart';
 import 'package:movie_app/features/authencation/domain/usecase/register_usecase.dart';
@@ -19,6 +20,7 @@ void setupAuthenticationDi() {
   getIt.registerLazySingleton(() => LoginWithGoogleUsecase(getIt()));
   getIt.registerLazySingleton(() => UpdateDisplayNameUseCase(getIt()));
   getIt.registerLazySingleton(() => UpdateUserUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetUserUseCase(getIt()));
 
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(getIt()),

@@ -276,15 +276,16 @@ class AuthenticationBloc
 
     final updatedLikedMovies = List<String>.from(state.user!.likedMovies);
     if (updatedLikedMovies.contains(event.movieId)) {
-      updatedLikedMovies.remove(event.movieId); // Bỏ thả tim
+      updatedLikedMovies.remove(event.movieId);
     } else {
-      updatedLikedMovies.add(event.movieId); // Thả tim
+      updatedLikedMovies.add(event.movieId);
     }
 
     final updatedUser = UserModel(
       uid: state.user!.uid,
       email: state.user!.email,
       name: state.user!.name,
+      avatar: state.user!.avatar,
       subscriptionPlan: state.user!.subscriptionPlan,
       likedMovies: updatedLikedMovies,
       watchedMovies: state.user!.watchedMovies,
@@ -342,6 +343,7 @@ class AuthenticationBloc
       uid: state.user!.uid,
       email: state.user!.email,
       name: state.user!.name,
+      avatar: state.user!.avatar,
       subscriptionPlan: state.user!.subscriptionPlan,
       likedMovies: state.user!.likedMovies,
       watchedMovies: updatedWatchedMovies,
@@ -371,6 +373,7 @@ class AuthenticationBloc
       uid: state.user!.uid,
       email: state.user!.email,
       name: state.user!.name,
+      avatar: state.user!.avatar,
       subscriptionPlan: event.subscriptionPlan,
       likedMovies: state.user!.likedMovies,
       watchedMovies: state.user!.watchedMovies,

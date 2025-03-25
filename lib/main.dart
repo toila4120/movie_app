@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/app_bloc_observer.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/features/authencation/presentation/bloc/authentication_bloc.dart';
+import 'package:movie_app/features/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/config/router/app_router.dart';
@@ -37,6 +38,9 @@ class MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => AuthenticationBloc(),
         ),
+        BlocProvider(
+          create: (context) => AppBloc(),
+        )
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

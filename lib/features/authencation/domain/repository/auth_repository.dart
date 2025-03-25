@@ -7,4 +7,5 @@ abstract class AuthRepository {
   Future<UserEntity> loginWithGoogle();
   Future<void> updateDisplayName(String name);
   Future<void> updateUser(UserEntity user);
+  Future<UserEntity> getUser(String uid);
 }

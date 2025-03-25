@@ -7,30 +7,44 @@ class UserModel extends UserEntity {
     required super.uid,
     required super.email,
     required super.name,
-    super.subscriptionPlan = SubscriptionPlan.basic,
+    required super.avatar,
+    super.subscriptionPlan,
     super.likedMovies = const [],
     super.watchedMovies = const [],
   });
 
-  // Tạo UserModel từ Firebase User
   factory UserModel.fromFirebaseUser(User user) {
     return UserModel(
       uid: user.uid,
       email: user.email ?? '',
       name: user.displayName ?? '',
-      subscriptionPlan: SubscriptionPlan.basic, // Mặc định là basic
+      avatar: 0,
+      subscriptionPlan: null,
       likedMovies: const [],
       watchedMovies: const [],
     );
   }
 
-  // Tạo UserModel từ dữ liệu Firestore
+  factory UserModel.init() {
+    return const UserModel(
+      uid: '',
+      email: '',
+      name: '',
+      avatar: 0,
+      subscriptionPlan: SubscriptionPlan.basic,
+      likedMovies: [],
+      watchedMovies: [],
+    );
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uid: json['uid'] as String,
       email: json['email'] as String,
       name: json['name'] as String,
-      subscriptionPlan: SubscriptionPlan.fromJson(json['subscriptionPlan'] as String? ?? 'basic'),
+      avatar: json['avatar'] as int,
+      subscriptionPlan: SubscriptionPlan.fromJson(
+          json['subscriptionPlan'] as String? ?? 'basic'),
       likedMovies: (json['likedMovies'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -44,13 +58,18 @@ class UserModel extends UserEntity {
 
   // Chuyển UserModel thành JSON để lưu vào Firestore
   Map<String, dynamic> toJson() {
-    return {
+    final json = {
       'uid': uid,
       'email': email,
       'name': name,
-      'subscriptionPlan': subscriptionPlan.toJson(),
+      'avatar': avatar,
       'likedMovies': likedMovies,
       'watchedMovies': watchedMovies.map((e) => e.toJson()).toList(),
     };
+    // Chỉ thêm subscriptionPlan vào JSON nếu nó không phải null
+    if (subscriptionPlan != null) {
+      json['subscriptionPlan'] = subscriptionPlan!.toJson();
+    }
+    return json;
   }
 }

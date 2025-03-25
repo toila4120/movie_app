@@ -6,6 +6,7 @@ import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/core.dart';
 import 'package:movie_app/features/authencation/presentation/bloc/authentication_bloc.dart';
+import 'package:movie_app/features/bloc/app_bloc.dart';
 
 part 'presentation/screen/login_screen.dart';
 part 'presentation/screen/register_screen.dart';

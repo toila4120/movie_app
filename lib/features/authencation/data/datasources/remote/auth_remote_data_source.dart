@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/features/authencation/data/model/user_model.dart';
+import 'package:movie_app/features/authencation/domain/entities/subscription_plan.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserModel> loginWithEmail(String email, String password);
@@ -10,13 +11,15 @@ abstract class AuthRemoteDataSource {
   Future<UserModel> loginWithGoogle();
   Future<void> updateDisplayName(String name);
   Future<void> updateUser(UserModel user);
+  Future<UserModel> getUser(String uid);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
 
-  AuthRemoteDataSourceImpl(this._auth) : _firestore = FirebaseFirestore.instance;
+  AuthRemoteDataSourceImpl(this._auth)
+      : _firestore = FirebaseFirestore.instance;
 
   @override
   Future<UserModel> loginWithEmail(String email, String password) async {
@@ -27,15 +30,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (userCredential.user == null) {
       throw Exception('Failed to sign in: No user data returned.');
     }
-    final userModel = UserModel.fromFirebaseUser(userCredential.user!);
 
-    // Lưu hoặc cập nhật thông tin người dùng vào Firestore
-    await _firestore.collection('users').doc(userModel.uid).set(
-          userModel.toJson(),
-          SetOptions(merge: true), // Ghi đè nếu đã tồn tại, nhưng giữ các trường không thay đổi
-        );
+    // Lấy dữ liệu từ Firestore
+    final doc = await _firestore
+        .collection('users')
+        .doc(userCredential.user!.uid)
+        .get();
+    if (!doc.exists) {
+      throw Exception(
+          'User data not found in Firestore. Please register first.');
+    }
 
-    return userModel;
+    return UserModel.fromJson(doc.data()!);
   }
 
   @override
@@ -49,18 +55,23 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
     final userModel = UserModel.fromFirebaseUser(userCredential.user!);
 
-    // Lưu thông tin người dùng vào Firestore
-    await _firestore.collection('users').doc(userModel.uid).set(
-          userModel.toJson(),
+    // Đăng ký người dùng mới, đặt subscriptionPlan mặc định là basic
+    final newUserModel = UserModel(
+      uid: userModel.uid,
+      email: userModel.email,
+      name: userModel.name,
+      avatar: userModel.avatar,
+      subscriptionPlan:
+          SubscriptionPlan.basic, // Mặc định là basic cho người dùng mới
+      likedMovies: userModel.likedMovies,
+      watchedMovies: userModel.watchedMovies,
+    );
+    await _firestore.collection('users').doc(newUserModel.uid).set(
+          newUserModel.toJson(),
           SetOptions(merge: true),
         );
 
-    return userModel;
-  }
-
-  @override
-  Future<void> forgotPassword(String email) async {
-    await _auth.sendPasswordResetEmail(email: email);
+    return newUserModel;
   }
 
   @override
@@ -70,7 +81,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('Google Sign-In cancelled.');
     }
 
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
@@ -82,13 +94,29 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
     final userModel = UserModel.fromFirebaseUser(userCredential.user!);
 
-    // Lưu thông tin người dùng vào Firestore
-    await _firestore.collection('users').doc(userModel.uid).set(
-          userModel.toJson(),
-          SetOptions(merge: true),
-        );
-
-    return userModel;
+    // Lấy dữ liệu hiện có từ Firestore
+    final doc = await _firestore.collection('users').doc(userModel.uid).get();
+    if (doc.exists) {
+      // Nếu tài liệu đã tồn tại, không ghi đè subscriptionPlan
+      return UserModel.fromJson(doc.data()!);
+    } else {
+      // Nếu tài liệu chưa tồn tại, tạo mới với subscriptionPlan mặc định là basic
+      final newUserModel = UserModel(
+        uid: userModel.uid,
+        email: userModel.email,
+        name: userModel.name,
+        avatar: userModel.avatar,
+        subscriptionPlan:
+            SubscriptionPlan.basic, // Mặc định là basic cho người dùng mới
+        likedMovies: userModel.likedMovies,
+        watchedMovies: userModel.watchedMovies,
+      );
+      await _firestore.collection('users').doc(newUserModel.uid).set(
+            newUserModel.toJson(),
+            SetOptions(merge: true),
+          );
+      return newUserModel;
+    }
   }
 
   @override
@@ -112,5 +140,24 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           user.toJson(),
           SetOptions(merge: true),
         );
+  }
+
+  // @override
+  // Future<void> signOut() async {
+  //   await _auth.signOut();
+  // }
+
+  @override
+  Future<UserModel> getUser(String uid) async {
+    final doc = await _firestore.collection('users').doc(uid).get();
+    if (!doc.exists) {
+      throw Exception('User not found in Firestore.');
+    }
+    return UserModel.fromJson(doc.data()!);
+  }
+
+  @override
+  Future<void> forgotPassword(String email) {
+    throw UnimplementedError();
   }
 }

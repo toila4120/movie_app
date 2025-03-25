@@ -5,7 +5,8 @@ class UserEntity extends Equatable {
   final String uid;
   final String email;
   final String name;
-  final SubscriptionPlan subscriptionPlan; // Sử dụng enum
+  final int avatar;
+  final SubscriptionPlan? subscriptionPlan; // Sử dụng enum
   final List<String> likedMovies; // Danh sách ID của phim đã thả tim
   final List<WatchedMovie> watchedMovies; // Danh sách phim đã xem
 
@@ -13,6 +14,7 @@ class UserEntity extends Equatable {
     required this.uid,
     required this.email,
     required this.name,
+    this.avatar = 0,
     this.subscriptionPlan = SubscriptionPlan.basic, // Mặc định là basic
     this.likedMovies = const [], // Mặc định là danh sách rỗng
     this.watchedMovies = const [], // Mặc định là danh sách rỗng
@@ -23,6 +25,7 @@ class UserEntity extends Equatable {
         uid,
         email,
         name,
+        avatar,
         subscriptionPlan,
         likedMovies,
         watchedMovies,
@@ -57,7 +60,8 @@ class WatchedMovie {
 
   // Tạo WatchedMovie từ JSON khi đọc từ Firestore
   factory WatchedMovie.fromJson(Map<String, dynamic> json) {
-    final watchedEpisodesJson = json['watchedEpisodes'] as Map<String, dynamic>? ?? {};
+    final watchedEpisodesJson =
+        json['watchedEpisodes'] as Map<String, dynamic>? ?? {};
     return WatchedMovie(
       movieId: json['movieId'] as String,
       isSeries: json['isSeries'] as bool,
