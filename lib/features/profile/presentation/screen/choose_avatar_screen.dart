@@ -28,7 +28,14 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
             numberOfRows +
         AppPadding.small * (numberOfRows - 1);
 
-    return BlocBuilder<AppBloc, AppState>(
+    return BlocConsumer<AppBloc, AppState>(
+      listener: (context, state) {
+        if (state.isLoading == LoadingState.finished) {
+          Navigator.of(context).pop();
+        } else if (state.isLoading == LoadingState.error) {
+          showToast(context, message: 'Error: ${state.error}');
+        }
+      },
       builder: (context, state) {
         return AppContainer(
           resizeToAvoidBottomInset: true,
@@ -120,7 +127,11 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                         ),
                         SizedBox(height: AppPadding.medium),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<AppBloc>().add(UpdateAvatarEvent(
+                                  newAvatar: _selectedAvatarIndex,
+                                ));
+                          },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),
                             backgroundColor: Colors.black,

@@ -7,7 +7,7 @@ import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/core.dart';
 import 'package:movie_app/core/utils/size_config.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:movie_app/features/bloc/app_bloc.dart';
+import 'package:movie_app/core/bloc/app_bloc.dart';
 
 part 'presentation/screen/login_screen.dart';
 part 'presentation/screen/register_screen.dart';

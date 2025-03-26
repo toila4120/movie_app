@@ -28,3 +28,11 @@ class FetchUserEvent extends AppEvent {
         uid,
       ];
 }
+
+class UpdateAvatarEvent extends AppEvent {
+  final int newAvatar;
+
+  const UpdateAvatarEvent({
+    required this.newAvatar,
+  });
+}

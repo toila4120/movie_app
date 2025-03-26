@@ -11,10 +11,16 @@ class AuthenticationLoginEvent extends AuthenticationEvent {
   final String email;
   final String password;
 
-  const AuthenticationLoginEvent({required this.email, required this.password});
+  const AuthenticationLoginEvent({
+    required this.email,
+    required this.password,
+  });
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [
+        email,
+        password,
+      ];
 }
 
 class AuthenticationRegisterEvent extends AuthenticationEvent {
@@ -31,16 +37,25 @@ class AuthenticationRegisterEvent extends AuthenticationEvent {
   });
 
   @override
-  List<Object?> get props => [email, password, passwordConfirm, name];
+  List<Object?> get props => [
+        email,
+        password,
+        passwordConfirm,
+        name,
+      ];
 }
 
 class AuthenticationForgotPasswordEvent extends AuthenticationEvent {
   final String email;
 
-  const AuthenticationForgotPasswordEvent({required this.email});
+  const AuthenticationForgotPasswordEvent({
+    required this.email,
+  });
 
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [
+        email,
+      ];
 }
 
 class AuthenticationGoogleLoginEvent extends AuthenticationEvent {}
@@ -48,10 +63,14 @@ class AuthenticationGoogleLoginEvent extends AuthenticationEvent {}
 class LikeMovieEvent extends AuthenticationEvent {
   final String movieId;
 
-  const LikeMovieEvent({required this.movieId});
+  const LikeMovieEvent({
+    required this.movieId,
+  });
 
   @override
-  List<Object?> get props => [movieId];
+  List<Object?> get props => [
+        movieId,
+      ];
 }
 
 class UpdateWatchedMovieEvent extends AuthenticationEvent {
@@ -74,8 +93,12 @@ class UpdateWatchedMovieEvent extends AuthenticationEvent {
 class UpdateSubscriptionPlanEvent extends AuthenticationEvent {
   final SubscriptionPlan subscriptionPlan;
 
-  const UpdateSubscriptionPlanEvent({required this.subscriptionPlan});
+  const UpdateSubscriptionPlanEvent({
+    required this.subscriptionPlan,
+  });
 
   @override
-  List<Object?> get props => [subscriptionPlan];
+  List<Object?> get props => [
+        subscriptionPlan,
+      ];
 }
