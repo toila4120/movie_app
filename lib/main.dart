@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/app_bloc_observer.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/utils/size_config.dart';
-import 'package:movie_app/features/authencation/presentation/bloc/authentication_bloc.dart';
+import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/features/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/injection_container.dart';

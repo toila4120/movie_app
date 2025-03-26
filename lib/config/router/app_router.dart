@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/router/app_navigator_observer.dart';
-import 'package:movie_app/features/authencation/authencation.dart';
+import 'package:movie_app/features/authentication/authentication.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';

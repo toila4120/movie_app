@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
-import 'package:movie_app/features/authencation/data/model/user_model.dart';
-import 'package:movie_app/features/authencation/domain/usecase/get_user_usecase.dart';
+import 'package:movie_app/features/authentication/data/model/user_model.dart';
+import 'package:movie_app/features/authentication/domain/usecase/get_user_usecase.dart';
 import 'package:movie_app/injection_container.dart';
 
 part 'app_event.dart';
