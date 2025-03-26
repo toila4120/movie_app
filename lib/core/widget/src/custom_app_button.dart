@@ -52,7 +52,8 @@ class CustomAppButton extends StatefulWidget {
   State<CustomAppButton> createState() => _CustomAppButtonState();
 }
 
-class _CustomAppButtonState extends State<CustomAppButton> with SingleTickerProviderStateMixin {
+class _CustomAppButtonState extends State<CustomAppButton>
+    with SingleTickerProviderStateMixin {
   double _scale = 1.0;
   AnimationController? _controller;
 

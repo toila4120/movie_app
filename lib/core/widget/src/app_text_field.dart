@@ -64,9 +64,9 @@ class _AppTextFieldState extends State<AppTextField> {
       maxLines: widget.maxLength ?? 1,
       minLines: 1,
       inputFormatters: widget.inputFormatters,
-      style: const TextStyle(
+      style: TextStyle(
         color: AppColor.secondLight,
-        fontSize: 12,
+        fontSize: SizeConfig.getResponsive(12),
         fontWeight: FontWeight.w500,
       ),
       obscureText: widget.obscureText,
@@ -106,9 +106,9 @@ class _AppTextFieldState extends State<AppTextField> {
           ),
         ),
         hintText: widget.hintText,
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           color: AppColor.subsidiaryLight,
-          fontSize: 12,
+          fontSize: SizeConfig.getResponsive(12),
           fontWeight: FontWeight.w500,
         ),
         prefixIcon: widget.prefixIcon,

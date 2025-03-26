@@ -10,17 +10,17 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    return const AppContainer(
+    return  AppContainer(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColor.backGroundScreen,
       child: Column(
         children: [
-          AppHeader(
+          const AppHeader(
             title: 'Categories',
           ),
           Expanded(
             child: ScrollConfiguration(
-              behavior: DisableGlowBehavior(),
+              behavior: const DisableGlowBehavior(),
               child: SingleChildScrollView(
                 padding: EdgeInsets.only(
                   top: AppPadding.superTiny,
@@ -28,7 +28,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   right: AppPadding.large,
                   bottom: AppPadding.large,
                 ),
-                child: Column(
+                child: const Column(
                   children: [
                     CategoriesList(),
                   ],

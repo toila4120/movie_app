@@ -7,14 +7,14 @@ class ContinueWatching extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
               child: Text(
                 'Continue Watching',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: SizeConfig.getResponsive(16),
                   color: AppColor.greyScale900,
                   fontWeight: FontWeight.w700,
                 ),
@@ -23,16 +23,16 @@ class ContinueWatching extends StatelessWidget {
             CustomAppButton(
               text: "See all list",
               textStyle: TextStyle(
-                fontSize: 12,
+                fontSize: SizeConfig.getResponsive(12),
                 color: AppColor.primary500,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppPadding.tiny),
+        SizedBox(height: AppPadding.tiny),
         SizedBox(
-          height: 120,
+          height: SizeConfig.getResponsive(120),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const ClampingScrollPhysics(),
@@ -40,8 +40,8 @@ class ContinueWatching extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: index == 0
-                    ? const EdgeInsets.only(right: AppPadding.superTiny)
-                    : const EdgeInsets.symmetric(
+                    ? EdgeInsets.only(right: AppPadding.superTiny)
+                    : EdgeInsets.symmetric(
                         horizontal: AppPadding.superTiny,
                       ),
                 child: const _ItemFilmContinue(),
@@ -65,8 +65,8 @@ class _ItemFilmContinue extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppBorderRadius.r8),
           child: Image.asset(
             AppImage.bannerDefault,
-            height: 120,
-            width: 172,
+            height: SizeConfig.getResponsive(120),
+            width: SizeConfig.getResponsive(172),
             fit: BoxFit.cover,
           ),
         ),
@@ -76,10 +76,10 @@ class _ItemFilmContinue extends StatelessWidget {
           bottom: 0,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(AppBorderRadius.r8),
             ),
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
               vertical: AppPadding.superTiny,
               horizontal: AppPadding.tiny,
             ),
@@ -89,13 +89,13 @@ class _ItemFilmContinue extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Nevertheless",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: SizeConfig.getResponsive(14),
                             color: AppColor.white,
                             fontWeight: FontWeight.w700,
                           ),
@@ -103,7 +103,7 @@ class _ItemFilmContinue extends StatelessWidget {
                         Text(
                           "Episode 5 of 10",
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: SizeConfig.getResponsive(10),
                             color: AppColor.white,
                             fontWeight: FontWeight.w700,
                           ),
@@ -113,18 +113,18 @@ class _ItemFilmContinue extends StatelessWidget {
                     CustomAppButton(
                       child: Image.asset(
                         AppImage.icPlay1,
-                        height: 18,
-                        width: 18,
+                        height: SizeConfig.getResponsive(18),
+                        width: SizeConfig.getResponsive(18),
                       ),
                     )
                   ],
                 ),
-                const SizedBox(height: AppPadding.tiny),
+                SizedBox(height: AppPadding.tiny),
                 LinearProgressIndicator(
                   minHeight: AppPadding.superTiny,
                   borderRadius: BorderRadius.circular(AppBorderRadius.r4),
                   value: 4 / 10,
-                  backgroundColor: AppColor.white.withOpacity(0.2),
+                  backgroundColor: AppColor.white.withValues(alpha: 0.2),
                   valueColor: const AlwaysStoppedAnimation<Color>(
                     AppColor.primary500,
                   ),

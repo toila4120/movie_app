@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/config/theme/theme.dart';
+import 'package:movie_app/core/utils/size_config.dart';
 
 void showToast(
   BuildContext context, {
@@ -14,7 +15,7 @@ void showToast(
       content: Align(
         alignment: Alignment.center,
         child: Container(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             vertical: AppPadding.tiny,
             horizontal: AppPadding.small,
           ),
@@ -24,8 +25,8 @@ void showToast(
           ),
           child: Text(
             message,
-            style: const TextStyle(
-              fontSize: 12,
+            style: TextStyle(
+              fontSize: SizeConfig.getResponsive(12),
               color: AppColor.white,
               fontWeight: FontWeight.w500,
             ),

@@ -10,19 +10,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const AppContainer(
+    return  AppContainer(
       resizeToAvoidBottomInset: true,
       child: ScrollConfiguration(
-        behavior: DisableGlowBehavior(),
+        behavior: const DisableGlowBehavior(),
         child: Column(
           children: [
             Expanded(
               child: ScrollConfiguration(
-                behavior: DisableGlowBehavior(),
+                behavior: const DisableGlowBehavior(),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      BannerHome(),
+                      const BannerHome(),
                       SizedBox(height: AppPadding.small),
                       Padding(
                         padding: EdgeInsets.only(
@@ -32,13 +32,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: Column(
                           children: [
-                            CategoryWidget(),
+                            const CategoryWidget(),
                             SizedBox(height: AppPadding.small),
-                            ContinueWatching(),
+                            const ContinueWatching(),
                             SizedBox(height: AppPadding.small),
-                            Popular(),
+                            const Popular(),
                             SizedBox(height: AppPadding.small),
-                            Popular(),
+                            const Popular(),
                           ],
                         ),
                       ),

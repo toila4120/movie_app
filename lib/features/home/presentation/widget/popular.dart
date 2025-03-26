@@ -7,14 +7,14 @@ class Popular extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
               child: Text(
                 'Popular',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: SizeConfig.getResponsive(16),
                   color: AppColor.greyScale900,
                   fontWeight: FontWeight.w700,
                 ),
@@ -23,26 +23,26 @@ class Popular extends StatelessWidget {
             CustomAppButton(
               text: "See all list",
               textStyle: TextStyle(
-                fontSize: 12,
+                fontSize: SizeConfig.getResponsive(12),
                 color: AppColor.primary500,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppPadding.tiny),
+        SizedBox(height: AppPadding.tiny),
         SizedBox(
-          height: 164,
+          height: SizeConfig.getResponsive(164),
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: 30,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Container(
                 padding: index == 0
-                    ? const EdgeInsets.only(
+                    ? EdgeInsets.only(
                         right: AppPadding.superTiny,
                       )
-                    : const EdgeInsets.symmetric(
+                    : EdgeInsets.symmetric(
                         horizontal: AppPadding.superTiny,
                       ),
                 child: const _ItemFilmPopular(),
@@ -68,8 +68,8 @@ class _ItemFilmPopular extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppBorderRadius.r8),
         child: Image.asset(
           AppImage.posterMovie,
-          height: 164,
-          width: 120,
+          height: SizeConfig.getResponsive(164),
+          width: SizeConfig.getResponsive(120),
           fit: BoxFit.cover,
         ),
       ),

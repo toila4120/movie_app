@@ -4,6 +4,7 @@ import 'package:movie_app/config/router/app_router.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
+import 'package:movie_app/core/utils/size_config.dart';
 import 'package:movie_app/core/widget/widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 

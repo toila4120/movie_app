@@ -31,60 +31,61 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const AppHeader(),
             Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: AppPadding.large),
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppPadding.large,
+                  vertical: AppPadding.large,
+                ),
                 child: ScrollConfiguration(
                   behavior: const DisableGlowBehavior(),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: AppPadding.large),
-                        const Text(
+                        Text(
                           'Register',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: SizeConfig.getResponsive(24),
                             fontWeight: FontWeight.w700,
                             color: AppColor.greyScale900,
                           ),
                         ),
-                        const SizedBox(height: AppPadding.large),
+                        SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _nameController,
                           hintText: 'Name',
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.all(AppPadding.small),
+                            padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icPerson,
-                              height: 20,
-                              width: 20,
+                              height: SizeConfig.getResponsive(20),
+                              width: SizeConfig.getResponsive(20),
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppPadding.large),
+                        SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _emailController,
                           hintText: 'Email',
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.all(AppPadding.small),
+                            padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icEmail,
-                              height: 20,
-                              width: 20,
+                              height: SizeConfig.getResponsive(20),
+                              width: SizeConfig.getResponsive(20),
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppPadding.large),
+                        SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _passwordController,
                           hintText: 'Password',
                           obscureText: _isObscureText,
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.all(AppPadding.small),
+                            padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icKey,
-                              height: 20,
-                              width: 20,
+                              height: SizeConfig.getResponsive(20),
+                              width: SizeConfig.getResponsive(20),
                             ),
                           ),
                           suffixIcon: IconButton(
@@ -97,22 +98,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               _isObscureText
                                   ? AppImage.icEyeOff
                                   : AppImage.icEye,
-                              height: 20,
-                              width: 20,
+                              height: SizeConfig.getResponsive(20),
+                              width: SizeConfig.getResponsive(20),
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppPadding.large),
+                        SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _confirmPasswordController,
                           hintText: 'Confirm Password',
                           obscureText: _isObscureText,
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.all(AppPadding.small),
+                            padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icKey,
-                              height: 20,
-                              width: 20,
+                              height: SizeConfig.getResponsive(20),
+                              width: SizeConfig.getResponsive(20),
                             ),
                           ),
                           suffixIcon: IconButton(
@@ -125,16 +126,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               _isObscureText
                                   ? AppImage.icEyeOff
                                   : AppImage.icEye,
-                              height: 20,
-                              width: 20,
+                              height: SizeConfig.getResponsive(20),
+                              width: SizeConfig.getResponsive(20),
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppPadding.large),
+                        SizedBox(height: AppPadding.large),
                         BlocBuilder<AuthenticationBloc, AuthenticationState>(
                           builder: (context, state) {
                             return CustomAppButton(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: AppPadding.medium),
                               onPressed: () {
                                 context
@@ -150,18 +151,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               radius: AppBorderRadius.r8,
                               backgroundColor: AppColor.primary200,
                               child: state.isLoading.isLoading
-                                  ? const SizedBox(
-                                      height: 16,
-                                      width: 16,
-                                      child: CircularProgressIndicator(
+                                  ? SizedBox(
+                                      height: SizeConfig.getResponsive(20),
+                                      width: SizeConfig.getResponsive(20),
+                                      child: const CircularProgressIndicator(
                                         color: Colors.white,
                                         strokeCap: StrokeCap.round,
                                       ),
                                     )
-                                  : const Text(
+                                  : Text(
                                       'Sign Up',
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: SizeConfig.getResponsive(14),
                                         fontWeight: FontWeight.w700,
                                         color: AppColor.white,
                                       ),
@@ -169,11 +170,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
                           },
                         ),
-                        const SizedBox(height: AppPadding.medium),
-                        const Row(
+                        SizedBox(height: AppPadding.medium),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
+                            const Expanded(
                               child: Divider(
                                 thickness: 1,
                                 color: AppColor.greyScale200,
@@ -184,13 +185,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Text(
                               'Or',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: SizeConfig.getResponsive(14),
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.greyScale500,
                               ),
                             ),
                             SizedBox(width: AppPadding.tiny),
-                            Expanded(
+                            const Expanded(
                               child: Divider(
                                 thickness: 1,
                                 color: AppColor.greyScale200,
@@ -199,28 +200,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppPadding.medium),
+                        SizedBox(height: AppPadding.medium),
                         const ButtonLoginWithGoogle(),
-                        const SizedBox(height: AppPadding.medium),
+                        SizedBox(height: AppPadding.medium),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               'Don\'t have an account?',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: SizeConfig.getResponsive(14),
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.greyScale500,
                               ),
                             ),
-                            const SizedBox(width: AppPadding.superTiny),
+                            SizedBox(width: AppPadding.superTiny),
                             CustomAppButton(
                               onPressed: () {
                                 context.go(AppRouter.loginScreenPath);
                               },
                               text: 'Login',
-                              textStyle: const TextStyle(
-                                fontSize: 14,
+                              textStyle: TextStyle(
+                                fontSize: SizeConfig.getResponsive(14),
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.primary500,
                               ),

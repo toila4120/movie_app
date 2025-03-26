@@ -4,6 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/utils/app_utils.dart';
+import 'package:movie_app/core/utils/size_config.dart';
 
 part 'src/app_container.dart';
 part 'src/custom_app_button.dart';

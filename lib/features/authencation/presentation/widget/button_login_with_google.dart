@@ -6,7 +6,7 @@ class ButtonLoginWithGoogle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppButton(
-      padding: const EdgeInsets.symmetric(vertical: AppPadding.medium),
+      padding: EdgeInsets.symmetric(vertical: AppPadding.medium),
       splashColor: AppColor.greyScale200,
       onPressed: () {
         context
@@ -26,14 +26,14 @@ class ButtonLoginWithGoogle extends StatelessWidget {
         children: [
           Image.asset(
             AppImage.icGoogle,
-            height: 24,
-            width: 24,
+            height: SizeConfig.getResponsive(24),
+            width: SizeConfig.getResponsive(24),
           ),
-          const SizedBox(width: AppPadding.tiny),
-          const Text(
+          SizedBox(width: AppPadding.tiny),
+          Text(
             'Login with Google',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: SizeConfig.getResponsive(14),
               fontWeight: FontWeight.w700,
               color: AppColor.greyScale900,
             ),

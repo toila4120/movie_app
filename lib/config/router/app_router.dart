@@ -33,6 +33,10 @@ abstract class AppRouter {
   static const String _profileTabName = 'profile_tab';
   static const String profileTabPath = '/profile_tab';
 
+  static const String _chooseAvatarScreenName = 'choose_avatar_screen';
+  static const String chooseAvatarScreenPath =
+      '/profile_tab/choose_avatar_screen';
+
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   static CustomTransitionPage _buildPageWithDefaultTransition<T>({
@@ -132,6 +136,19 @@ abstract class AppRouter {
                 builder: (context, state) {
                   return const ProfileScreen();
                 },
+                routes: [
+                  GoRoute(
+                    name: _chooseAvatarScreenName,
+                    path: '/$_chooseAvatarScreenName',
+                    pageBuilder: (context, state) {
+                      return _buildPageWithDefaultTransition<void>(
+                        context: context,
+                        state: state,
+                        child: const ChooseAvatarScreen(),
+                      );
+                    },
+                  )
+                ],
               ),
             ],
           ),

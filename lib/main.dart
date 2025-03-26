@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/app_bloc_observer.dart';
 import 'package:movie_app/config/theme/theme.dart';
+import 'package:movie_app/core/utils/size_config.dart';
 import 'package:movie_app/features/authencation/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/features/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
@@ -30,23 +31,26 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => CategoriesBloc(),
+    return Builder(builder: (context) {
+      SizeConfig.init(context);
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => CategoriesBloc(),
+          ),
+          BlocProvider(
+            create: (context) => AuthenticationBloc(),
+          ),
+          BlocProvider(
+            create: (context) => AppBloc(),
+          )
+        ],
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          routerConfig: AppRouter.router,
         ),
-        BlocProvider(
-          create: (context) => AuthenticationBloc(),
-        ),
-        BlocProvider(
-          create: (context) => AppBloc(),
-        )
-      ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        routerConfig: AppRouter.router,
-      ),
-    );
+      );
+    });
   }
 }

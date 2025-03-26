@@ -31,42 +31,42 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: AppContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.large),
+          padding: EdgeInsets.symmetric(horizontal: AppPadding.large),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Login',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: SizeConfig.getResponsive(24),
                   fontWeight: FontWeight.w700,
                   color: AppColor.greyScale900,
                 ),
               ),
-              const SizedBox(height: AppPadding.large),
+              SizedBox(height: AppPadding.large),
               AppTextField(
                 controller: _emailController,
                 hintText: 'Email',
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(AppPadding.small),
+                  padding: EdgeInsets.all(AppPadding.small),
                   child: Image.asset(
                     AppImage.icEmail,
-                    height: 20,
-                    width: 20,
+                    height: SizeConfig.getResponsive(20),
+                    width: SizeConfig.getResponsive(20),
                   ),
                 ),
               ),
-              const SizedBox(height: AppPadding.large),
+              SizedBox(height: AppPadding.large),
               AppTextField(
                 controller: _passwordController,
                 hintText: 'Password',
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(AppPadding.small),
+                  padding: EdgeInsets.all(AppPadding.small),
                   child: Image.asset(
                     AppImage.icKey,
-                    height: 20,
-                    width: 20,
+                    height: SizeConfig.getResponsive(20),
+                    width: SizeConfig.getResponsive(20),
                   ),
                 ),
                 suffixIcon: IconButton(
@@ -77,64 +77,68 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   icon: Image.asset(
                     _isObscureText ? AppImage.icEyeOff : AppImage.icEye,
-                    height: 20,
-                    width: 20,
+                    height: SizeConfig.getResponsive(20),
+                    width: SizeConfig.getResponsive(20),
                   ),
                 ),
                 obscureText: _isObscureText,
               ),
-              const SizedBox(height: AppPadding.medium),
+              SizedBox(height: AppPadding.medium),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Checkbox(
-                          value: _isRememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              _isRememberMe = value!;
-                            });
-                          },
-                          shape: const CircleBorder(),
-                          activeColor: AppColor.primary400,
-                          checkColor: AppColor.white,
-                          side: const BorderSide(
-                            color: AppColor.greyScale300,
-                            width: 1,
+                        height: SizeConfig.getResponsive(20),
+                        width: SizeConfig.getResponsive(20),
+                        child: Center(
+                          child: Transform.scale(
+                            scale: SizeConfig.getResponsive(20) / 24,
+                            child: Checkbox(
+                              value: _isRememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isRememberMe = value!;
+                                });
+                              },
+                              shape: const CircleBorder(),
+                              activeColor: AppColor.primary400,
+                              checkColor: AppColor.white,
+                              side: const BorderSide(
+                                color: AppColor.greyScale300,
+                                width: 1,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: AppPadding.superTiny),
-                      const Text(
+                      SizedBox(width: AppPadding.superTiny),
+                      Text(
                         'Remember me',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: SizeConfig.getResponsive(14),
                           fontWeight: FontWeight.w500,
                           color: AppColor.greyScale500,
                         ),
                       ),
                     ],
                   ),
-                  const Text(
+                  Text(
                     'Forgot password?',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: SizeConfig.getResponsive(14),
                       fontWeight: FontWeight.w500,
                       color: AppColor.greyScale500,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: AppPadding.large),
+              SizedBox(height: AppPadding.large),
               BlocBuilder<AuthenticationBloc, AuthenticationState>(
                 builder: (context, state) {
                   return CustomAppButton(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: AppPadding.medium),
+                    padding: EdgeInsets.symmetric(vertical: AppPadding.medium),
                     onPressed: () {
                       context.read<AuthenticationBloc>().add(
                             AuthenticationLoginEvent(
@@ -146,18 +150,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     radius: AppBorderRadius.r8,
                     backgroundColor: AppColor.primary200,
                     child: state.isLoading.isLoading
-                        ? const SizedBox(
-                            height: 16,
-                            width: 16,
-                            child: CircularProgressIndicator(
+                        ? SizedBox(
+                            height: SizeConfig.getResponsive(16),
+                            width: SizeConfig.getResponsive(16),
+                            child: const CircularProgressIndicator(
                               color: Colors.white,
                               strokeCap: StrokeCap.round,
                             ),
                           )
-                        : const Text(
+                        : Text(
                             'Login',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: SizeConfig.getResponsive(14),
                               fontWeight: FontWeight.w700,
                               color: AppColor.white,
                             ),
@@ -165,11 +169,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 },
               ),
-              const SizedBox(height: AppPadding.medium),
-              const Row(
+              SizedBox(height: AppPadding.medium),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       thickness: 1,
                       color: AppColor.greyScale200,
@@ -177,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(width: AppPadding.tiny),
-                  Text(
+                  const Text(
                     'Or',
                     style: TextStyle(
                       fontSize: 14,
@@ -186,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(width: AppPadding.tiny),
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       thickness: 1,
                       color: AppColor.greyScale200,
@@ -195,28 +199,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: AppPadding.medium),
+              SizedBox(height: AppPadding.medium),
               const ButtonLoginWithGoogle(),
-              const SizedBox(height: AppPadding.medium),
+              SizedBox(height: AppPadding.medium),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Don\'t have an account?',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: SizeConfig.getResponsive(14),
                       fontWeight: FontWeight.w500,
                       color: AppColor.greyScale500,
                     ),
                   ),
-                  const SizedBox(width: AppPadding.superTiny),
+                  SizedBox(width: AppPadding.superTiny),
                   CustomAppButton(
                     onPressed: () {
                       context.push(AppRouter.registerScreenPath);
                     },
                     text: 'Sign up',
-                    textStyle: const TextStyle(
-                      fontSize: 14,
+                    textStyle: TextStyle(
+                      fontSize: SizeConfig.getResponsive(14),
                       fontWeight: FontWeight.w500,
                       color: AppColor.primary500,
                     ),

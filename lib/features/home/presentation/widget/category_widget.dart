@@ -18,7 +18,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     ];
 
     List<String> categoryTitle = [
-      "Anime",
+      "Hoạt hình",
       "Tình cảm",
       "Hành động",
       "Cổ trang",
@@ -30,9 +30,10 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
     double itemWidth = (screenWidth - paddingTotal) / 2;
     if (itemWidth <= 0 || itemWidth.isNaN) {
-      itemWidth = 100;
+      itemWidth = SizeConfig.getResponsive(100);
     }
-    double desiredHeight = 60;
+
+    double desiredHeight = SizeConfig.getResponsive(62);
     double childAspectRatio = itemWidth / desiredHeight;
     if (childAspectRatio.isNaN || childAspectRatio.isInfinite) {
       childAspectRatio = 2.0;
@@ -43,11 +44,11 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 'Category',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: SizeConfig.getResponsive(16),
                   color: AppColor.greyScale900,
                   fontWeight: FontWeight.w700,
                 ),
@@ -58,23 +59,22 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 context.push(AppRouter.categoriesTabPath);
               },
               text: "See all list",
-              textStyle: const TextStyle(
-                fontSize: 12,
+              textStyle: TextStyle(
+                fontSize: SizeConfig.getResponsive(12),
                 color: AppColor.primary500,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppPadding.tiny),
+        SizedBox(height: AppPadding.tiny),
         Row(
           children: [
             Expanded(
               child: SizedBox(
-                height: (2 * 60) + AppPadding.tiny,
+                height: SizeConfig.getResponsive((2 * 62) + AppPadding.tiny),
                 child: GridView.builder(
                   padding: EdgeInsets.zero,
-                  shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -102,7 +102,10 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 class _ItemCategory extends StatelessWidget {
   final String image;
   final String title;
-  const _ItemCategory({required this.image, required this.title});
+  const _ItemCategory({
+    required this.image,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -124,29 +127,33 @@ class _ItemCategory extends StatelessWidget {
               child: Image.asset(
                 height: double.infinity,
                 image,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
-            width: 80,
-            height: 60,
+            width: (MediaQuery.of(context).size.width -
+                    AppPadding.large * 2 -
+                    AppPadding.tiny) /
+                2 *
+                0.4,
+            height: double.infinity,
             decoration: BoxDecoration(
-              color: AppColor.black.withOpacity(0.9),
+              color: AppColor.black.withValues(alpha: 0.9),
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(AppBorderRadius.r8),
                 bottomRight: Radius.circular(AppBorderRadius.r8),
               ),
             ),
-            padding: const EdgeInsets.all(AppPadding.small),
             child: Center(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColor.white,
-                  fontSize: 10,
+                  fontSize: SizeConfig.getResponsive(12),
                   fontWeight: FontWeight.w500,
                 ),
+                textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

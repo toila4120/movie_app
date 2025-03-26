@@ -9,7 +9,7 @@ class HeaderMovieDetail extends StatelessWidget {
       children: [
         Image.asset(
           AppImage.posterMovie,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
           height: MediaQuery.of(context).size.height * 0.6,
           width: double.infinity,
         ),
@@ -26,8 +26,8 @@ class HeaderMovieDetail extends StatelessWidget {
                 },
                 child: Image.asset(
                   AppImage.icBack1,
-                  width: 40,
-                  height: 40,
+                  width: SizeConfig.getResponsive(40),
+                  height: SizeConfig.getResponsive(40),
                 ),
               ),
               CustomAppButton(
@@ -36,8 +36,8 @@ class HeaderMovieDetail extends StatelessWidget {
                 },
                 child: Image.asset(
                   AppImage.icHeart,
-                  width: 40,
-                  height: 40,
+                  width: SizeConfig.getResponsive(40),
+                  height: SizeConfig.getResponsive(40),
                 ),
               ),
             ],
@@ -47,7 +47,7 @@ class HeaderMovieDetail extends StatelessWidget {
           bottom: 0,
           child: Container(
             width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: AppPadding.large,
               vertical: AppPadding.tiny,
             ),
@@ -55,7 +55,7 @@ class HeaderMovieDetail extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   AppColor.white,
-                  AppColor.white.withOpacity(0.0),
+                  AppColor.white.withValues(alpha: 0.0),
                 ],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
@@ -64,98 +64,98 @@ class HeaderMovieDetail extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CustomAppButton(
+                CustomAppButton(
                   child: CircleAvatar(
-                    radius: 24,
-                    backgroundImage: AssetImage(AppImage.icPlay),
+                    radius: SizeConfig.getResponsive(24),
+                    backgroundImage: const AssetImage(AppImage.icPlay),
                   ),
                 ),
-                const SizedBox(height: AppPadding.medium),
-                const Text(
+                SizedBox(height: AppPadding.tiny),
+                Text(
                   "Cruella",
                   style: TextStyle(
                     color: AppColor.greyScale900,
-                    fontSize: 24,
+                    fontSize: SizeConfig.getResponsive(24),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: AppPadding.superTiny),
+                SizedBox(height: AppPadding.superTiny),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "2021",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: 12,
+                        fontSize: SizeConfig.getResponsive(12),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(
+                      margin: EdgeInsets.symmetric(
                         horizontal: AppPadding.superTiny,
                       ),
-                      height: 4,
-                      width: 4,
+                      height: SizeConfig.getResponsive(4),
+                      width: SizeConfig.getResponsive(4),
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.circular(AppPadding.superTiny),
                         color: AppColor.greyScale500,
                       ),
                     ),
-                    const Text(
+                    Text(
                       "Fantasy, Drama",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: 12,
+                        fontSize: SizeConfig.getResponsive(12),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(
+                      margin: EdgeInsets.symmetric(
                         horizontal: AppPadding.superTiny,
                       ),
-                      height: 4,
-                      width: 4,
+                      height: SizeConfig.getResponsive(4),
+                      width: SizeConfig.getResponsive(4),
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.circular(AppPadding.superTiny),
                         color: AppColor.greyScale500,
                       ),
                     ),
-                    const Text(
+                    Text(
                       "12 Episode",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: 12,
+                        fontSize: SizeConfig.getResponsive(12),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppPadding.superTiny),
+                SizedBox(height: AppPadding.superTiny),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       AppImage.icStar,
-                      width: 12,
-                      height: 12,
+                      width: SizeConfig.getResponsive(12),
+                      height: SizeConfig.getResponsive(12),
                     ),
-                    const Text(
+                    Text(
                       " 4.5",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: 12,
+                        fontSize: SizeConfig.getResponsive(12),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const Text(
+                    Text(
                       " (128 review)",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: 12,
+                        fontSize: SizeConfig.getResponsive(12),
                         fontWeight: FontWeight.w500,
                       ),
                     ),

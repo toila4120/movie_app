@@ -12,13 +12,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  void navigator() {
+    context.go(AppRouter.loginScreenPath);
+  }
+
   @override
   void initState() {
     super.initState();
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        context.go(AppRouter.loginScreenPath);
+        navigator();
       },
     );
   }

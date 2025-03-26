@@ -20,42 +20,43 @@ class _MovieDetailState extends State<MovieDetail> {
             children: [
               const HeaderMovieDetail(),
               Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppPadding.large,
                   vertical: AppPadding.small,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "The Plot",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: 16,
+                        fontSize: SizeConfig.getResponsive(16),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const Text(
+                    Text(
                       "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam.",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: 14,
+                        fontSize: SizeConfig.getResponsive(14),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: AppPadding.medium),
-                    const Text(
+                    SizedBox(height: AppPadding.medium),
+                    Text(
                       "Casts",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: 16,
+                        fontSize: SizeConfig.getResponsive(16),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: AppPadding.small),
+                    SizedBox(height: AppPadding.tiny),
                     SizedBox(
-                      height: 76,
+                      height: SizeConfig.getResponsive(76),
                       child: ListView.builder(
+                        padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemCount: 5,
@@ -65,11 +66,11 @@ class _MovieDetailState extends State<MovieDetail> {
                               left: index == 0 ? 0 : AppPadding.tiny,
                               right: AppPadding.tiny,
                             ),
-                            child: const Column(
+                            child: Column(
                               children: [
                                 CircleAvatar(
-                                  radius: 28,
-                                  backgroundImage: AssetImage(
+                                  radius: SizeConfig.getResponsive(28),
+                                  backgroundImage: const AssetImage(
                                     AppImage.avatarDefault,
                                   ),
                                 ),
@@ -78,7 +79,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   "Emma Wats",
                                   style: TextStyle(
                                     color: AppColor.greyScale900,
-                                    fontSize: 12,
+                                    fontSize: SizeConfig.getResponsive(12),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
@@ -88,15 +89,16 @@ class _MovieDetailState extends State<MovieDetail> {
                         },
                       ),
                     ),
-                    const SizedBox(height: AppPadding.medium),
-                    const Text(
+                    SizedBox(height: AppPadding.medium),
+                    Text(
                       "Episodes",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: 16,
+                        fontSize: SizeConfig.getResponsive(16),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
+                    SizedBox(height: AppPadding.superTiny),
                     ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
@@ -111,8 +113,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                   child: Row(
                                     children: [
                                       Container(
-                                        height: 60,
-                                        width: 60,
+                                        height: SizeConfig.getResponsive(60),
+                                        width: SizeConfig.getResponsive(60),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                             AppPadding.superTiny,
@@ -120,8 +122,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                           color: AppColor.greyScale100,
                                         ),
                                       ),
-                                      const SizedBox(width: AppPadding.small),
-                                      const Expanded(
+                                      SizedBox(width: AppPadding.small),
+                                      Expanded(
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -130,7 +132,9 @@ class _MovieDetailState extends State<MovieDetail> {
                                               "Episode 1",
                                               style: TextStyle(
                                                 color: AppColor.greyScale900,
-                                                fontSize: 14,
+                                                fontSize:
+                                                    SizeConfig.getResponsive(
+                                                        14),
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
@@ -138,7 +142,9 @@ class _MovieDetailState extends State<MovieDetail> {
                                               "56:00",
                                               style: TextStyle(
                                                 color: AppColor.greyScale500,
-                                                fontSize: 12,
+                                                fontSize:
+                                                    SizeConfig.getResponsive(
+                                                        12),
                                                 fontWeight: FontWeight.w500,
                                               ),
                                               overflow: TextOverflow.ellipsis,
@@ -150,16 +156,16 @@ class _MovieDetailState extends State<MovieDetail> {
                                     ],
                                   ),
                                 ),
-                                const CustomAppButton(
+                                CustomAppButton(
                                   child: CircleAvatar(
-                                    radius: 20,
+                                    radius: SizeConfig.getResponsive(20),
                                     backgroundImage:
-                                        AssetImage(AppImage.icPlay),
+                                        const AssetImage(AppImage.icPlay),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: AppPadding.small),
+                            SizedBox(height: AppPadding.small),
                           ],
                         );
                       },

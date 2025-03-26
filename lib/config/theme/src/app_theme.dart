@@ -110,7 +110,7 @@ abstract final class AppTheme {
             ),
             foregroundColor: WidgetStateProperty.all(Colors.white),
             padding: WidgetStateProperty.all(
-              const EdgeInsets.symmetric(
+               EdgeInsets.symmetric(
                 horizontal: AppPadding.large,
                 vertical: AppPadding.small,
               ),
@@ -176,7 +176,7 @@ abstract final class AppTheme {
             ),
             foregroundColor: WidgetStateProperty.all(Colors.white),
             padding: WidgetStateProperty.all(
-              const EdgeInsets.symmetric(
+               EdgeInsets.symmetric(
                 horizontal: AppPadding.large,
                 vertical: AppPadding.small,
               ),

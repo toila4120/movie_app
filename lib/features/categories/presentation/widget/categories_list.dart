@@ -29,8 +29,12 @@ class _CategoriesListState extends State<CategoriesList> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(AppImage.imageNotFound, width: 100, height: 100),
-                const SizedBox(height: AppPadding.tiny),
+                Image.asset(
+                  AppImage.imageNotFound,
+                  width: SizeConfig.getResponsive(100),
+                  height: SizeConfig.getResponsive(100),
+                ),
+                SizedBox(height: AppPadding.tiny),
                 const Text("Đã có lỗi xảy ra, vui lòng thử lại sau"),
               ],
             ),
@@ -44,7 +48,7 @@ class _CategoriesListState extends State<CategoriesList> {
             itemCount: state.categories.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: AppPadding.tiny),
+                padding: EdgeInsets.only(bottom: AppPadding.tiny),
                 child: _Itemcategories(
                   title: state.categories[index].name,
                 ),
@@ -52,11 +56,11 @@ class _CategoriesListState extends State<CategoriesList> {
             },
           );
         }
-        return const Center(
+        return Center(
           child: Text(
             'Không có thể loại nào',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: SizeConfig.getResponsive(16),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -83,7 +87,7 @@ class _Itemcategories extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(AppBorderRadius.r8),
         ),
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           vertical: AppPadding.small,
           horizontal: AppPadding.small,
         ),
@@ -92,15 +96,15 @@ class _Itemcategories extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 16,
+              style: TextStyle(
+                fontSize: SizeConfig.getResponsive(16),
                 fontWeight: FontWeight.w500,
               ),
             ),
             Image.asset(
               AppImage.icRight,
-              width: 16,
-              height: 16,
+              width: SizeConfig.getResponsive(16),
+              height: SizeConfig.getResponsive(16),
             ),
           ],
         ),

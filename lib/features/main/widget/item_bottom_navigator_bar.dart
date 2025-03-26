@@ -21,8 +21,8 @@ class BottomNavigatorBarItem extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        splashColor: AppColor.subsidiaryLight.withOpacity(0.2),
-        highlightColor: AppColor.subsidiaryLight.withOpacity(0.1),
+        splashColor: AppColor.subsidiaryLight.withValues(alpha: 0.2),
+        highlightColor: AppColor.subsidiaryLight.withValues(alpha: 0.1),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
