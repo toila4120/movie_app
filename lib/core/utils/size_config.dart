@@ -8,7 +8,7 @@ class SizeConfig {
   static void init(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    scaleFactor = screenWidth > 600 ? screenHeight / 600 : 1.0;
+    scaleFactor = screenWidth > 600 ? screenWidth / 600 + 0.2 : 1.0;
   }
 
   static double getResponsive(double base) {

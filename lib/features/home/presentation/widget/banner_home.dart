@@ -46,33 +46,11 @@ class _BannerHomeState extends State<BannerHome> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final screenWidth = MediaQuery.of(context).size.width;
-        final screenHeight = MediaQuery.of(context).size.height;
-        final orientation = MediaQuery.of(context).orientation;
-
-        double carouselHeight = screenWidth > 800
-            ? screenHeight * 0.5
-            : orientation == Orientation.portrait
-                ? screenHeight * 0.3
-                : screenHeight * 0.4;
-
-        double titleFontSize = screenWidth > 800 ? 28 : 20;
-        double infoFontSize = screenWidth > 800 ? 16 : 12;
-
-        double horizontalPadding =
-            screenWidth > 800 ? AppPadding.superLarge : AppPadding.large;
-        double verticalPadding =
-            screenWidth > 800 ? AppPadding.small : AppPadding.tiny;
-
-        double dotWidthActive = screenWidth > 800 ? 32 : 24;
-        double dotWidthInactive = screenWidth > 800 ? 12 : 8;
-        double dotHeight = screenWidth > 800 ? 12 : 8;
-
         return Stack(
           children: [
             SizedBox(
               width: double.infinity,
-              height: carouselHeight,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: CarouselSlider.builder(
                 itemCount: _banners.length,
                 itemBuilder: (
@@ -92,10 +70,10 @@ class _BannerHomeState extends State<BannerHome> {
                       Positioned(
                         bottom: 0,
                         child: Container(
-                          width: screenWidth,
+                          width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.symmetric(
-                            horizontal: horizontalPadding,
-                            vertical: verticalPadding,
+                            horizontal: AppPadding.large,
+                            vertical: AppPadding.large,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.black.withValues(alpha: 0.7),
@@ -110,7 +88,7 @@ class _BannerHomeState extends State<BannerHome> {
                                     banner['title'],
                                     style: TextStyle(
                                       color: AppColor.white,
-                                      fontSize: titleFontSize,
+                                      fontSize: SizeConfig.getResponsive(14),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -121,7 +99,8 @@ class _BannerHomeState extends State<BannerHome> {
                                         banner['year'],
                                         style: TextStyle(
                                           color: AppColor.white,
-                                          fontSize: infoFontSize,
+                                          fontSize:
+                                              SizeConfig.getResponsive(12),
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -142,7 +121,8 @@ class _BannerHomeState extends State<BannerHome> {
                                         banner['genres'],
                                         style: TextStyle(
                                           color: AppColor.white,
-                                          fontSize: infoFontSize,
+                                          fontSize:
+                                              SizeConfig.getResponsive(12),
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -162,7 +142,8 @@ class _BannerHomeState extends State<BannerHome> {
                                         banner['episodes'],
                                         style: TextStyle(
                                           color: AppColor.white,
-                                          fontSize: infoFontSize,
+                                          fontSize:
+                                              SizeConfig.getResponsive(12),
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -176,7 +157,7 @@ class _BannerHomeState extends State<BannerHome> {
                                   context.push(AppRouter.movieDetailPath);
                                 },
                                 child: CircleAvatar(
-                                  radius: screenWidth > 800 ? 30 : 20,
+                                  radius: SizeConfig.getResponsive(20),
                                   backgroundImage:
                                       const AssetImage(AppImage.icPlay),
                                 ),
@@ -189,7 +170,7 @@ class _BannerHomeState extends State<BannerHome> {
                   );
                 },
                 options: CarouselOptions(
-                  height: carouselHeight,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   viewportFraction: 1,
                   initialPage: 0,
                   enableInfiniteScroll: true,
@@ -221,9 +202,9 @@ class _BannerHomeState extends State<BannerHome> {
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 3),
                     width: _currentIndex == index
-                        ? dotWidthActive
-                        : dotWidthInactive,
-                    height: dotHeight,
+                        ? SizeConfig.getResponsive(24)
+                        : SizeConfig.getResponsive(8),
+                    height: SizeConfig.getResponsive(8),
                     decoration: BoxDecoration(
                       color:
                           _currentIndex == index ? null : AppColor.greyScale700,

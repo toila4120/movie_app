@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/app_bloc_observer.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/utils/size_config.dart';
@@ -16,9 +18,12 @@ void main() async {
   Bloc.observer = const AppBlocObserver();
   setup();
 
-  runApp(
-    const MyApp(),
-  );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -32,7 +37,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      SizeConfig.init(context);
+      // SizeConfig.init(context);
       return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -45,10 +50,15 @@ class MyAppState extends State<MyApp> {
             create: (context) => AppBloc(),
           )
         ],
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          routerConfig: AppRouter.router,
+        child: ScreenUtilInit(
+          designSize: const Size(411, 467),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) => MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            routerConfig: AppRouter.router,
+          ),
         ),
       );
     });

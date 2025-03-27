@@ -21,7 +21,7 @@ class _CategoriesListState extends State<CategoriesList> {
         if (state.loadingState == LoadingState.loading) {
           return const SizedBox(
             child: Center(
-              child: CustomLoadingAnimation(),
+              child: ItemShimmer(),
             ),
           );
         } else if (state.loadingState == LoadingState.error) {

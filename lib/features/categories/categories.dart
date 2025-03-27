@@ -8,6 +8,8 @@ import 'package:movie_app/core/utils/size_config.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_event.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_state.dart';
+import 'package:shimmer/shimmer.dart';
 
 part 'presentation/screen/categories_screen.dart';
 part 'presentation/widget/categories_list.dart';
+part 'presentation/widget/item_shimmer.dart';
