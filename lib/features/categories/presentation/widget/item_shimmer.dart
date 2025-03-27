@@ -27,14 +27,14 @@ class ItemShimmer extends StatelessWidget {
             Text(
               'Title',
               style: TextStyle(
-                fontSize: SizeConfig.getResponsive(16),
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Image.asset(
               AppImage.icRight,
-              width: SizeConfig.getResponsive(16),
-              height: SizeConfig.getResponsive(16),
+              width: 16.w,
+              height: 16.w,
             ),
           ],
         ),

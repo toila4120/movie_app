@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/utils/size_config.dart';
 
@@ -32,8 +33,8 @@ class BottomNavigatorBarItem extends StatelessWidget {
             ),
             Image.asset(
               iconPath,
-              width: SizeConfig.getResponsive(20),
-              height: SizeConfig.getResponsive(20),
+              width: 20.w,
+              height: 20.w,
               color:
                   isActive ? AppColor.primaryLight : AppColor.subsidiaryLight,
             ),
@@ -41,7 +42,7 @@ class BottomNavigatorBarItem extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                fontSize: SizeConfig.getResponsive(10),
+                fontSize: 10.sp,
                 color:
                     isActive ? AppColor.primaryLight : AppColor.subsidiaryLight,
                 fontWeight: FontWeight.w500,

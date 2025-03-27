@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           "Profile",
                           style: TextStyle(
-                            fontSize: SizeConfig.getResponsive(20),
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.w600,
                             color: AppColor.greyScale900,
                           ),
@@ -49,8 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                           child: Image.asset(
                             AppImage.icEdit,
-                            width: SizeConfig.getResponsive(24),
-                            height: SizeConfig.getResponsive(24),
+                            width: 24.w,
+                            height: 24.w,
                           ),
                         )
                       ],
@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          radius: SizeConfig.getResponsive(36),
+                          radius: 36.w,
                           backgroundImage: AssetImage(
                             AppAssets.getAvatarPath(state.userModel!.avatar),
                           ),
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               state.userModel!.name,
                               style: TextStyle(
-                                fontSize: SizeConfig.getResponsive(20),
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColor.greyScale900,
                               ),
@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               state.userModel!.email,
                               style: TextStyle(
-                                fontSize: SizeConfig.getResponsive(12),
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.greyScale500,
                               ),
@@ -109,14 +109,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 .isSilver
                                             ? AppColor.greyScale500
                                             : AppColor.white,
-                                    size: SizeConfig.getResponsive(16),
+                                    size: 16.w,
                                   ),
                                   SizedBox(width: AppPadding.tiny),
                                   Text(
                                     state.userModel!.subscriptionPlan!
                                         .displayName,
                                     style: TextStyle(
-                                      fontSize: SizeConfig.getResponsive(16),
+                                      fontSize: 16.sp,
                                       color: AppColor.greyScale900,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -132,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       "Profile Settings",
                       style: TextStyle(
-                        fontSize: SizeConfig.getResponsive(14),
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColor.greyScale500,
                       ),
@@ -149,14 +149,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Image.asset(
                                 AppImage.icPlay2,
-                                width: SizeConfig.getResponsive(20),
-                                height: SizeConfig.getResponsive(20),
+                                width: 20.w,
+                                height: 20.w,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
                                 "Watch History",
                                 style: TextStyle(
-                                  fontSize: SizeConfig.getResponsive(16),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColor.greyScale900,
                                 ),
@@ -165,8 +165,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Image.asset(
                             AppImage.icRight,
-                            width: SizeConfig.getResponsive(20),
-                            height: SizeConfig.getResponsive(20),
+                            width: 20.w,
+                            height: 20.w,
                             color: AppColor.greyScale900,
                           )
                         ],
@@ -184,14 +184,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Image.asset(
                                 AppImage.icHeart1,
-                                width: SizeConfig.getResponsive(20),
-                                height: SizeConfig.getResponsive(20),
+                                width: 20.w,
+                                height: 20.w,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
                                 "Liked Movies",
                                 style: TextStyle(
-                                  fontSize: SizeConfig.getResponsive(16),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColor.greyScale900,
                                 ),
@@ -200,8 +200,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Image.asset(
                             AppImage.icRight,
-                            width: SizeConfig.getResponsive(20),
-                            height: SizeConfig.getResponsive(20),
+                            width: 20.w,
+                            height: 20.w,
                             color: AppColor.greyScale900,
                           )
                         ],
@@ -219,14 +219,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Image.asset(
                                 AppImage.icDownload,
-                                width: SizeConfig.getResponsive(20),
-                                height: SizeConfig.getResponsive(20),
+                                width: 20.w,
+                                height: 20.w,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
                                 "Downloaded Movies",
                                 style: TextStyle(
-                                  fontSize: SizeConfig.getResponsive(16),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColor.greyScale900,
                                 ),
@@ -235,8 +235,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Image.asset(
                             AppImage.icRight,
-                            width: SizeConfig.getResponsive(20),
-                            height: SizeConfig.getResponsive(20),
+                            width: 20.w,
+                            height: 20.w,
                             color: AppColor.greyScale900,
                           )
                         ],
@@ -257,14 +257,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Image.asset(
                                 AppImage.icLogout,
-                                width: SizeConfig.getResponsive(20),
-                                height: SizeConfig.getResponsive(20),
+                                width: 20.w,
+                                height: 20.w,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
                                 "Sign Out",
                                 style: TextStyle(
-                                  fontSize: SizeConfig.getResponsive(16),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColor.primary500,
                                 ),
@@ -273,8 +273,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Image.asset(
                             AppImage.icRight,
-                            width: SizeConfig.getResponsive(20),
-                            height: SizeConfig.getResponsive(20),
+                            width: 20.w,
+                            height: 20.w,
                             color: AppColor.greyScale900,
                           )
                         ],

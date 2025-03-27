@@ -13,8 +13,8 @@ class BackWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppButton(
-      width: SizeConfig.getResponsive(32),
-      height: SizeConfig.getResponsive(32),
+      width: 32.w,
+      height: 32.w,
       onPressed: () {
         finish(context);
       },

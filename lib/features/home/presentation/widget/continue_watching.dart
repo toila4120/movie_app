@@ -8,13 +8,13 @@ class ContinueWatching extends StatelessWidget {
     return Column(
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Text(
                 'Continue Watching',
                 style: TextStyle(
-                  fontSize: SizeConfig.getResponsive(16),
+                  fontSize: 16.sp,
                   color: AppColor.greyScale900,
                   fontWeight: FontWeight.w700,
                 ),
@@ -23,7 +23,7 @@ class ContinueWatching extends StatelessWidget {
             CustomAppButton(
               text: "See all list",
               textStyle: TextStyle(
-                fontSize: SizeConfig.getResponsive(12),
+                fontSize: 12.sp,
                 color: AppColor.primary500,
                 fontWeight: FontWeight.w500,
               ),
@@ -32,7 +32,7 @@ class ContinueWatching extends StatelessWidget {
         ),
         SizedBox(height: AppPadding.tiny),
         SizedBox(
-          height: SizeConfig.getResponsive(120),
+          height: 120.w,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const ClampingScrollPhysics(),
@@ -65,8 +65,8 @@ class _ItemFilmContinue extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppBorderRadius.r8),
           child: Image.asset(
             AppImage.bannerDefault,
-            height: SizeConfig.getResponsive(120),
-            width: SizeConfig.getResponsive(172),
+            height: 120.h,
+            width: 172.w,
             fit: BoxFit.cover,
           ),
         ),
@@ -95,7 +95,7 @@ class _ItemFilmContinue extends StatelessWidget {
                         Text(
                           "Nevertheless",
                           style: TextStyle(
-                            fontSize: SizeConfig.getResponsive(14),
+                            fontSize: 14.sp,
                             color: AppColor.white,
                             fontWeight: FontWeight.w700,
                           ),
@@ -103,7 +103,7 @@ class _ItemFilmContinue extends StatelessWidget {
                         Text(
                           "Episode 5 of 10",
                           style: TextStyle(
-                            fontSize: SizeConfig.getResponsive(10),
+                            fontSize: 10.sp,
                             color: AppColor.white,
                             fontWeight: FontWeight.w700,
                           ),
@@ -113,8 +113,8 @@ class _ItemFilmContinue extends StatelessWidget {
                     CustomAppButton(
                       child: Image.asset(
                         AppImage.icPlay1,
-                        height: SizeConfig.getResponsive(18),
-                        width: SizeConfig.getResponsive(18),
+                        height: 18.w,
+                        width: 18.w,
                       ),
                     )
                   ],

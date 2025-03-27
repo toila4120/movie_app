@@ -31,8 +31,8 @@ class _CategoriesListState extends State<CategoriesList> {
               children: [
                 Image.asset(
                   AppImage.imageNotFound,
-                  width: SizeConfig.getResponsive(100),
-                  height: SizeConfig.getResponsive(100),
+                  width: 100.w,
+                  height: 100.w,
                 ),
                 SizedBox(height: AppPadding.tiny),
                 const Text("Đã có lỗi xảy ra, vui lòng thử lại sau"),
@@ -60,7 +60,7 @@ class _CategoriesListState extends State<CategoriesList> {
           child: Text(
             'Không có thể loại nào',
             style: TextStyle(
-              fontSize: SizeConfig.getResponsive(16),
+              fontSize: 16.sp,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -97,14 +97,14 @@ class _Itemcategories extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontSize: SizeConfig.getResponsive(16),
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Image.asset(
               AppImage.icRight,
-              width: SizeConfig.getResponsive(16),
-              height: SizeConfig.getResponsive(16),
+              width: 16.w,
+              height: 16.w,
             ),
           ],
         ),

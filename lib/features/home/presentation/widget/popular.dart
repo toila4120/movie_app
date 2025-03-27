@@ -8,13 +8,13 @@ class Popular extends StatelessWidget {
     return Column(
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Text(
                 'Popular',
                 style: TextStyle(
-                  fontSize: SizeConfig.getResponsive(16),
+                  fontSize: 16.sp,
                   color: AppColor.greyScale900,
                   fontWeight: FontWeight.w700,
                 ),
@@ -23,7 +23,7 @@ class Popular extends StatelessWidget {
             CustomAppButton(
               text: "See all list",
               textStyle: TextStyle(
-                fontSize: SizeConfig.getResponsive(12),
+                fontSize: 12.sp,
                 color: AppColor.primary500,
                 fontWeight: FontWeight.w500,
               ),
@@ -32,7 +32,7 @@ class Popular extends StatelessWidget {
         ),
         SizedBox(height: AppPadding.tiny),
         SizedBox(
-          height: SizeConfig.getResponsive(164),
+          height: 164.w,
           child: ListView.builder(
             itemCount: 30,
             scrollDirection: Axis.horizontal,
@@ -68,8 +68,8 @@ class _ItemFilmPopular extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppBorderRadius.r8),
         child: Image.asset(
           AppImage.posterMovie,
-          height: SizeConfig.getResponsive(164),
-          width: SizeConfig.getResponsive(120),
+          height: 164.w,
+          width: 120.w,
           fit: BoxFit.cover,
         ),
       ),

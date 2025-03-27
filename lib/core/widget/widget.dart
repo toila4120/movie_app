@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';

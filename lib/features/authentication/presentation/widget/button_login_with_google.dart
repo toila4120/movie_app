@@ -26,14 +26,14 @@ class ButtonLoginWithGoogle extends StatelessWidget {
         children: [
           Image.asset(
             AppImage.icGoogle,
-            height: SizeConfig.getResponsive(24),
-            width: SizeConfig.getResponsive(24),
+            height: 24.w,
+            width: 24.w,
           ),
           SizedBox(width: AppPadding.tiny),
           Text(
             'Login with Google',
             style: TextStyle(
-              fontSize: SizeConfig.getResponsive(14),
+              fontSize: 14.sp,
               fontWeight: FontWeight.w700,
               color: AppColor.greyScale900,
             ),

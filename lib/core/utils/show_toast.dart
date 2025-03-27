@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/config/theme/theme.dart';
-import 'package:movie_app/core/utils/size_config.dart';
 
 void showToast(
   BuildContext context, {
@@ -26,7 +26,7 @@ void showToast(
           child: Text(
             message,
             style: TextStyle(
-              fontSize: SizeConfig.getResponsive(12),
+              fontSize: 12.sp,
               color: AppColor.white,
               fontWeight: FontWeight.w500,
             ),

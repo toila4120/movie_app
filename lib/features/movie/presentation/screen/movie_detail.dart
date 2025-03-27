@@ -31,7 +31,7 @@ class _MovieDetailState extends State<MovieDetail> {
                       "The Plot",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: SizeConfig.getResponsive(16),
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -39,7 +39,7 @@ class _MovieDetailState extends State<MovieDetail> {
                       "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam.",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: SizeConfig.getResponsive(14),
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -48,13 +48,13 @@ class _MovieDetailState extends State<MovieDetail> {
                       "Casts",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: SizeConfig.getResponsive(16),
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     SizedBox(height: AppPadding.tiny),
                     SizedBox(
-                      height: SizeConfig.getResponsive(76),
+                      height: 76.h,
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
@@ -69,7 +69,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             child: Column(
                               children: [
                                 CircleAvatar(
-                                  radius: SizeConfig.getResponsive(28),
+                                  radius: 28.w,
                                   backgroundImage: const AssetImage(
                                     AppImage.avatarDefault,
                                   ),
@@ -79,7 +79,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   "Emma Wats",
                                   style: TextStyle(
                                     color: AppColor.greyScale900,
-                                    fontSize: SizeConfig.getResponsive(12),
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
@@ -94,7 +94,7 @@ class _MovieDetailState extends State<MovieDetail> {
                       "Episodes",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: SizeConfig.getResponsive(16),
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -113,8 +113,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                   child: Row(
                                     children: [
                                       Container(
-                                        height: SizeConfig.getResponsive(60),
-                                        width: SizeConfig.getResponsive(60),
+                                        height: 60.w,
+                                        width: 60.w,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                             AppPadding.superTiny,
@@ -132,9 +132,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                               "Episode 1",
                                               style: TextStyle(
                                                 color: AppColor.greyScale900,
-                                                fontSize:
-                                                    SizeConfig.getResponsive(
-                                                        14),
+                                                fontSize: 14.sp,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
@@ -142,9 +140,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                               "56:00",
                                               style: TextStyle(
                                                 color: AppColor.greyScale500,
-                                                fontSize:
-                                                    SizeConfig.getResponsive(
-                                                        12),
+                                                fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                               overflow: TextOverflow.ellipsis,
@@ -158,7 +154,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ),
                                 CustomAppButton(
                                   child: CircleAvatar(
-                                    radius: SizeConfig.getResponsive(20),
+                                    radius: 20.w,
                                     backgroundImage:
                                         const AssetImage(AppImage.icPlay),
                                   ),

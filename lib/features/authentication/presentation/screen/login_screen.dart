@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 'Login',
                 style: TextStyle(
-                  fontSize: SizeConfig.getResponsive(24),
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
                   color: AppColor.greyScale900,
                 ),
@@ -52,8 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.all(AppPadding.small),
                   child: Image.asset(
                     AppImage.icEmail,
-                    height: SizeConfig.getResponsive(20),
-                    width: SizeConfig.getResponsive(20),
+                    height: 20.w,
+                    width: 20.w,
                   ),
                 ),
               ),
@@ -65,8 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.all(AppPadding.small),
                   child: Image.asset(
                     AppImage.icKey,
-                    height: SizeConfig.getResponsive(20),
-                    width: SizeConfig.getResponsive(20),
+                    height: 20.w,
+                    width: 20.w,
                   ),
                 ),
                 suffixIcon: IconButton(
@@ -77,8 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   icon: Image.asset(
                     _isObscureText ? AppImage.icEyeOff : AppImage.icEye,
-                    height: SizeConfig.getResponsive(20),
-                    width: SizeConfig.getResponsive(20),
+                    height: 20.w,
+                    width: 20.w,
                   ),
                 ),
                 obscureText: _isObscureText,
@@ -90,11 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     children: [
                       SizedBox(
-                        height: SizeConfig.getResponsive(20),
-                        width: SizeConfig.getResponsive(20),
+                        height: 20.w,
+                        width: 20.w,
                         child: Center(
                           child: Transform.scale(
-                            scale: SizeConfig.getResponsive(20) / 24,
+                            scale: 20.w / 24,
                             child: Checkbox(
                               value: _isRememberMe,
                               onChanged: (value) {
@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         'Remember me',
                         style: TextStyle(
-                          fontSize: SizeConfig.getResponsive(14),
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColor.greyScale500,
                         ),
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Forgot password?',
                     style: TextStyle(
-                      fontSize: SizeConfig.getResponsive(14),
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColor.greyScale500,
                     ),
@@ -151,8 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: AppColor.primary200,
                     child: state.isLoading.isLoading
                         ? SizedBox(
-                            height: SizeConfig.getResponsive(16),
-                            width: SizeConfig.getResponsive(16),
+                            height: 16.w,
+                            width: 16.w,
                             child: const CircularProgressIndicator(
                               color: Colors.white,
                               strokeCap: StrokeCap.round,
@@ -161,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         : Text(
                             'Login',
                             style: TextStyle(
-                              fontSize: SizeConfig.getResponsive(14),
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColor.white,
                             ),
@@ -181,10 +181,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(width: AppPadding.tiny),
-                  const Text(
+                  Text(
                     'Or',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColor.greyScale500,
                     ),
@@ -208,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Don\'t have an account?',
                     style: TextStyle(
-                      fontSize: SizeConfig.getResponsive(14),
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColor.greyScale500,
                     ),
@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     text: 'Sign up',
                     textStyle: TextStyle(
-                      fontSize: SizeConfig.getResponsive(14),
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColor.primary500,
                     ),

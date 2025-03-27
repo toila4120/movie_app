@@ -88,7 +88,7 @@ class _BannerHomeState extends State<BannerHome> {
                                     banner['title'],
                                     style: TextStyle(
                                       color: AppColor.white,
-                                      fontSize: SizeConfig.getResponsive(14),
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -99,8 +99,7 @@ class _BannerHomeState extends State<BannerHome> {
                                         banner['year'],
                                         style: TextStyle(
                                           color: AppColor.white,
-                                          fontSize:
-                                              SizeConfig.getResponsive(12),
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -108,8 +107,8 @@ class _BannerHomeState extends State<BannerHome> {
                                         margin: EdgeInsets.symmetric(
                                           horizontal: AppPadding.superTiny,
                                         ),
-                                        height: SizeConfig.getResponsive(4),
-                                        width: SizeConfig.getResponsive(4),
+                                        height: 4.w,
+                                        width: 4.w,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                             AppPadding.superTiny,
@@ -121,8 +120,7 @@ class _BannerHomeState extends State<BannerHome> {
                                         banner['genres'],
                                         style: TextStyle(
                                           color: AppColor.white,
-                                          fontSize:
-                                              SizeConfig.getResponsive(12),
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -130,8 +128,8 @@ class _BannerHomeState extends State<BannerHome> {
                                         margin: EdgeInsets.symmetric(
                                           horizontal: AppPadding.superTiny,
                                         ),
-                                        height: SizeConfig.getResponsive(4),
-                                        width: SizeConfig.getResponsive(4),
+                                        height: 4.sp,
+                                        width: 4.sp,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                               AppPadding.superTiny),
@@ -142,8 +140,7 @@ class _BannerHomeState extends State<BannerHome> {
                                         banner['episodes'],
                                         style: TextStyle(
                                           color: AppColor.white,
-                                          fontSize:
-                                              SizeConfig.getResponsive(12),
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -157,7 +154,7 @@ class _BannerHomeState extends State<BannerHome> {
                                   context.push(AppRouter.movieDetailPath);
                                 },
                                 child: CircleAvatar(
-                                  radius: SizeConfig.getResponsive(20),
+                                  radius: 20.w,
                                   backgroundImage:
                                       const AssetImage(AppImage.icPlay),
                                 ),
@@ -201,10 +198,8 @@ class _BannerHomeState extends State<BannerHome> {
                   (index) => AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 3),
-                    width: _currentIndex == index
-                        ? SizeConfig.getResponsive(24)
-                        : SizeConfig.getResponsive(8),
-                    height: SizeConfig.getResponsive(8),
+                    width: _currentIndex == index ? 24.w : 8.w,
+                    height: 8.w,
                     decoration: BoxDecoration(
                       color:
                           _currentIndex == index ? null : AppColor.greyScale700,

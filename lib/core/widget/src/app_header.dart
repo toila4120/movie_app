@@ -49,7 +49,7 @@ class AppHeader extends StatelessWidget {
                         title ?? '',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: SizeConfig.getResponsive(16),
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
                           color: colorTitle ?? AppColor.secondLight,
                         ).merge(
@@ -57,10 +57,7 @@ class AppHeader extends StatelessWidget {
                         ),
                       ),
                 ),
-                rightWidget ??
-                    SizedBox(
-                      width: SizeConfig.getResponsive(24.0),
-                    ),
+                rightWidget ?? SizedBox(width: 24.0.w),
               ],
             ),
           ),

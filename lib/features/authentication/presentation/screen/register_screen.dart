@@ -44,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Text(
                           'Register',
                           style: TextStyle(
-                            fontSize: SizeConfig.getResponsive(24),
+                            fontSize: 24.sp,
                             fontWeight: FontWeight.w700,
                             color: AppColor.greyScale900,
                           ),
@@ -57,8 +57,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icPerson,
-                              height: SizeConfig.getResponsive(20),
-                              width: SizeConfig.getResponsive(20),
+                              height: 20.w,
+                              width: 20.w,
                             ),
                           ),
                         ),
@@ -70,8 +70,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icEmail,
-                              height: SizeConfig.getResponsive(20),
-                              width: SizeConfig.getResponsive(20),
+                              height: 20.w,
+                              width: 20.w,
                             ),
                           ),
                         ),
@@ -84,8 +84,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icKey,
-                              height: SizeConfig.getResponsive(20),
-                              width: SizeConfig.getResponsive(20),
+                              height: 20.w,
+                              width: 20.w,
                             ),
                           ),
                           suffixIcon: IconButton(
@@ -98,8 +98,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               _isObscureText
                                   ? AppImage.icEyeOff
                                   : AppImage.icEye,
-                              height: SizeConfig.getResponsive(20),
-                              width: SizeConfig.getResponsive(20),
+                              height: 20.w,
+                              width: 20.w,
                             ),
                           ),
                         ),
@@ -112,8 +112,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
                               AppImage.icKey,
-                              height: SizeConfig.getResponsive(20),
-                              width: SizeConfig.getResponsive(20),
+                              height: 20.w,
+                              width: 20.w,
                             ),
                           ),
                           suffixIcon: IconButton(
@@ -126,8 +126,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               _isObscureText
                                   ? AppImage.icEyeOff
                                   : AppImage.icEye,
-                              height: SizeConfig.getResponsive(20),
-                              width: SizeConfig.getResponsive(20),
+                              height: 20.w,
+                              width: 20.w,
                             ),
                           ),
                         ),
@@ -152,8 +152,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               backgroundColor: AppColor.primary200,
                               child: state.isLoading.isLoading
                                   ? SizedBox(
-                                      height: SizeConfig.getResponsive(20),
-                                      width: SizeConfig.getResponsive(20),
+                                      height: 20.w,
+                                      width: 20.w,
                                       child: const CircularProgressIndicator(
                                         color: Colors.white,
                                         strokeCap: StrokeCap.round,
@@ -162,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : Text(
                                       'Sign Up',
                                       style: TextStyle(
-                                        fontSize: SizeConfig.getResponsive(14),
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         color: AppColor.white,
                                       ),
@@ -185,7 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Text(
                               'Or',
                               style: TextStyle(
-                                fontSize: SizeConfig.getResponsive(14),
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.greyScale500,
                               ),
@@ -209,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Text(
                               'Don\'t have an account?',
                               style: TextStyle(
-                                fontSize: SizeConfig.getResponsive(14),
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.greyScale500,
                               ),
@@ -221,7 +221,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                               text: 'Login',
                               textStyle: TextStyle(
-                                fontSize: SizeConfig.getResponsive(14),
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColor.primary500,
                               ),

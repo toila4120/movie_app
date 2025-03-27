@@ -73,8 +73,8 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                                 AppAssets.getAvatarPath(
                                   _selectedAvatarIndex,
                                 ),
-                                width: SizeConfig.getResponsive(200),
-                                height: SizeConfig.getResponsive(200),
+                                width: 200.w,
+                                height: 200.w,
                               ),
                             ),
                           ],
@@ -83,7 +83,7 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                         Text(
                           "Select your avatar",
                           style: TextStyle(
-                            fontSize: SizeConfig.getResponsive(16),
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                             color: AppColor.greyScale900,
                           ),

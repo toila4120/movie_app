@@ -26,8 +26,8 @@ class HeaderMovieDetail extends StatelessWidget {
                 },
                 child: Image.asset(
                   AppImage.icBack1,
-                  width: SizeConfig.getResponsive(40),
-                  height: SizeConfig.getResponsive(40),
+                  width: 40.w,
+                  height: 40.w,
                 ),
               ),
               CustomAppButton(
@@ -36,8 +36,8 @@ class HeaderMovieDetail extends StatelessWidget {
                 },
                 child: Image.asset(
                   AppImage.icHeart,
-                  width: SizeConfig.getResponsive(40),
-                  height: SizeConfig.getResponsive(40),
+                  width: 40.w,
+                  height: 40.w,
                 ),
               ),
             ],
@@ -66,7 +66,7 @@ class HeaderMovieDetail extends StatelessWidget {
               children: [
                 CustomAppButton(
                   child: CircleAvatar(
-                    radius: SizeConfig.getResponsive(24),
+                    radius: 24.w,
                     backgroundImage: const AssetImage(AppImage.icPlay),
                   ),
                 ),
@@ -75,7 +75,7 @@ class HeaderMovieDetail extends StatelessWidget {
                   "Cruella",
                   style: TextStyle(
                     color: AppColor.greyScale900,
-                    fontSize: SizeConfig.getResponsive(24),
+                    fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -87,7 +87,7 @@ class HeaderMovieDetail extends StatelessWidget {
                       "2021",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: SizeConfig.getResponsive(12),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -95,8 +95,8 @@ class HeaderMovieDetail extends StatelessWidget {
                       margin: EdgeInsets.symmetric(
                         horizontal: AppPadding.superTiny,
                       ),
-                      height: SizeConfig.getResponsive(4),
-                      width: SizeConfig.getResponsive(4),
+                      width: 4.w,
+                      height: 4.w,
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.circular(AppPadding.superTiny),
@@ -107,7 +107,7 @@ class HeaderMovieDetail extends StatelessWidget {
                       "Fantasy, Drama",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: SizeConfig.getResponsive(12),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -115,8 +115,8 @@ class HeaderMovieDetail extends StatelessWidget {
                       margin: EdgeInsets.symmetric(
                         horizontal: AppPadding.superTiny,
                       ),
-                      height: SizeConfig.getResponsive(4),
-                      width: SizeConfig.getResponsive(4),
+                      width: 4.w,
+                      height: 4.w,
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.circular(AppPadding.superTiny),
@@ -127,7 +127,7 @@ class HeaderMovieDetail extends StatelessWidget {
                       "12 Episode",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: SizeConfig.getResponsive(12),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -140,14 +140,14 @@ class HeaderMovieDetail extends StatelessWidget {
                   children: [
                     Image.asset(
                       AppImage.icStar,
-                      width: SizeConfig.getResponsive(12),
-                      height: SizeConfig.getResponsive(12),
+                      width: 12.w,
+                      height: 12.w,
                     ),
                     Text(
                       " 4.5",
                       style: TextStyle(
                         color: AppColor.greyScale900,
-                        fontSize: SizeConfig.getResponsive(12),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -155,7 +155,7 @@ class HeaderMovieDetail extends StatelessWidget {
                       " (128 review)",
                       style: TextStyle(
                         color: AppColor.greyScale500,
-                        fontSize: SizeConfig.getResponsive(12),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

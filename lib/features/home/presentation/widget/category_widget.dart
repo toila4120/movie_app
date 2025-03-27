@@ -30,10 +30,10 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
     double itemWidth = (screenWidth - paddingTotal) / 2;
     if (itemWidth <= 0 || itemWidth.isNaN) {
-      itemWidth = SizeConfig.getResponsive(100);
+      itemWidth = 100.h;
     }
 
-    double desiredHeight = SizeConfig.getResponsive(62);
+    double desiredHeight = 62.w;
     double childAspectRatio = itemWidth / desiredHeight;
     if (childAspectRatio.isNaN || childAspectRatio.isInfinite) {
       childAspectRatio = 2.0;
@@ -42,13 +42,13 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     return Column(
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Text(
                 'Category',
                 style: TextStyle(
-                  fontSize: SizeConfig.getResponsive(16),
+                  fontSize: 16.sp,
                   color: AppColor.greyScale900,
                   fontWeight: FontWeight.w700,
                 ),
@@ -60,7 +60,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               },
               text: "See all list",
               textStyle: TextStyle(
-                fontSize: SizeConfig.getResponsive(12),
+                fontSize: 12.sp,
                 color: AppColor.primary500,
                 fontWeight: FontWeight.w500,
               ),
@@ -72,7 +72,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
           children: [
             Expanded(
               child: SizedBox(
-                height: SizeConfig.getResponsive((2 * 62) + AppPadding.tiny),
+                height: (2 * 62).w + AppPadding.tiny,
                 child: GridView.builder(
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
@@ -150,7 +150,7 @@ class _ItemCategory extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color: AppColor.white,
-                  fontSize: SizeConfig.getResponsive(12),
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,

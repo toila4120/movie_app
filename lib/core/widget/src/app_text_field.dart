@@ -66,7 +66,7 @@ class _AppTextFieldState extends State<AppTextField> {
       inputFormatters: widget.inputFormatters,
       style: TextStyle(
         color: AppColor.secondLight,
-        fontSize: SizeConfig.getResponsive(12),
+        fontSize: 12.sp,
         fontWeight: FontWeight.w500,
       ),
       obscureText: widget.obscureText,
@@ -108,7 +108,7 @@ class _AppTextFieldState extends State<AppTextField> {
         hintText: widget.hintText,
         hintStyle: TextStyle(
           color: AppColor.subsidiaryLight,
-          fontSize: SizeConfig.getResponsive(12),
+          fontSize: 12.sp,
           fontWeight: FontWeight.w500,
         ),
         prefixIcon: widget.prefixIcon,
