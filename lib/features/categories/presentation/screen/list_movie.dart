@@ -16,7 +16,7 @@ class ListMovie extends StatefulWidget {
 class _ListMovieState extends State<ListMovie> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoriesBloc, CategoriesState>(
+    return BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
         return AppContainer(
           resizeToAvoidBottomInset: true,
@@ -34,7 +34,7 @@ class _ListMovieState extends State<ListMovie> {
                       if (scrollInfo.metrics.pixels ==
                               scrollInfo.metrics.maxScrollExtent &&
                           state.loadingState != LoadingState.loading) {
-                        context.read<CategoriesBloc>().add(
+                        context.read<MovieBloc>().add(
                               FetchMoviesByCategory(
                                 categorySlug: widget.slug,
                                 page: state.page + 1,

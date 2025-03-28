@@ -83,7 +83,7 @@ class _Itemcategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomAppButton(
       onPressed: () {
-        context.read<CategoriesBloc>().add(
+        context.read<MovieBloc>().add(
               FetchMoviesByCategory(categorySlug: slug),
             );
         context.push(

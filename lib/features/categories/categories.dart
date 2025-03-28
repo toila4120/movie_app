@@ -13,6 +13,7 @@ import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.
 import 'package:movie_app/features/categories/presentation/bloc/categories_event.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_state.dart';
 import 'package:movie_app/features/categories/presentation/widget/item_movie_shimer.dart';
+import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 part 'presentation/screen/categories_screen.dart';

@@ -7,6 +7,7 @@ import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
+import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/config/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,6 +47,9 @@ class MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (context) => AppBloc(),
+          ),
+          BlocProvider(
+            create: (context) => MovieBloc(),
           )
         ],
         child: ScreenUtilInit(

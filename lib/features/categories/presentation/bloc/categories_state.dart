@@ -6,27 +6,18 @@ import 'package:movie_app/features/categories/domain/entities/categories_entitie
 class CategoriesState extends Equatable {
   final LoadingState loadingState;
   final List<CategoryEntity> categories;
-  final int page;
-  final bool hasReachedMax;
-  final List<MovieModel> movies;
   final String? errorMessage;
 
   const CategoriesState({
     required this.loadingState,
     required this.categories,
-    required this.page,
-    required this.hasReachedMax,
-    this.movies = const [],
     this.errorMessage,
   });
 
   factory CategoriesState.init() {
     return const CategoriesState(
       loadingState: LoadingState.pure,
-      page: 0,
       categories: [],
-      hasReachedMax: false,
-      movies: [],
       errorMessage: null,
     );
   }
@@ -42,10 +33,7 @@ class CategoriesState extends Equatable {
     return CategoriesState(
       loadingState: loadingState ?? this.loadingState,
       categories: categories ?? this.categories,
-      page: page ?? this.page,
-      movies: movies ?? this.movies,
       errorMessage: errorMessage ?? this.errorMessage,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
 
@@ -53,9 +41,6 @@ class CategoriesState extends Equatable {
   List<Object?> get props => [
         loadingState,
         categories,
-        page,
-        movies,
         errorMessage,
-        hasReachedMax,
       ];
 }
