@@ -14,8 +14,6 @@ class ListMovie extends StatefulWidget {
 }
 
 class _ListMovieState extends State<ListMovie> {
-  bool _isFetching = false;
-  int _lastFetchedPage = 0;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoriesBloc, CategoriesState>(

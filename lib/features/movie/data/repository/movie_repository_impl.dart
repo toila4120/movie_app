@@ -1,0 +1,20 @@
+import 'package:movie_app/features/movie/data/datasource/movie_remote_datasource.dart';
+import 'package:movie_app/features/movie/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/domain/repository/movie_repository.dart';
+
+class MovieRepositoryImpl extends MovieRepository {
+  final MovieRemoteDatasource movieRemoteDatasource;
+
+  MovieRepositoryImpl(this.movieRemoteDatasource);
+
+  @override
+  Future<List<MovieModel>> fetchMoviesByCategory(
+      String categorySlug, int page) async {
+    try {
+      return await movieRemoteDatasource.fetchMoviesByCategory(
+          categorySlug, page);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}

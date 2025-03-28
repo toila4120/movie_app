@@ -1,8 +1,8 @@
-import 'package:movie_app/features/categories/data/model/movie_model.dart';
-import 'package:movie_app/features/categories/domain/repository/categories_repository.dart';
+import 'package:movie_app/features/movie/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/domain/repository/movie_repository.dart';
 
 class FetchMoviesByCategoryUseCase {
-  final CategoriesRepository repository;
+  final MovieRepository repository;
 
   FetchMoviesByCategoryUseCase(this.repository);
 

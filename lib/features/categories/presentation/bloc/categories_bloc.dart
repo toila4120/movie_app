@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
-import 'package:movie_app/features/categories/domain/usecase/fetch_movies_by_category_usecase.dart';
+import 'package:movie_app/features/movie/domain/usecase/fetch_movies_by_category_usecase.dart';
 import 'package:movie_app/features/categories/domain/usecase/get_all_categories_use_case.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_event.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_state.dart';

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
-import 'package:movie_app/features/categories/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/categories/domain/entities/categories_entities.dart';
 
 class CategoriesState extends Equatable {
