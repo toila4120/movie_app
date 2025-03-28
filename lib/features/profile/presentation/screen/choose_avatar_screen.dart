@@ -48,6 +48,7 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                 child: ScrollConfiguration(
                   behavior: const DisableGlowBehavior(),
                   child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.only(
                       top: AppPadding.superTiny,
                       left: AppPadding.large,

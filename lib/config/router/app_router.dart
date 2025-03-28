@@ -18,6 +18,9 @@ abstract class AppRouter {
   static const String _allCategoriesName = "all_categories";
   static const String allCategoriesPath = "/home_tab/all_categories";
 
+  static const String _listMovieName = "list_movie";
+  static const String listMoviePath = "/home_tab/list_movie";
+
   static const String _categoriesTabName = "categories_tab_name";
   static const String categoriesTabPath = "/categories_tab";
 
@@ -99,6 +102,26 @@ abstract class AppRouter {
                         context: context,
                         state: state,
                         child: const CategoriesScreen(),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    name: _listMovieName,
+                    path: '/$_listMovieName',
+                    pageBuilder: (context, state) {
+                      final Map<String, dynamic> extra =
+                          state.extra as Map<String, dynamic>? ?? {};
+                      final String input =
+                          extra['input'] as String? ?? 'Hành động';
+                      final String input2 =
+                          extra['input2'] as String? ?? 'hanh-dong';
+                      return _buildPageWithDefaultTransition<void>(
+                        context: context,
+                        state: state,
+                        child: ListMovie(
+                          title: input,
+                          slug: input2,
+                        ),
                       );
                     },
                   ),

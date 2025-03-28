@@ -15,6 +15,7 @@ class _MovieDetailState extends State<MovieDetail> {
       child: ScrollConfiguration(
         behavior: const DisableGlowBehavior(),
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,7 +55,7 @@ class _MovieDetailState extends State<MovieDetail> {
                     ),
                     SizedBox(height: AppPadding.tiny),
                     SizedBox(
-                      height: 76.h,
+                      height: 76.w,
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,

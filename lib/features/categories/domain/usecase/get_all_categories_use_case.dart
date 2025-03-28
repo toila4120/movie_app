@@ -2,7 +2,7 @@ import 'package:movie_app/features/categories/domain/entities/categories_entitie
 import 'package:movie_app/features/categories/domain/repository/categories_repository.dart';
 
 class GetAllCategories {
-  final CategoryRepository repository;
+  final CategoriesRepository repository;
 
   GetAllCategories(this.repository);
 

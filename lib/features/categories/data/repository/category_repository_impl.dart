@@ -1,31 +1,30 @@
-import 'package:dio/dio.dart';
-import 'package:movie_app/core/constants/api_constant.dart';
-import 'package:movie_app/features/categories/data/model/categories_model.dart';
-import 'package:movie_app/features/categories/data/model/category_mapper.dart';
+import 'package:movie_app/features/categories/data/datasource/categories_remote_data_source.dart';
+import 'package:movie_app/features/categories/data/model/movie_model.dart';
 import 'package:movie_app/features/categories/domain/entities/categories_entities.dart';
 import 'package:movie_app/features/categories/domain/repository/categories_repository.dart';
 
-class CategoryRepositoryImpl implements CategoryRepository {
-  final Dio dio;
+class CategoryRepositoryImpl implements CategoriesRepository {
+  final CategoriesRemoteDataSource categoriesRemoteDataSource;
 
-  CategoryRepositoryImpl(this.dio);
+  CategoryRepositoryImpl(this.categoriesRemoteDataSource);
 
   @override
   Future<List<CategoryEntity>> getAllCategories() async {
     try {
-      final response = await dio.get(ApiConstant.categories);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        final categories =
-            data.map((json) => CategoriesModel.fromJson(json)).toList();
-        return categories.map((model) => model.toEntity()).toList();
-      } else {
-        throw Exception('Failed to fetch categories: ${response.statusCode}');
-      }
-    } on DioException catch (e) {
-      throw Exception('Dio error: ${e.message}');
+      return await categoriesRemoteDataSource.fetchCategories();
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<MovieModel>> fetchMoviesByCategory(
+      String categorySlug, int page) async {
+    try {
+      return await categoriesRemoteDataSource.fetchMoviesByCategory(
+          categorySlug, page);
+    } catch (e) {
+      rethrow;
     }
   }
 }

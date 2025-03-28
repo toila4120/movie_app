@@ -28,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: ScrollConfiguration(
               behavior: const DisableGlowBehavior(),
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

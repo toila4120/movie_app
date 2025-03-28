@@ -38,6 +38,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: ScrollConfiguration(
                   behavior: const DisableGlowBehavior(),
                   child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                  
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

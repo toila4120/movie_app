@@ -129,6 +129,7 @@ class _ItemFilmContinue extends StatelessWidget {
                     AppColor.primary500,
                   ),
                 ),
+                SizedBox(height: AppPadding.superTiny),
               ],
             ),
           ),

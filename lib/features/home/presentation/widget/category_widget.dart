@@ -24,6 +24,13 @@ class _CategoryWidgetState extends State<CategoryWidget> {
       "Cổ trang",
     ];
 
+    List<String> categorySlug = [
+      "tre-em",
+      "tinh-cam",
+      "hanh-dong",
+      "co-trang",
+    ];
+
     double screenWidth = MediaQuery.of(context).size.width;
     double crossAxisSpacing = AppPadding.tiny;
     double paddingTotal = crossAxisSpacing + AppPadding.large;
@@ -87,6 +94,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                     return _ItemCategory(
                       image: category[index],
                       title: categoryTitle[index],
+                      slug: categorySlug[index],
                     );
                   },
                 ),
@@ -102,64 +110,81 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 class _ItemCategory extends StatelessWidget {
   final String image;
   final String title;
+  final String slug;
   const _ItemCategory({
     required this.image,
     required this.title,
+    required this.slug,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppBorderRadius.r8),
-        border: Border.all(
-          color: AppColor.greyScale200,
+    return CustomAppButton(
+      onPressed: () {
+        context.read<CategoriesBloc>().add(FetchMoviesByCategory(
+              categorySlug: slug,
+              page: 1,
+            ));
+        context.push(
+          AppRouter.listMoviePath,
+          extra: {
+            'input': title,
+            'input2': slug,
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+          border: Border.all(
+            color: AppColor.greyScale200,
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(AppBorderRadius.r8),
-                bottomLeft: Radius.circular(AppBorderRadius.r8),
-              ),
-              child: Image.asset(
-                height: double.infinity,
-                image,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Container(
-            width: (MediaQuery.of(context).size.width -
-                    AppPadding.large * 2 -
-                    AppPadding.tiny) /
-                2 *
-                0.4,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColor.black.withValues(alpha: 0.9),
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(AppBorderRadius.r8),
-                bottomRight: Radius.circular(AppBorderRadius.r8),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: AppColor.white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
+        child: Row(
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(AppBorderRadius.r8),
+                  bottomLeft: Radius.circular(AppBorderRadius.r8),
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                child: Image.asset(
+                  height: double.infinity,
+                  image,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-          ),
-        ],
+            Container(
+              width: (MediaQuery.of(context).size.width -
+                      AppPadding.large * 2 -
+                      AppPadding.tiny) /
+                  2 *
+                  0.4,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColor.black.withValues(alpha: 0.9),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(AppBorderRadius.r8),
+                  bottomRight: Radius.circular(AppBorderRadius.r8),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: AppColor.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -51,6 +51,7 @@ class _CategoriesListState extends State<CategoriesList> {
                 padding: EdgeInsets.only(bottom: AppPadding.tiny),
                 child: _Itemcategories(
                   title: state.categories[index].name,
+                  slug: state.categories[index].slug,
                 ),
               );
             },
@@ -72,13 +73,27 @@ class _CategoriesListState extends State<CategoriesList> {
 
 class _Itemcategories extends StatelessWidget {
   final String title;
+  final String slug;
   const _Itemcategories({
     required this.title,
+    required this.slug,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomAppButton(
+      onPressed: () {
+        context.read<CategoriesBloc>().add(
+              FetchMoviesByCategory(categorySlug: slug),
+            );
+        context.push(
+          AppRouter.listMoviePath,
+          extra: {
+            "input": title,
+            "input2": slug,
+          },
+        );
+      },
       child: Container(
         decoration: BoxDecoration(
           color: AppColor.white,

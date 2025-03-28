@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return  AppContainer(
+    return AppContainer(
       resizeToAvoidBottomInset: true,
       child: ScrollConfiguration(
         behavior: const DisableGlowBehavior(),
@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
               child: ScrollConfiguration(
                 behavior: const DisableGlowBehavior(),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       const BannerHome(),
