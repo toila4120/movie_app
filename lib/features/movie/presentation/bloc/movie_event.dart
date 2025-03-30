@@ -30,3 +30,19 @@ class FetchMovieDetailEvent extends MovieEvent {
         slug,
       ];
 }
+
+class FetchMovieByListEvent extends MovieEvent {
+  final String listSlug;
+  final int page;
+
+  const FetchMovieByListEvent({
+    required this.listSlug,
+    this.page = 1,
+  });
+
+  @override
+  List<Object?> get props => [
+        listSlug,
+        page,
+      ];
+}

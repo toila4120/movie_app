@@ -27,4 +27,13 @@ class MovieRepositoryImpl extends MovieRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<List<MovieModel>> fetchMoviesByList(String listSlug, int page) {
+    try {
+      return movieRemoteDatasource.fetchMoviesByList(listSlug, page);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

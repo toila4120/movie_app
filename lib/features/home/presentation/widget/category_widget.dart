@@ -12,23 +12,23 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   Widget build(BuildContext context) {
     List<String> category = [
       AppImage.imageAnime,
+      AppImage.imageCoTrang,
       AppImage.imageTinhCam,
       AppImage.imageHanhDong,
-      AppImage.imageCoTrang,
     ];
 
     List<String> categoryTitle = [
       "Hoạt hình",
-      "Tình cảm",
-      "Hành động",
-      "Cổ trang",
+      "Phim bộ",
+      "Phim lẻ",
+      "TV Shows",
     ];
 
     List<String> categorySlug = [
-      "tre-em",
-      "tinh-cam",
-      "hanh-dong",
-      "co-trang",
+      "hoat-hinh",
+      "phim-bo",
+      "phim-le",
+      "tv-shows",
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;
@@ -121,8 +121,8 @@ class _ItemCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomAppButton(
       onPressed: () {
-        context.read<MovieBloc>().add(FetchMoviesByCategory(
-              categorySlug: slug,
+        context.read<MovieBloc>().add(FetchMovieByListEvent(
+              listSlug: slug,
               page: 1,
             ));
         context.push(

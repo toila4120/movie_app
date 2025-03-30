@@ -2,7 +2,10 @@ part of '../../movie.dart';
 
 class HeaderMovieDetail extends StatelessWidget {
   final MovieEntity movie;
-  const HeaderMovieDetail({super.key, required this.movie});
+  const HeaderMovieDetail({
+    super.key,
+    required this.movie,
+  });
 
   @override
   Widget build(BuildContext context) {
