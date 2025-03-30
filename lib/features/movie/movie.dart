@@ -1,10 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
 import 'package:movie_app/core/widget/widget.dart';
+import 'package:movie_app/features/movie/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
+import 'package:movie_app/features/movie/presentation/widget/item_container.dart';
+import 'package:shimmer/shimmer.dart';
 
 part 'presentation/screen/movie_detail.dart';
 part 'presentation/widget/header_movie_detail.dart';

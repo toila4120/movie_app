@@ -1,5 +1,6 @@
 import 'package:movie_app/features/movie/data/datasource/movie_remote_datasource.dart';
 import 'package:movie_app/features/movie/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/domain/repository/movie_repository.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
@@ -13,6 +14,15 @@ class MovieRepositoryImpl extends MovieRepository {
     try {
       return await movieRemoteDatasource.fetchMoviesByCategory(
           categorySlug, page);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MovieEntity> fetchMovieDetail(String slug) async {
+    try {
+      return await movieRemoteDatasource.fetchMovieDetail(slug);
     } catch (e) {
       rethrow;
     }

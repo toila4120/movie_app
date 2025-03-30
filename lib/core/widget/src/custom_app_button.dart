@@ -39,7 +39,7 @@ class CustomAppButton extends StatefulWidget {
     this.radius = 8,
     this.decoration,
     this.height,
-    this.splashColor,
+    this.splashColor = AppColor.transparent,
     this.enableScaleAnimation = true,
     this.disabledTextColor,
     this.hoverElevation,

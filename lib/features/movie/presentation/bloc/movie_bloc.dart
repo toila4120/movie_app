@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/features/movie/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movie/domain/usecase/fetch_movie_detail_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movies_by_category_usecase.dart';
 import 'package:movie_app/injection_container.dart';
 
@@ -11,6 +13,7 @@ part 'movie_state.dart';
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc() : super(MovieState.init()) {
     on<FetchMoviesByCategory>(_onFetchMoviesByCategory);
+    on<FetchMovieDetailEvent>(_onFetchMovieDetail);
   }
 
   Future<void> _onFetchMoviesByCategory(
@@ -34,6 +37,26 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         loadingState: LoadingState.finished,
         movies: updatedMovies,
         hasReachedMax: movies.length < 10,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        loadingState: LoadingState.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _onFetchMovieDetail(
+      FetchMovieDetailEvent event, Emitter<MovieState> emit) async {
+    emit(
+        state.copyWith(loadingState: LoadingState.loading, errorMessage: null));
+
+    try {
+      final useCase = getIt<FetchMovieDetailUsecase>();
+      final movie = await useCase(event.slug);
+      emit(state.copyWith(
+        loadingState: LoadingState.finished,
+        movie: movie,
       ));
     } catch (e) {
       emit(state.copyWith(

@@ -92,7 +92,9 @@ class _ListMovieState extends State<ListMovie> {
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: AppPadding.tiny),
-                                  child: ItemMovie(movieModel: movie),
+                                  child: ItemMovie(
+                                    movieModel: movie,
+                                  ),
                                 );
                               },
                             ),
