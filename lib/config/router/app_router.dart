@@ -7,6 +7,7 @@ import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
 import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/movie/movie.dart';
+import 'package:movie_app/features/movie/presentation/widget/movie.dart';
 import 'package:movie_app/features/profile/profile.dart';
 import 'package:movie_app/features/splash/splash_screen.dart';
 
@@ -27,6 +28,9 @@ abstract class AppRouter {
 
   static const String _movieDetailName = "movie_detail";
   static const String movieDetailPath = "/home_tab/movie_detail";
+
+  static const String _playMovieName = "play_movie";
+  static const String playMoviePath = "/home_tab/play_movie";
 
   static const String _loginScreenName = 'login_screen';
   static const String loginScreenPath = '/login_screen';
@@ -138,6 +142,22 @@ abstract class AppRouter {
                         state: state,
                         child: MovieDetail(
                           movie: movie,
+                        ),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    name: _playMovieName,
+                    path: '/$_playMovieName',
+                    pageBuilder: (context, state) {
+                      final Map<String, dynamic> extra =
+                          state.extra as Map<String, dynamic>? ?? {};
+                      final String url = extra['url'] as String;
+                      return _buildPageWithDefaultTransition<void>(
+                        context: context,
+                        state: state,
+                        child: Movie(
+                          url: url,
                         ),
                       );
                     },

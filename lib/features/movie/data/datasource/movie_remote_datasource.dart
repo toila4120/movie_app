@@ -49,7 +49,12 @@ class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
         if (jsonData['status'] != true) {
           throw Exception('Failed to fetch movie detail: ${jsonData['msg']}');
         }
-        return MovieModel.fromJson(jsonData['movie']);
+
+        // Lấy danh sách episodes
+        final movieJson = jsonData['movie'] as Map<String, dynamic>;
+        movieJson['episodes'] = jsonData['episodes'];
+
+        return MovieModel.fromJson(movieJson);
       } else {
         throw Exception('Failed to fetch movie detail: ${response.statusCode}');
       }

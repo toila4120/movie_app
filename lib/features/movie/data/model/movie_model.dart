@@ -49,8 +49,7 @@ class MovieModel extends MovieEntity {
       quality: json['quality'] as String? ?? '',
       lang: json['lang'] as String? ?? '',
       year: json['year'] as int? ?? 0,
-      voteAverage: (json['tmdb']?['vote_average'] as num?)?.toDouble() ??
-          0.0, // Ánh xạ vote_average
+      voteAverage: (json['tmdb']?['vote_average'] as num?)?.toDouble() ?? 0.0,
       actor: (json['actor'] as List<dynamic>?)?.cast<String>() ?? [],
       director: (json['director'] as List<dynamic>?)?.cast<String>() ?? [],
       categories: (json['category'] as List<dynamic>?)

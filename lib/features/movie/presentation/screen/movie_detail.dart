@@ -112,7 +112,15 @@ class _MovieDetailState extends State<MovieDetail> {
                                 children: [
                                   Expanded(
                                     child: CustomAppButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        print(state.movie!.episodes.last
+                                            .serverData.first.linkM3u8);
+                                        context.push(AppRouter.playMoviePath,
+                                            extra: {
+                                              'url': state.movie!.episodes.last
+                                                  .serverData.first.linkM3u8
+                                            });
+                                      },
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
