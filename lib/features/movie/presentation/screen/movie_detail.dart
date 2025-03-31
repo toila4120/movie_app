@@ -14,12 +14,24 @@ class MovieDetail extends StatefulWidget {
 class _MovieDetailState extends State<MovieDetail> {
   @override
   void initState() {
-    super.initState();
+    // Khóa màn hình ở chế độ dọc
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    // Gọi sự kiện lấy chi tiết phim
     context.read<MovieBloc>().add(
           FetchMovieDetailEvent(
             slug: widget.movie.slug,
           ),
         );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -113,12 +125,10 @@ class _MovieDetailState extends State<MovieDetail> {
                                   Expanded(
                                     child: CustomAppButton(
                                       onPressed: () {
-                                        print(state.movie!.episodes.last
-                                            .serverData.first.linkM3u8);
                                         context.push(AppRouter.playMoviePath,
                                             extra: {
-                                              'url': state.movie!.episodes.last
-                                                  .serverData.first.linkM3u8
+                                              'url': state.movie!.episodes.first
+                                                  .serverData.first.linkM3u8,
                                             });
                                       },
                                       child: Container(

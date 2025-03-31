@@ -30,7 +30,7 @@ abstract class AppRouter {
   static const String movieDetailPath = "/home_tab/movie_detail";
 
   static const String _playMovieName = "play_movie";
-  static const String playMoviePath = "/home_tab/play_movie";
+  static const String playMoviePath = "/play_movie";
 
   static const String _loginScreenName = 'login_screen';
   static const String loginScreenPath = '/login_screen';
@@ -146,22 +146,6 @@ abstract class AppRouter {
                       );
                     },
                   ),
-                  GoRoute(
-                    name: _playMovieName,
-                    path: '/$_playMovieName',
-                    pageBuilder: (context, state) {
-                      final Map<String, dynamic> extra =
-                          state.extra as Map<String, dynamic>? ?? {};
-                      final String url = extra['url'] as String;
-                      return _buildPageWithDefaultTransition<void>(
-                        context: context,
-                        state: state,
-                        child: Movie(
-                          url: url,
-                        ),
-                      );
-                    },
-                  ),
                 ],
               ),
             ],
@@ -211,11 +195,28 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-          name: _registerScreenName,
-          path: registerScreenPath,
-          builder: (context, state) {
-            return const RegisterScreen();
-          }),
+        name: _registerScreenName,
+        path: registerScreenPath,
+        builder: (context, state) {
+          return const RegisterScreen();
+        },
+      ),
+      GoRoute(
+        name: _playMovieName,
+        path: '/$_playMovieName',
+        pageBuilder: (context, state) {
+          final Map<String, dynamic> extra =
+              state.extra as Map<String, dynamic>? ?? {};
+          final String url = extra['url'] as String;
+          return _buildPageWithDefaultTransition<void>(
+            context: context,
+            state: state,
+            child: Movie(
+              url: url,
+            ),
+          );
+        },
+      ),
     ],
   );
 }

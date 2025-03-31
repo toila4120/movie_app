@@ -14,6 +14,13 @@ class ListMovie extends StatefulWidget {
 }
 
 class _ListMovieState extends State<ListMovie> {
+  List<String> categorySlug = [
+    "hoat-hinh",
+    "phim-bo",
+    "phim-le",
+    "tv-shows",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, MovieState>(
@@ -34,12 +41,19 @@ class _ListMovieState extends State<ListMovie> {
                       if (scrollInfo.metrics.pixels ==
                               scrollInfo.metrics.maxScrollExtent &&
                           state.loadingState != LoadingState.loading) {
-                        context.read<MovieBloc>().add(
-                              FetchMoviesByCategory(
-                                categorySlug: widget.slug,
-                                page: state.page + 1,
-                              ),
-                            );
+                        categorySlug.contains(widget.slug)
+                            ? context.read<MovieBloc>().add(
+                                  FetchMovieByListEvent(
+                                    listSlug: widget.slug,
+                                    page: state.page + 1,
+                                  ),
+                                )
+                            : context.read<MovieBloc>().add(
+                                  FetchMoviesByCategory(
+                                    categorySlug: widget.slug,
+                                    page: state.page + 1,
+                                  ),
+                                );
                         return true;
                       }
                       return false;
