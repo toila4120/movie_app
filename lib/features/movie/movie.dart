@@ -16,7 +16,9 @@ import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movie/presentation/widget/item_container.dart';
+import 'package:pod_player/pod_player.dart';
 import 'package:shimmer/shimmer.dart';
 
 part 'presentation/screen/movie_detail.dart';
 part 'presentation/widget/header_movie_detail.dart';
+part 'presentation/widget/movie.dart';

@@ -1,7 +1,7 @@
 part of '../../categories.dart';
 
 class ItemMovie extends StatelessWidget {
-  final MovieModel movieModel;
+  final MovieEntity movieModel;
   const ItemMovie({
     super.key,
     required this.movieModel,
@@ -11,9 +11,17 @@ class ItemMovie extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomAppButton(
       onPressed: () {
-        context.push(AppRouter.movieDetailPath, extra: {
-          'movie': movieModel,
-        });
+        context.read<MovieBloc>().add(
+              FetchMovieDetailEvent(
+                slug: movieModel.slug,
+              ),
+            );
+        context.push(
+          AppRouter.movieDetailPath,
+          extra: {
+            'movie': movieModel,
+          },
+        );
       },
       child: Container(
         padding: EdgeInsets.symmetric(

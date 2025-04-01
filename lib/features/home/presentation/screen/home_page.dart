@@ -9,6 +9,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    context.read<HomeBloc>().add(
+          FectchMovieForBannerMovies(),
+        );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppContainer(
       resizeToAvoidBottomInset: true,

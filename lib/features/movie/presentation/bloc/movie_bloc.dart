@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
-import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_by_list_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_detail_usecase.dart';

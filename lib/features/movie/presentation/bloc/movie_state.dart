@@ -4,7 +4,7 @@ class MovieState extends Equatable {
   final LoadingState loadingState;
   final int page;
   final bool hasReachedMax;
-  final List<MovieModel> movies;
+  final List<MovieEntity> movies;
   final String? errorMessage;
   final MovieEntity? movie;
 
@@ -29,7 +29,7 @@ class MovieState extends Equatable {
 
   MovieState copyWith({
     LoadingState? loadingState,
-    List<MovieModel>? movies,
+    List<MovieEntity>? movies,
     String? errorMessage,
     int? page,
     bool? hasReachedMax,

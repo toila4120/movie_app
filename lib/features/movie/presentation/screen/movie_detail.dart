@@ -14,18 +14,11 @@ class MovieDetail extends StatefulWidget {
 class _MovieDetailState extends State<MovieDetail> {
   @override
   void initState() {
-    // Khóa màn hình ở chế độ dọc
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
 
-    // Gọi sự kiện lấy chi tiết phim
-    context.read<MovieBloc>().add(
-          FetchMovieDetailEvent(
-            slug: widget.movie.slug,
-          ),
-        );
     super.initState();
   }
 
@@ -90,13 +83,13 @@ class _MovieDetailState extends State<MovieDetail> {
                                       color: AppColor.primary500,
                                     ),
                                   ),
-                                  SizedBox(width: AppPadding.tiny),
+                                  SizedBox(width: AppPadding.superTiny),
                                   Icon(
                                     Icons.chevron_right_outlined,
                                     color: AppColor.primary500,
                                     size: 20.w,
                                   ),
-                                  SizedBox(width: AppPadding.small),
+                                  SizedBox(width: AppPadding.superTiny),
                                   Text(
                                     state.movie!.year.toString(),
                                     style: TextStyle(
@@ -111,7 +104,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                         .map((countries) => countries.name)
                                         .join(", "),
                                   ),
-                                  SizedBox(width: AppPadding.small),
+                                  SizedBox(width: AppPadding.tiny),
                                   ItemContainer(
                                     title: state.movie!.lang,
                                   ),
@@ -228,50 +221,50 @@ class _MovieDetailState extends State<MovieDetail> {
                               ),
                               SizedBox(height: AppPadding.medium),
                               Text(
-                                "Casts",
+                                "Danh sách diễn viên: ${state.movie!.actor.map((cast) => cast).join(", ")}",
                                 style: TextStyle(
                                   color: AppColor.greyScale900,
                                   fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              SizedBox(height: AppPadding.tiny),
-                              SizedBox(
-                                height: 76.w,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        left: index == 0 ? 0 : AppPadding.tiny,
-                                        right: AppPadding.tiny,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 28.w,
-                                            backgroundImage: const AssetImage(
-                                              AppImage.avatarDefault,
-                                            ),
-                                          ),
-                                          SizedBox(width: AppPadding.superTiny),
-                                          Text(
-                                            "Emma Wats",
-                                            style: TextStyle(
-                                              color: AppColor.greyScale900,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
+                              // SizedBox(height: AppPadding.tiny),
+                              // SizedBox(
+                              //   height: 76.w,
+                              //   child: ListView.builder(
+                              //     padding: EdgeInsets.zero,
+                              //     shrinkWrap: true,
+                              //     scrollDirection: Axis.horizontal,
+                              //     itemCount: 5,
+                              //     itemBuilder: (context, index) {
+                              //       return Padding(
+                              //         padding: EdgeInsets.only(
+                              //           left: index == 0 ? 0 : AppPadding.tiny,
+                              //           right: AppPadding.tiny,
+                              //         ),
+                              //         child: Column(
+                              //           children: [
+                              //             CircleAvatar(
+                              //               radius: 28.w,
+                              //               backgroundImage: const AssetImage(
+                              //                 AppImage.avatarDefault,
+                              //               ),
+                              //             ),
+                              //             SizedBox(width: AppPadding.superTiny),
+                              //             Text(
+                              //               "Emma Wats",
+                              //               style: TextStyle(
+                              //                 color: AppColor.greyScale900,
+                              //                 fontSize: 12.sp,
+                              //                 fontWeight: FontWeight.w500,
+                              //               ),
+                              //             )
+                              //           ],
+                              //         ),
+                              //       );
+                              //     },
+                              //   ),
+                              // ),
                               SizedBox(height: AppPadding.medium),
                               Text(
                                 "Episodes",

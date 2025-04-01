@@ -7,7 +7,6 @@ import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
 import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/movie/movie.dart';
-import 'package:movie_app/features/movie/presentation/widget/movie.dart';
 import 'package:movie_app/features/profile/profile.dart';
 import 'package:movie_app/features/splash/splash_screen.dart';
 
