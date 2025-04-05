@@ -9,6 +9,7 @@ class BannerHome extends StatefulWidget {
 
 class _BannerHomeState extends State<BannerHome> {
   int _currentIndex = 0;
+  final int _itemCount = 5;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _BannerHomeState extends State<BannerHome> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.4,
                   child: CarouselSlider.builder(
-                    itemCount: 4,
+                    itemCount: _itemCount,
                     itemBuilder: (
                       BuildContext context,
                       int itemIndex,
@@ -219,7 +220,7 @@ class _BannerHomeState extends State<BannerHome> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
-                      4,
+                      _itemCount,
                       (index) => AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         margin: const EdgeInsets.symmetric(horizontal: 3),

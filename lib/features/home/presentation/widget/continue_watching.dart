@@ -12,7 +12,7 @@ class ContinueWatching extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Continue Watching',
+                'Video đang xem',
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: AppColor.greyScale900,
@@ -21,7 +21,7 @@ class ContinueWatching extends StatelessWidget {
               ),
             ),
             CustomAppButton(
-              text: "See all list",
+              text: "Xem tất cả",
               textStyle: TextStyle(
                 fontSize: 12.sp,
                 color: AppColor.primary500,

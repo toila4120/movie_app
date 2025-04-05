@@ -53,7 +53,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
           children: [
             Expanded(
               child: Text(
-                'Category',
+                'Thể loại phim',
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: AppColor.greyScale900,
@@ -65,7 +65,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               onPressed: () {
                 context.push(AppRouter.categoriesTabPath);
               },
-              text: "See all list",
+              text: "Xem tất cả",
               textStyle: TextStyle(
                 fontSize: 12.sp,
                 color: AppColor.primary500,

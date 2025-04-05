@@ -30,11 +30,13 @@ class _MovieState extends State<Movie> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          PodVideoPlayer(controller: controller),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            PodVideoPlayer(controller: controller),
+          ],
+        ),
       ),
     );
   }

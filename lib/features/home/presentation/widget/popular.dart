@@ -21,7 +21,7 @@ class Popular extends StatelessWidget {
               ),
             ),
             CustomAppButton(
-              text: "See all list",
+              text: "Xem tất cả",
               textStyle: TextStyle(
                 fontSize: 12.sp,
                 color: AppColor.primary500,

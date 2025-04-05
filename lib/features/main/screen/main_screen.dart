@@ -16,7 +16,6 @@ class MainScreen extends StatelessWidget {
         AppRouter.profileTabPath,
       ];
 
-      // Điều hướng đến tab mới với extra
       context.go(
         tabPaths[newIndex],
         extra: {
@@ -27,14 +26,22 @@ class MainScreen extends StatelessWidget {
     }
   }
 
+  bool _shouldShowBottomNavBar(BuildContext context) {
+    final routerState = GoRouterState.of(context);
+    final currentLocation = routerState.uri.toString();
+    return currentLocation != '/home_tab/movie_detail/play_movie';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigatorBar(
-        onTap: (value) => _onTabChange(value, context),
-        currentIndex: shell.currentIndex,
-      ),
+      bottomNavigationBar: _shouldShowBottomNavBar(context)
+          ? BottomNavigatorBar(
+              onTap: (value) => _onTabChange(value, context),
+              currentIndex: shell.currentIndex,
+            )
+          : null,
       body: shell,
     );
   }
