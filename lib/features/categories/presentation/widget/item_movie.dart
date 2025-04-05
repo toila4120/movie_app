@@ -18,9 +18,9 @@ class ItemMovie extends StatelessWidget {
             );
         context.push(
           AppRouter.movieDetailPath,
-          extra: {
-            'movie': movieModel,
-          },
+          // extra: {
+          //   'movie': movieModel,
+          // },
         );
       },
       child: Container(

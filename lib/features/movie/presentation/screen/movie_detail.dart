@@ -1,10 +1,10 @@
 part of '../../movie.dart';
 
 class MovieDetail extends StatefulWidget {
-  final MovieModel movie;
+  // final MovieModel movie;
   const MovieDetail({
     super.key,
-    required this.movie,
+    // required this.movie,
   });
 
   @override

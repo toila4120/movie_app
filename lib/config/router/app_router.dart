@@ -6,7 +6,6 @@ import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/chatting/presentation/screen/chatting_screen.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
-import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/movie/movie.dart';
 import 'package:movie_app/features/profile/profile.dart';
 import 'package:movie_app/features/splash/login_next_screen.dart';
@@ -128,12 +127,12 @@ abstract class AppRouter {
                     name: _movieDetailName,
                     path: '/$_movieDetailName',
                     pageBuilder: (context, state) {
-                      final extra = state.extra as Map<String, dynamic>? ?? {};
-                      final movie = extra['movie'] as MovieModel;
+                      // final extra = state.extra as Map<String, dynamic>? ?? {};
+                      // final movie = extra['movie'] as MovieModel;
                       return _buildPageWithDefaultTransition(
                         context: context,
                         state: state,
-                        child: MovieDetail(movie: movie),
+                        child: const MovieDetail(),
                       );
                     },
                   ),

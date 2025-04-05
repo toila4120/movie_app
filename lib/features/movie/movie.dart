@@ -12,7 +12,6 @@ import 'package:movie_app/core/utils/disable_glow_behavior.dart';
 import 'package:movie_app/core/widget/src/expandable_text.dart';
 import 'package:movie_app/core/widget/src/loading_screen.dart';
 import 'package:movie_app/core/widget/widget.dart';
-import 'package:movie_app/features/movie/data/model/movie_model.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movie/presentation/widget/item_container.dart';
