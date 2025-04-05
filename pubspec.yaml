@@ -39,6 +39,7 @@ dependencies:
   flutter_vlc_player: ^7.4.3
   flick_video_player: ^0.9.0
   pod_player: ^0.2.2
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

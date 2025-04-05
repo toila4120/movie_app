@@ -36,33 +36,45 @@ class _BannerHomeState extends State<BannerHome> {
                       final banner = state.bannerMovies[itemIndex];
                       return Stack(
                         children: [
-                          CachedNetworkImage(
-                            imageUrl: banner.posterUrl,
-                            height: double.infinity,
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                            placeholder: (context, url) => Shimmer.fromColors(
-                              baseColor: Colors.grey.shade300,
-                              highlightColor: Colors.grey.shade100,
-                              child: Container(
-                                height: double.infinity,
-                                width: double.infinity,
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                            errorWidget: (context, url, error) => Container(
-                              height: double.infinity,
-                              width: double.infinity,
-                              color: Colors.grey.shade300,
-                              child: const Center(
-                                child: Icon(
-                                  Icons.broken_image,
-                                  color: Colors.grey,
-                                  size: 40,
+                          state.loadingState.isPure
+                              ? Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.grey.shade100,
+                                  child: Container(
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                )
+                              : CachedNetworkImage(
+                                  imageUrl: banner.posterUrl,
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                  placeholder: (context, url) =>
+                                      Shimmer.fromColors(
+                                    baseColor: Colors.grey.shade300,
+                                    highlightColor: Colors.grey.shade100,
+                                    child: Container(
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    color: Colors.grey.shade300,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.broken_image,
+                                        color: Colors.grey,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
                           Positioned(
                             bottom: 0,
                             child: Container(
@@ -156,7 +168,14 @@ class _BannerHomeState extends State<BannerHome> {
                                   ),
                                   CustomAppButton(
                                     onPressed: () {
-                                      context.push(AppRouter.movieDetailPath);
+                                      context.read<MovieBloc>().add(
+                                            FetchMovieDetailEvent(
+                                              slug: banner.slug,
+                                            ),
+                                          );
+                                      context.push(
+                                        AppRouter.movieDetailPath,
+                                      );
                                     },
                                     child: CircleAvatar(
                                       radius: 20.w,
