@@ -38,7 +38,7 @@ class BottomNavigatorBar extends StatelessWidget {
           Expanded(
             child: BottomNavigatorBarItem(
               iconPath: AppImage.icHomeTab,
-              label: 'Home',
+              label: 'Trang chủ',
               isActive: currentIndex == 0,
               onTap: () => onTap(0),
             ),
@@ -46,7 +46,7 @@ class BottomNavigatorBar extends StatelessWidget {
           Expanded(
             child: BottomNavigatorBarItem(
               iconPath: AppImage.icSearchTab,
-              label: "Categories",
+              label: "Khám phá",
               isActive: currentIndex == 1,
               onTap: () => onTap(1),
             ),
@@ -54,7 +54,7 @@ class BottomNavigatorBar extends StatelessWidget {
           Expanded(
             child: BottomNavigatorBarItem(
               iconPath: AppImage.icActivityTab,
-              label: 'Chatting',
+              label: 'Trò chuyện',
               isActive: currentIndex == 2,
               onTap: () => onTap(2),
             ),
@@ -62,7 +62,7 @@ class BottomNavigatorBar extends StatelessWidget {
           Expanded(
             child: BottomNavigatorBarItem(
               iconPath: AppImage.icProfileTab,
-              label: 'Profile',
+              label: 'Cá nhân',
               isActive: currentIndex == 3,
               onTap: () => onTap(3),
             ),
