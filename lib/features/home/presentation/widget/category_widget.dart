@@ -63,7 +63,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             ),
             CustomAppButton(
               onPressed: () {
-                context.push(AppRouter.categoriesTabPath);
+                context.push(AppRouter.allCategoriesPath);
               },
               text: "Xem tất cả",
               textStyle: TextStyle(

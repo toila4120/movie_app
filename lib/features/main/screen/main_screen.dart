@@ -11,7 +11,7 @@ class MainScreen extends StatelessWidget {
     if (newIndex != shell.currentIndex) {
       const tabPaths = [
         AppRouter.homeTabPath,
-        AppRouter.categoriesTabPath,
+        AppRouter.exploreScreenPath,
         AppRouter.chattingTabPath,
         AppRouter.profileTabPath,
       ];

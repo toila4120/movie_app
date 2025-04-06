@@ -4,6 +4,7 @@ class HomeState extends Equatable {
   final List<MovieForBannerEntity> bannerMovies;
   final LoadingState loadingState;
   final String errorMessage;
+  
   const HomeState({
     required this.bannerMovies,
     required this.loadingState,

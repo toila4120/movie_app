@@ -4,6 +4,7 @@ import 'package:movie_app/config/router/app_navigator_observer.dart';
 import 'package:movie_app/features/authentication/authentication.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/chatting/presentation/screen/chatting_screen.dart';
+import 'package:movie_app/features/explore/explore.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
 import 'package:movie_app/features/movie/movie.dart';
@@ -19,8 +20,6 @@ abstract class AppRouter {
   static const String allCategoriesPath = "/home_tab/all_categories";
   static const String _listMovieName = "list_movie";
   static const String listMoviePath = "/home_tab/list_movie";
-  static const String _categoriesTabName = "categories_tab_name";
-  static const String categoriesTabPath = "/categories_tab";
   static const String _movieDetailName = "movie_detail";
   static const String movieDetailPath = "/home_tab/movie_detail";
   static const String _playMovieName = "play_movie";
@@ -38,6 +37,8 @@ abstract class AppRouter {
   static const String splashLoginScreenPath = '/splash_login_screen';
   static const String _chattingTabName = 'chatting_tab';
   static const String chattingTabPath = '/chatting_tab';
+  static const String _exploreScreenTabName = 'explore_tab';
+  static const String exploreScreenPath = '/explore_tab';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -164,13 +165,13 @@ abstract class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                name: _categoriesTabName,
-                path: categoriesTabPath,
+                name: _exploreScreenTabName,
+                path: exploreScreenPath,
                 pageBuilder: (context, state) {
                   return _buildPageWithDefaultTransition(
                     context: context,
                     state: state,
-                    child: const CategoriesScreen(),
+                    child: const ExploreScreen(),
                   );
                 },
               ),

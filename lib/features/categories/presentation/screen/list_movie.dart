@@ -38,8 +38,8 @@ class _ListMovieState extends State<ListMovie> {
                   behavior: const DisableGlowBehavior(),
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (ScrollNotification scrollInfo) {
-                      if (scrollInfo.metrics.pixels ==
-                              scrollInfo.metrics.maxScrollExtent &&
+                      if (scrollInfo.metrics.pixels >=
+                              scrollInfo.metrics.maxScrollExtent - 100 &&
                           state.loadingState != LoadingState.loading) {
                         categorySlug.contains(widget.slug)
                             ? context.read<MovieBloc>().add(
