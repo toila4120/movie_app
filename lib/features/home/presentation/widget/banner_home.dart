@@ -26,7 +26,7 @@ class _BannerHomeState extends State<BannerHome> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: constraints.maxHeight * 0.4,
                   child: CarouselSlider.builder(
                     itemCount: _itemCount,
                     itemBuilder: (
@@ -82,7 +82,7 @@ class _BannerHomeState extends State<BannerHome> {
                               width: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.symmetric(
                                 horizontal: AppPadding.large,
-                                vertical: AppPadding.large,
+                                vertical: AppPadding.small,
                               ),
                               decoration: BoxDecoration(
                                 color: Colors.black.withValues(alpha: 0.7),
@@ -90,83 +90,91 @@ class _BannerHomeState extends State<BannerHome> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        banner.name,
-                                        style: TextStyle(
-                                          color: AppColor.white,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w600,
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          banner.name,
+                                          style: TextStyle(
+                                            color: AppColor.white,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            banner.year.toString(),
-                                            style: TextStyle(
-                                              color: AppColor.white,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                              horizontal: AppPadding.superTiny,
-                                            ),
-                                            height: 4.w,
-                                            width: 4.w,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                AppPadding.superTiny,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              banner.year.toString(),
+                                              style: TextStyle(
+                                                color: AppColor.white,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              color: AppColor.white,
                                             ),
-                                          ),
-                                          Text(
-                                            banner.category
-                                                .take(3)
-                                                .map((countries) =>
-                                                    countries.name)
-                                                .join(", "),
-                                            style: TextStyle(
-                                              color: AppColor.white,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w500,
+                                            Container(
+                                              margin: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    AppPadding.superTiny,
+                                              ),
+                                              height: 4.w,
+                                              width: 4.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  AppPadding.superTiny,
+                                                ),
+                                                color: AppColor.white,
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                              horizontal: AppPadding.superTiny,
+                                            Text(
+                                              banner.category
+                                                  .take(3)
+                                                  .map((countries) =>
+                                                      countries.name)
+                                                  .join(", "),
+                                              style: TextStyle(
+                                                color: AppColor.white,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                            height: 4.sp,
-                                            width: 4.sp,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppPadding.superTiny),
-                                              color: AppColor.white,
+                                            Container(
+                                              margin: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    AppPadding.superTiny,
+                                              ),
+                                              height: 4.sp,
+                                              width: 4.sp,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        AppPadding.superTiny),
+                                                color: AppColor.white,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            banner.episodeCurrent,
-                                            style: TextStyle(
-                                              color: AppColor.white,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w500,
+                                            Text(
+                                              banner.episodeCurrent,
+                                              style: TextStyle(
+                                                color: AppColor.white,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: AppPadding.small),
-                                    ],
+                                          ],
+                                        ),
+                                        SizedBox(height: AppPadding.small),
+                                      ],
+                                    ),
                                   ),
+                                  SizedBox(width: AppPadding.small),
                                   CustomAppButton(
                                     onPressed: () {
                                       context.read<MovieBloc>().add(
@@ -192,7 +200,7 @@ class _BannerHomeState extends State<BannerHome> {
                       );
                     },
                     options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: constraints.maxHeight * 0.4,
                       viewportFraction: 1,
                       initialPage: 0,
                       enableInfiniteScroll: true,
