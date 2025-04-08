@@ -26,7 +26,7 @@ class _BannerHomeState extends State<BannerHome> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   child: CarouselSlider.builder(
                     itemCount: _itemCount,
                     itemBuilder: (
@@ -200,7 +200,7 @@ class _BannerHomeState extends State<BannerHome> {
                       );
                     },
                     options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       viewportFraction: 1,
                       initialPage: 0,
                       enableInfiniteScroll: true,
