@@ -30,8 +30,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     const Expanded(
                       child: AppTextField(
                         hintText: 'Search',
-                        prefixIcon: Icon(
-                          Icons.search,
+                        prefixIcon: ImageIcon(
+                          AssetImage(AppImage.icSearchTab),
                           color: AppColor.greyScale300,
                         ),
                       ),

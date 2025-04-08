@@ -4,6 +4,7 @@ import 'package:movie_app/features/categories/domain/entities/categories_entitie
 class MovieForBannerEntity extends Equatable {
   final String name;
   final String posterUrl;
+  final String thumbUrl;
   final String slug;
   final String episodeCurrent;
   final int year;
@@ -12,6 +13,7 @@ class MovieForBannerEntity extends Equatable {
   const MovieForBannerEntity({
     required this.name,
     required this.posterUrl,
+    required this.thumbUrl,
     required this.slug,
     required this.episodeCurrent,
     required this.year,
@@ -22,6 +24,7 @@ class MovieForBannerEntity extends Equatable {
   List<Object?> get props => [
         name,
         posterUrl,
+        thumbUrl,
         slug,
         episodeCurrent,
         year,

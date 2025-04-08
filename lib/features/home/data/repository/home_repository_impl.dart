@@ -15,7 +15,34 @@ class HomeRepositoryImpl implements HomeRepository {
       return movies
           .map((movie) => MovieForBannerEntity(
                 name: movie.name,
-                posterUrl: movie.thumbUrl,
+                posterUrl: movie.posterUrl,
+                thumbUrl: movie.thumbUrl,
+                slug: movie.slug,
+                episodeCurrent: movie.episodeCurrent,
+                year: movie.year,
+                category: movie.categories
+                    .map((category) => CategoryEntity(
+                          id: category.id,
+                          name: category.name,
+                          slug: category.slug,
+                        ))
+                    .toList(),
+              ))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<MovieForBannerEntity>> getMoviesByGenre(String genre) async {
+    try {
+      final movies = await homeRemoteDatasource.fetchMoviesForBanner();
+      return movies
+          .map((movie) => MovieForBannerEntity(
+                name: movie.name,
+                posterUrl: movie.posterUrl,
+                thumbUrl: movie.thumbUrl,
                 slug: movie.slug,
                 episodeCurrent: movie.episodeCurrent,
                 year: movie.year,

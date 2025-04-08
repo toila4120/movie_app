@@ -48,7 +48,7 @@ class _BannerHomeState extends State<BannerHome> {
                                   ),
                                 )
                               : CachedNetworkImage(
-                                  imageUrl: banner.posterUrl,
+                                  imageUrl: banner.thumbUrl,
                                   height: double.infinity,
                                   width: double.infinity,
                                   fit: BoxFit.fill,
@@ -90,7 +90,7 @@ class _BannerHomeState extends State<BannerHome> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Flexible(
                                     child: Column(
@@ -156,7 +156,8 @@ class _BannerHomeState extends State<BannerHome> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                        AppPadding.superTiny),
+                                                  AppPadding.superTiny,
+                                                ),
                                                 color: AppColor.white,
                                               ),
                                             ),
@@ -187,7 +188,7 @@ class _BannerHomeState extends State<BannerHome> {
                                       );
                                     },
                                     child: CircleAvatar(
-                                      radius: 20.w,
+                                      radius: 18.w,
                                       backgroundImage:
                                           const AssetImage(AppImage.icPlay),
                                     ),

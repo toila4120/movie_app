@@ -2,4 +2,5 @@ import 'package:movie_app/features/home/domain/entities/movie_for_banner_entity.
 
 abstract class HomeRepository {
   Future<List<MovieForBannerEntity>> getMovieForBanner();
+  Future<List<MovieForBannerEntity>> getMoviesByGenre(String genre);
 }
