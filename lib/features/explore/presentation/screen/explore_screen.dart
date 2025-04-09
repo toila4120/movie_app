@@ -27,12 +27,19 @@ class _ExploreScreenState extends State<ExploreScreen> {
               children: [
                 Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: AppTextField(
                         hintText: 'Search',
-                        prefixIcon: ImageIcon(
-                          AssetImage(AppImage.icSearchTab),
-                          color: AppColor.greyScale300,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(AppPadding.small),
+                          child: SizedBox(
+                            height: 16.w,
+                            width: 16.w,
+                            child: const ImageIcon(
+                              AssetImage(AppImage.icSearchTab),
+                              color: AppColor.greyScale300,
+                            ),
+                          ),
                         ),
                       ),
                     ),
