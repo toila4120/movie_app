@@ -72,9 +72,12 @@ class _MovieDetailState extends State<MovieDetail> {
                                     color: AppColor.primary500,
                                     size: 20.w,
                                   ),
-                                  SizedBox(width: AppPadding.tiny),
+                                  SizedBox(width: AppPadding.superTiny),
                                   Text(
-                                    state.movie!.voteAverage.toStringAsFixed(1),
+                                    state.movie!.voteAverage == 0
+                                        ? "5.0"
+                                        : state.movie!.voteAverage
+                                            .toStringAsFixed(1),
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w700,
@@ -218,51 +221,56 @@ class _MovieDetailState extends State<MovieDetail> {
                                     .convert(state.movie!.content),
                               ),
                               SizedBox(height: AppPadding.medium),
-                              Text(
-                                "Danh sách diễn viên: ${state.movie!.actor.map((cast) => cast).join(", ")}",
-                                style: TextStyle(
-                                  color: AppColor.greyScale900,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              // SizedBox(height: AppPadding.tiny),
-                              // SizedBox(
-                              //   height: 76.w,
-                              //   child: ListView.builder(
-                              //     padding: EdgeInsets.zero,
-                              //     shrinkWrap: true,
-                              //     scrollDirection: Axis.horizontal,
-                              //     itemCount: 5,
-                              //     itemBuilder: (context, index) {
-                              //       return Padding(
-                              //         padding: EdgeInsets.only(
-                              //           left: index == 0 ? 0 : AppPadding.tiny,
-                              //           right: AppPadding.tiny,
-                              //         ),
-                              //         child: Column(
-                              //           children: [
-                              //             CircleAvatar(
-                              //               radius: 28.w,
-                              //               backgroundImage: const AssetImage(
-                              //                 AppImage.avatarDefault,
-                              //               ),
-                              //             ),
-                              //             SizedBox(width: AppPadding.superTiny),
-                              //             Text(
-                              //               "Emma Wats",
-                              //               style: TextStyle(
-                              //                 color: AppColor.greyScale900,
-                              //                 fontSize: 12.sp,
-                              //                 fontWeight: FontWeight.w500,
-                              //               ),
-                              //             )
-                              //           ],
-                              //         ),
-                              //       );
-                              //     },
-                              //   ),
-                              // ),
+                              state.actor!.isEmpty
+                                  ? Text(
+                                      "Danh sách diễn viên: ${state.movie!.actor.map((cast) => cast).join(", ")}",
+                                      style: TextStyle(
+                                        color: AppColor.greyScale900,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  : SizedBox(
+                                      height: 76.w,
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: state.actor?.length ?? 0,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              left: index == 0
+                                                  ? 0
+                                                  : AppPadding.tiny,
+                                              right: AppPadding.tiny,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 28.w,
+                                                  backgroundImage: NetworkImage(
+                                                    state.actor![index].image!,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                    width:
+                                                        AppPadding.superTiny),
+                                                Text(
+                                                  state.actor![index].name!,
+                                                  style: TextStyle(
+                                                    color:
+                                                        AppColor.greyScale900,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
                               SizedBox(height: AppPadding.medium),
                               Text(
                                 "Episodes",

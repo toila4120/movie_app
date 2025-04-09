@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/features/movie/data/model/movie_model.dart';
+import 'package:movie_app/features/movie/domain/entities/actor_entity.dart';
 
 abstract class MovieRemoteDatasource {
   Future<List<MovieModel>> fetchMoviesByCategory(String categorySlug, int page);
   Future<MovieModel> fetchMovieDetail(String slug);
   Future<List<MovieModel>> fetchMoviesByList(String listSlug, int page);
+  Future<List<ActorEntity>> fetchMovieActors(String slug);
 }
 
 class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
@@ -50,7 +52,6 @@ class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
           throw Exception('Failed to fetch movie detail: ${jsonData['msg']}');
         }
 
-        // Lấy danh sách episodes
         final movieJson = jsonData['movie'] as Map<String, dynamic>;
         movieJson['episodes'] = jsonData['episodes'];
 
@@ -85,6 +86,31 @@ class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
             .toList();
       } else {
         throw Exception('Failed to fetch movies: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      throw Exception('Dio error: ${e.message}');
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
+    }
+  }
+
+  @override
+  Future<List<ActorEntity>> fetchMovieActors(String slug) async {
+    try {
+      final response =
+          await dio.get('https://api.dulieuphim.ink/get-dien-vien/$slug');
+      if (response.statusCode == 200) {
+        final jsonData = response.data;
+        if (jsonData['success'] != true) {
+          return [];
+        }
+
+        final List<dynamic> items = jsonData['actors'];
+        return items
+            .map((item) => ActorEntity.fromJson(item as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception('Failed to fetch movie actors: ${response.statusCode}');
       }
     } on DioException catch (e) {
       throw Exception('Dio error: ${e.message}');

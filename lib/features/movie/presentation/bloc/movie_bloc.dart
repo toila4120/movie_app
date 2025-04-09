@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
+import 'package:movie_app/features/movie/domain/entities/actor_entity.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
+import 'package:movie_app/features/movie/domain/usecase/fectch_movie_actor_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_by_list_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_detail_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movies_by_category_usecase.dart';
@@ -54,10 +56,13 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
     try {
       final useCase = getIt<FetchMovieDetailUsecase>();
+      final actorUseCase = getIt<FectchMovieActorUsecase>();
       final movie = await useCase(event.slug);
+      final actors = await actorUseCase(event.slug);
       emit(state.copyWith(
         loadingState: LoadingState.finished,
         movie: movie,
+        actor: actors.isNotEmpty ? actors : [],
       ));
     } catch (e) {
       emit(state.copyWith(

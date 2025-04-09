@@ -18,9 +18,6 @@ class ItemMovie extends StatelessWidget {
             );
         context.push(
           AppRouter.movieDetailPath,
-          // extra: {
-          //   'movie': movieModel,
-          // },
         );
       },
       child: Container(
@@ -38,31 +35,48 @@ class ItemMovie extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.r16),
-                    child: CachedNetworkImage(
-                      imageUrl: 'https://phimimg.com/${movieModel.posterUrl}',
-                      width: 120.w,
-                      height: 144.w,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) => Shimmer.fromColors(
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.grey.shade100,
-                        child: Container(
+                  Hero(
+                    tag: movieModel.slug,
+                    flightShuttleBuilder: (
+                      BuildContext flightContext,
+                      Animation<double> animation,
+                      HeroFlightDirection flightDirection,
+                      BuildContext fromHeroContext,
+                      BuildContext toHeroContext,
+                    ) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: flightDirection == HeroFlightDirection.push
+                            ? fromHeroContext.widget
+                            : toHeroContext.widget,
+                      );
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+                      child: CachedNetworkImage(
+                        imageUrl: 'https://phimimg.com/${movieModel.posterUrl}',
+                        width: 120.w,
+                        height: 144.w,
+                        fit: BoxFit.fill,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Container(
+                            width: 120.w,
+                            height: 88.w,
+                            color: Colors.grey.shade300,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
                           width: 120.w,
                           height: 88.w,
                           color: Colors.grey.shade300,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        width: 120.w,
-                        height: 88.w,
-                        color: Colors.grey.shade300,
-                        child: const Center(
-                          child: Icon(
-                            Icons.broken_image,
-                            color: Colors.grey,
-                            size: 40,
+                          child: const Center(
+                            child: Icon(
+                              Icons.broken_image,
+                              color: Colors.grey,
+                              size: 40,
+                            ),
                           ),
                         ),
                       ),

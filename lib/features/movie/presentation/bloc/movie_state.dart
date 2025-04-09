@@ -7,12 +7,14 @@ class MovieState extends Equatable {
   final List<MovieEntity> movies;
   final String? errorMessage;
   final MovieEntity? movie;
+  final List<ActorEntity>? actor;
 
   const MovieState({
     required this.loadingState,
     required this.page,
     required this.hasReachedMax,
     this.movies = const [],
+    this.actor = const [],
     this.errorMessage,
     this.movie,
   });
@@ -22,6 +24,7 @@ class MovieState extends Equatable {
       page: 0,
       hasReachedMax: false,
       movies: [],
+      actor: [],
       errorMessage: null,
       movie: null,
     );
@@ -34,6 +37,7 @@ class MovieState extends Equatable {
     int? page,
     bool? hasReachedMax,
     MovieEntity? movie,
+    List<ActorEntity>? actor,
   }) {
     return MovieState(
       loadingState: loadingState ?? this.loadingState,
@@ -42,6 +46,7 @@ class MovieState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       movie: movie ?? this.movie,
+      actor: actor ?? this.actor,
     );
   }
 
@@ -53,5 +58,6 @@ class MovieState extends Equatable {
         errorMessage,
         hasReachedMax,
         movie,
+        actor,
       ];
 }
