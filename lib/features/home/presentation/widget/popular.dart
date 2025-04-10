@@ -46,7 +46,7 @@ class Popular extends StatelessWidget {
             ),
             SizedBox(height: AppPadding.tiny),
             SizedBox(
-              height: 189.w,
+              height: 190.w,
               child: ListView.builder(
                 itemCount: state.bannerMovies.length,
                 scrollDirection: Axis.horizontal,

@@ -10,3 +10,4 @@ part 'src/custom_app_button.dart';
 part 'src/back_widget.dart';
 part 'src/app_header.dart';
 part 'src/app_text_field.dart';
+part 'src/loading_screen.dart';

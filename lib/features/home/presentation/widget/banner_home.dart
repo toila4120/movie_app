@@ -129,8 +129,7 @@ class _BannerHomeState extends State<BannerHome> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  AppPadding.superTiny,
-                                                ),
+                                                        AppPadding.superTiny),
                                                 color: AppColor.white,
                                               ),
                                             ),
@@ -156,19 +155,21 @@ class _BannerHomeState extends State<BannerHome> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  AppPadding.superTiny,
-                                                ),
+                                                        AppPadding.superTiny),
                                                 color: AppColor.white,
                                               ),
                                             ),
-                                            Text(
-                                              banner.episodeCurrent,
-                                              style: TextStyle(
-                                                color: AppColor.white,
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w500,
+                                            Flexible(
+                                              child: Text(
+                                                banner.episodeCurrent,
+                                                style: TextStyle(
+                                                  color: AppColor.white,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
-                                              maxLines: 1,
                                             ),
                                           ],
                                         ),

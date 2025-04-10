@@ -10,7 +10,6 @@ import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
 import 'package:movie_app/core/widget/src/expandable_text.dart';
-import 'package:movie_app/core/widget/src/loading_screen.dart';
 import 'package:movie_app/core/widget/widget.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'; // Sử dụng Material thay vì chỉ Widgets
+part of '../widget.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
@@ -19,7 +19,7 @@ class LoadingScreen extends StatelessWidget {
             Text(
               'Đang tải dữ liệu...',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 18.w,
                 color: Colors.grey.shade800,
                 fontWeight: FontWeight.w500,
               ),

@@ -12,58 +12,30 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Widget build(BuildContext context) {
     return AppContainer(
       resizeToAvoidBottomInset: true,
-      child: ScrollConfiguration(
-        behavior: const DisableGlowBehavior(),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + AppPadding.small,
-              left: AppPadding.large,
-              right: AppPadding.large,
-              bottom: AppPadding.small,
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        hintText: 'Search',
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(AppPadding.small),
-                          child: SizedBox(
-                            height: 16.w,
-                            width: 16.w,
-                            child: const ImageIcon(
-                              AssetImage(AppImage.icSearchTab),
-                              color: AppColor.greyScale300,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: AppPadding.small),
-                    CustomAppButton(
-                      onPressed: () {},
-                      child: Container(
-                        padding: EdgeInsets.all(AppPadding.small),
-                        decoration: BoxDecoration(
-                          color: AppColor.primary100,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Icon(
-                          Icons.filter_list,
-                          color: AppColor.primary500,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+      child: Column(
+        children: [
+          const AppHeaderForExplore(),
+          Expanded(
+            child: ScrollConfiguration(
+              behavior: const DisableGlowBehavior(),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: AppPadding.small,
+                    left: AppPadding.large,
+                    right: AppPadding.large,
+                    bottom: AppPadding.small,
+                  ),
+                  child: const Column(
+                    children: [
+                      ListMovieWidget(),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
