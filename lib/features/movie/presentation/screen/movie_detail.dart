@@ -128,13 +128,13 @@ class _MovieDetailState extends State<MovieDetail> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
-                                            AppBorderRadius.r16,
+                                            AppBorderRadius.r16.w,
                                           ),
                                           color: AppColor.primary500,
                                         ),
                                         padding: EdgeInsets.symmetric(
-                                          horizontal: AppPadding.small,
-                                          vertical: AppPadding.tiny,
+                                          horizontal: AppPadding.small.w,
+                                          vertical: AppPadding.tiny.w,
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
@@ -172,14 +172,14 @@ class _MovieDetailState extends State<MovieDetail> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
-                                              AppBorderRadius.r16,
+                                              AppBorderRadius.r16.w,
                                             ),
                                             border: Border.all(
                                               color: AppColor.primary500,
                                             )),
                                         padding: EdgeInsets.symmetric(
-                                          horizontal: AppPadding.small,
-                                          vertical: AppPadding.tiny,
+                                          horizontal: AppPadding.small.w,
+                                          vertical: AppPadding.tiny.w,
                                         ),
                                         child: Row(
                                           mainAxisAlignment:

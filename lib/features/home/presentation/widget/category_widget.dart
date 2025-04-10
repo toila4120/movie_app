@@ -135,7 +135,7 @@ class _ItemCategory extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
           border: Border.all(
             color: AppColor.greyScale200,
           ),
@@ -144,9 +144,9 @@ class _ItemCategory extends StatelessWidget {
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(AppBorderRadius.r8),
-                  bottomLeft: Radius.circular(AppBorderRadius.r8),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppBorderRadius.r8.w),
+                  bottomLeft: Radius.circular(AppBorderRadius.r8.w),
                 ),
                 child: Image.asset(
                   height: double.infinity,
@@ -164,9 +164,9 @@ class _ItemCategory extends StatelessWidget {
               height: double.infinity,
               decoration: BoxDecoration(
                 color: AppColor.black.withValues(alpha: 0.9),
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(AppBorderRadius.r8),
-                  bottomRight: Radius.circular(AppBorderRadius.r8),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(AppBorderRadius.r8.w),
+                  bottomRight: Radius.circular(AppBorderRadius.r8.w),
                 ),
               ),
               child: Center(

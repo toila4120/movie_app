@@ -92,7 +92,7 @@ class _ItemFilmPopular extends StatelessWidget {
     return Column(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
           child: CachedNetworkImage(
             imageUrl: movieForBannerEntity.posterUrl,
             height: 164.w,

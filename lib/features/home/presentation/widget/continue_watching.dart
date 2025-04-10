@@ -62,7 +62,7 @@ class _ItemFilmContinue extends StatelessWidget {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
           child: Image.asset(
             AppImage.bannerDefault,
             height: 120.h,

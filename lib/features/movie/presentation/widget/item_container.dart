@@ -18,17 +18,20 @@ class ItemContainer extends StatelessWidget {
         vertical: AppPadding.superTiny,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+        borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
         border: Border.all(
           color: AppColor.primary500,
+          width: 1.w,
         ),
       ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 10.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColor.primary500,
+      child: Center(
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColor.primary500,
+          ),
         ),
       ),
     );

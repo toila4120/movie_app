@@ -91,12 +91,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(height: AppPadding.superTiny),
                             Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: AppPadding.tiny,
-                                vertical: AppPadding.superTiny,
+                                horizontal: AppPadding.tiny.w,
+                                vertical: AppPadding.superTiny.w,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.circular(AppBorderRadius.r8),
+                                    BorderRadius.circular(AppBorderRadius.r8.w),
                                 color: state.userModel!.subscriptionPlan!.color,
                               ),
                               child: Row(

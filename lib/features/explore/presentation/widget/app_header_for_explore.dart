@@ -32,7 +32,7 @@ class AppHeaderForExplore extends StatelessWidget {
               padding: EdgeInsets.all(AppPadding.small.w),
               decoration: BoxDecoration(
                 color: AppColor.primary100,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
               ),
               child: Icon(
                 Icons.filter_list,
