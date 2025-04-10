@@ -28,6 +28,9 @@ abstract class AppRouter {
   static const String loginScreenPath = '/login_screen';
   static const String _registerScreenName = 'register_screen';
   static const String registerScreenPath = '/register_screen';
+  static const String _selectGenreScreenName = 'select_genre_screen';
+  static const String selectGenreScreenPath =
+      '/register_screen/select_genre_screen';
   static const String _profileTabName = 'profile_tab';
   static const String profileTabPath = '/profile_tab';
   static const String _chooseAvatarScreenName = 'choose_avatar_screen';
@@ -230,6 +233,19 @@ abstract class AppRouter {
         name: _registerScreenName,
         path: registerScreenPath,
         builder: (context, state) => const RegisterScreen(),
+        routes: [
+          GoRoute(
+            name: _selectGenreScreenName,
+            path: '/$_selectGenreScreenName',
+            pageBuilder: (context, state) {
+              return _buildPageWithDefaultTransition(
+                context: context,
+                state: state,
+                child: const SelectGenreScreen(),
+              );
+            },
+          )
+        ],
       ),
       GoRoute(
         name: _splashLoginScreenName,

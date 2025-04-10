@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state.isLoading.isError) {
           showToast(context, message: state.error!);
-        } else if (state.isLoading.isFinished) {
+        } else if (state.isLoading.isFinished && state.action.isLogin()) {
           context.read<AppBloc>().add(FetchUserEvent(uid: state.user!.uid));
           context.go(AppRouter.splashLoginScreenPath);
         }

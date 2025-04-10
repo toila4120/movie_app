@@ -77,56 +77,54 @@ class _ItemFilmPopular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppBorderRadius.r8),
-            child: CachedNetworkImage(
-              imageUrl: movieForBannerEntity.posterUrl,
-              height: 164.w,
-              width: 120.w,
-              fit: BoxFit.fill,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: Container(
-                  height: 164.w,
-                  width: 120.w,
-                  color: Colors.grey.shade300,
-                ),
-              ),
-              errorWidget: (context, url, error) => Container(
+    return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+          child: CachedNetworkImage(
+            imageUrl: movieForBannerEntity.posterUrl,
+            height: 164.w,
+            width: 120.w,
+            fit: BoxFit.fill,
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
                 height: 164.w,
                 width: 120.w,
                 color: Colors.grey.shade300,
-                child: const Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    color: Colors.grey,
-                    size: 40,
-                  ),
+              ),
+            ),
+            errorWidget: (context, url, error) => Container(
+              height: 164.w,
+              width: 120.w,
+              color: Colors.grey.shade300,
+              child: const Center(
+                child: Icon(
+                  Icons.broken_image,
+                  color: Colors.grey,
+                  size: 40,
                 ),
               ),
             ),
           ),
-          SizedBox(height: AppPadding.tiny),
-          SizedBox(
-            width: 120.w,
-            child: Text(
-              movieForBannerEntity.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12.sp,
-                color: AppColor.greyScale900,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
+        ),
+        SizedBox(height: AppPadding.tiny),
+        SizedBox(
+          width: 120.w,
+          child: Text(
+            movieForBannerEntity.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: AppColor.greyScale900,
+              fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

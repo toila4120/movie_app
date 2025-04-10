@@ -97,17 +97,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     // Lấy dữ liệu hiện có từ Firestore
     final doc = await _firestore.collection('users').doc(userModel.uid).get();
     if (doc.exists) {
-      // Nếu tài liệu đã tồn tại, không ghi đè subscriptionPlan
       return UserModel.fromJson(doc.data()!);
     } else {
-      // Nếu tài liệu chưa tồn tại, tạo mới với subscriptionPlan mặc định là basic
       final newUserModel = UserModel(
         uid: userModel.uid,
         email: userModel.email,
         name: userModel.name,
         avatar: userModel.avatar,
         subscriptionPlan:
-            SubscriptionPlan.basic, // Mặc định là basic cho người dùng mới
+            SubscriptionPlan.basic,
         likedMovies: userModel.likedMovies,
         watchedMovies: userModel.watchedMovies,
       );
@@ -128,7 +126,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     await user.updateDisplayName(name);
     await user.reload();
 
-    // Cập nhật tên trong Firestore
     await _firestore.collection('users').doc(user.uid).update({
       'name': name,
     });
@@ -141,11 +138,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           SetOptions(merge: true),
         );
   }
-
-  // @override
-  // Future<void> signOut() async {
-  //   await _auth.signOut();
-  // }
 
   @override
   Future<UserModel> getUser(String uid) async {

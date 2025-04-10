@@ -26,6 +26,7 @@ class AuthenticationBloc
     on<LikeMovieEvent>(_onLikeMovieEvent);
     on<UpdateWatchedMovieEvent>(_onUpdateWatchedMovieEvent);
     on<UpdateSubscriptionPlanEvent>(_onUpdateSubscriptionPlanEvent);
+    on<UpdateGenresEvent>(_onUpdateGenresEvent);
   }
 
   Future<void> _onAuthencationLoginEvent(
@@ -71,6 +72,7 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.finished,
         user: user,
+        action: AuthAction.login,
       ));
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
@@ -106,6 +108,14 @@ class AuthenticationBloc
     final passwordConfirm = event.passwordConfirm.trim();
     final name = event.name.trim();
 
+    if (name.isEmpty) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: "Name can't be empty.",
+      ));
+      return;
+    }
+
     if (email.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
@@ -118,14 +128,6 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: "Invalid email format.",
-      ));
-      return;
-    }
-
-    if (name.isEmpty) {
-      emit(state.copyWith(
-        isLoading: LoadingState.error,
-        error: "Name can't be empty.",
       ));
       return;
     }
@@ -148,15 +150,17 @@ class AuthenticationBloc
 
     try {
       final registerUseCase = getIt<RegisterUseCase>();
-      final user = await registerUseCase(email, password);
+      UserEntity user = await registerUseCase(email, password);
 
       // Cập nhật tên người dùng
       final updateDisplayNameUseCase = getIt<UpdateDisplayNameUseCase>();
       await updateDisplayNameUseCase(name);
+      user = user.copyWith(name: name);
 
       emit(state.copyWith(
         isLoading: LoadingState.finished,
         user: user,
+        action: AuthAction.register,
       ));
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
@@ -245,6 +249,7 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.finished,
         user: user,
+        action: AuthAction.login,
       ));
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
@@ -382,7 +387,43 @@ class AuthenticationBloc
     try {
       final updateUserUseCase = getIt<UpdateUserUseCase>();
       await updateUserUseCase(updatedUser);
-      emit(state.copyWith(user: updatedUser));
+      emit(state.copyWith(
+        user: updatedUser,
+      ));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateGenresEvent(
+    UpdateGenresEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.user == null) {
+      emit(state.copyWith(
+        error: 'User not logged in.',
+      ));
+      return;
+    }
+
+    final updatedUser = UserModel(
+      uid: state.user!.uid,
+      email: state.user!.email,
+      name: state.user!.name,
+      avatar: state.user!.avatar,
+      subscriptionPlan: state.user!.subscriptionPlan,
+      likedMovies: state.user!.likedMovies,
+      watchedMovies: state.user!.watchedMovies,
+      likedGenres: event.genres,
+    );
+
+    try {
+      final updateUserUseCase = getIt<UpdateUserUseCase>();
+      await updateUserUseCase(updatedUser);
+      emit(state.copyWith(
+        user: updatedUser,
+        action: AuthAction.none,
+      ));
     } catch (e) {
       emit(state.copyWith(error: e.toString()));
     }

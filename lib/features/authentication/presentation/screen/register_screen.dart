@@ -19,9 +19,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state.isLoading.isError) {
-          showToast(context, message: state.error!);
-        } else if (state.isLoading.isFinished) {
-          context.go(AppRouter.homeTabPath);
+          if (state.error != null) {
+            showToast(context, message: state.error!);
+          } else {
+            showToast(context, message: 'Đã xảy ra lỗi không xác định');
+          }
+        } else if (state.isLoading.isFinished && state.action.isRegister()) {
+          context.read<AppBloc>().add(FetchUserEvent(uid: state.user!.uid));
+          context.go(AppRouter.selectGenreScreenPath);
         }
       },
       child: AppContainer(
@@ -39,7 +44,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   behavior: const DisableGlowBehavior(),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                  
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -140,15 +144,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: AppPadding.medium),
                               onPressed: () {
-                                context
-                                    .read<AuthenticationBloc>()
-                                    .add(AuthenticationRegisterEvent(
-                                      name: _nameController.text,
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                      passwordConfirm:
-                                          _confirmPasswordController.text,
-                                    ));
+                                context.read<CategoriesBloc>().add(
+                                      FetchCategories(),
+                                    );
+                                context.read<AuthenticationBloc>().add(
+                                      AuthenticationRegisterEvent(
+                                        name: _nameController.text,
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                        passwordConfirm:
+                                            _confirmPasswordController.text,
+                                      ),
+                                    );
                               },
                               radius: AppBorderRadius.r8,
                               backgroundColor: AppColor.primary200,

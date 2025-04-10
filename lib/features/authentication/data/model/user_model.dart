@@ -11,6 +11,7 @@ class UserModel extends UserEntity {
     super.subscriptionPlan,
     super.likedMovies = const [],
     super.watchedMovies = const [],
+    super.likedGenres = const [],
   });
 
   factory UserModel.fromFirebaseUser(User user) {
@@ -22,6 +23,7 @@ class UserModel extends UserEntity {
       subscriptionPlan: null,
       likedMovies: const [],
       watchedMovies: const [],
+      likedGenres: const [],
     );
   }
 
@@ -34,6 +36,7 @@ class UserModel extends UserEntity {
       subscriptionPlan: SubscriptionPlan.basic,
       likedMovies: [],
       watchedMovies: [],
+      likedGenres: [],
     );
   }
 
@@ -53,6 +56,10 @@ class UserModel extends UserEntity {
               ?.map((e) => WatchedMovie.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      likedGenres: (json['likedGenres'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
   }
 
@@ -65,8 +72,8 @@ class UserModel extends UserEntity {
       'avatar': avatar,
       'likedMovies': likedMovies,
       'watchedMovies': watchedMovies.map((e) => e.toJson()).toList(),
+      'likedGenres': likedGenres,
     };
-    // Chỉ thêm subscriptionPlan vào JSON nếu nó không phải null
     if (subscriptionPlan != null) {
       json['subscriptionPlan'] = subscriptionPlan!.toJson();
     }

@@ -101,9 +101,6 @@ class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
           await dio.get('https://api.dulieuphim.ink/get-dien-vien/$slug');
       if (response.statusCode == 200) {
         final jsonData = response.data;
-        if (jsonData['success'] != true) {
-          return [];
-        }
 
         final List<dynamic> items = jsonData['actors'];
         return items

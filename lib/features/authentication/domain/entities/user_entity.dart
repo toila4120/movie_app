@@ -9,6 +9,7 @@ class UserEntity extends Equatable {
   final SubscriptionPlan? subscriptionPlan; // Sử dụng enum
   final List<String> likedMovies; // Danh sách ID của phim đã thả tim
   final List<WatchedMovie> watchedMovies; // Danh sách phim đã xem
+  final List<String> likedGenres; // Danh sách thể loại đã thả tim
 
   const UserEntity({
     required this.uid,
@@ -18,6 +19,7 @@ class UserEntity extends Equatable {
     this.subscriptionPlan = SubscriptionPlan.basic, // Mặc định là basic
     this.likedMovies = const [], // Mặc định là danh sách rỗng
     this.watchedMovies = const [], // Mặc định là danh sách rỗng
+    this.likedGenres = const [], // Mặc định là danh sách rỗng
   });
 
   @override
@@ -29,7 +31,30 @@ class UserEntity extends Equatable {
         subscriptionPlan,
         likedMovies,
         watchedMovies,
+        likedGenres,
       ];
+
+  UserEntity copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    int? avatar,
+    SubscriptionPlan? subscriptionPlan,
+    List<String>? likedMovies,
+    List<WatchedMovie>? watchedMovies,
+    List<String>? likedGenres,
+  }) {
+    return UserEntity(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      avatar: avatar ?? this.avatar,
+      subscriptionPlan: subscriptionPlan ?? this.subscriptionPlan,
+      likedMovies: likedMovies ?? this.likedMovies,
+      watchedMovies: watchedMovies ?? this.watchedMovies,
+      likedGenres: likedGenres ?? this.likedGenres,
+    );
+  }
 }
 
 // Class đại diện cho một bộ phim đã xem

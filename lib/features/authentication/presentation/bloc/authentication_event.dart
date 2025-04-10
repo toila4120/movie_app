@@ -102,3 +102,16 @@ class UpdateSubscriptionPlanEvent extends AuthenticationEvent {
         subscriptionPlan,
       ];
 }
+
+class UpdateGenresEvent extends AuthenticationEvent {
+  final List<String> genres;
+
+  const UpdateGenresEvent({
+    required this.genres,
+  });
+
+  @override
+  List<Object?> get props => [
+        genres,
+      ];
+}
