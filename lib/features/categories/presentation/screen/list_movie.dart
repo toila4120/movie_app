@@ -48,12 +48,18 @@ class _ListMovieState extends State<ListMovie> {
                                     page: state.page + 1,
                                   ),
                                 )
-                            : context.read<MovieBloc>().add(
-                                  FetchMoviesByCategory(
-                                    categorySlug: widget.slug,
-                                    page: state.page + 1,
-                                  ),
-                                );
+                            : widget.slug == 'phim-moi-cap-nhat-v3'
+                                ? context.read<MovieBloc>().add(
+                                      FetchNewMoviesEvent(
+                                        page: state.page + 1,
+                                      ),
+                                    )
+                                : context.read<MovieBloc>().add(
+                                      FetchMoviesByCategory(
+                                        categorySlug: widget.slug,
+                                        page: state.page + 1,
+                                      ),
+                                    );
                         return true;
                       }
                       return false;

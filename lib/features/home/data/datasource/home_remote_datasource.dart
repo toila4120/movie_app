@@ -40,7 +40,8 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<List<MovieModel>> fetchMoviesByGenre(String genre) async {
     try {
-      final response = await dio.get('https://phimapi.com/v1/api/the-loai/$genre',
+      final response = await dio.get(
+          'https://phimapi.com/v1/api/the-loai/$genre',
           queryParameters: {'page': 1});
       if (response.statusCode == 200) {
         final jsonData = response.data;
@@ -51,7 +52,8 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
         final List<dynamic> items = jsonData['items'];
         return items.map((item) => MovieModel.fromJson(item)).toList();
       } else {
-        throw Exception('Failed to fetch movies by genre: ${response.statusCode}');
+        throw Exception(
+            'Failed to fetch movies by genre: ${response.statusCode}');
       }
     } on DioException catch (e) {
       throw Exception('Dio error: ${e.message}');

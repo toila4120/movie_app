@@ -7,6 +7,7 @@ abstract class MovieRemoteDatasource {
   Future<MovieModel> fetchMovieDetail(String slug);
   Future<List<MovieModel>> fetchMoviesByList(String listSlug, int page);
   Future<List<ActorEntity>> fetchMovieActors(String slug);
+  Future<List<MovieModel>> fetchNewMovies(int page);
 }
 
 class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
@@ -108,6 +109,31 @@ class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
             .toList();
       } else {
         throw Exception('Failed to fetch movie actors: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      throw Exception('Dio error: ${e.message}');
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
+    }
+  }
+
+  @override
+  Future<List<MovieModel>> fetchNewMovies(int page) async {
+    try {
+      final response = await dio.get(
+        'https://phimapi.com/danh-sach/phim-moi-cap-nhat-v3',
+        queryParameters: {'page': page},
+      );
+      if (response.statusCode == 200) {
+        final jsonData = response.data;
+        if (jsonData['status'] != true) {
+          throw Exception('Failed to fetch movies');
+        }
+
+        final List<dynamic> items = jsonData['items'];
+        return items.map((item) => MovieModel.fromJson(item)).toList();
+      } else {
+        throw Exception('Failed to fetch movies: ${response.statusCode}');
       }
     } on DioException catch (e) {
       throw Exception('Dio error: ${e.message}');

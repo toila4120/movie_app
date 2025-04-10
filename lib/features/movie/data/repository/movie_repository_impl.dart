@@ -46,4 +46,13 @@ class MovieRepositoryImpl extends MovieRepository {
       rethrow;
     }
   }
+  
+  @override
+  Future<List<MovieEntity>> fetchNewMovies(int page) {
+    try {
+      return movieRemoteDatasource.fetchNewMovies(page);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

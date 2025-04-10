@@ -23,6 +23,18 @@ class Popular extends StatelessWidget {
                   ),
                 ),
                 CustomAppButton(
+                  onPressed: () {
+                    context.read<MovieBloc>().add(const FetchNewMoviesEvent(
+                          page: 1,
+                        ));
+                    context.push(
+                      AppRouter.listMoviePath,
+                      extra: {
+                        'input': 'Phim nổi bật',
+                        'input2': 'phim-moi-cap-nhat-v3',
+                      },
+                    );
+                  },
                   text: "Xem tất cả",
                   textStyle: TextStyle(
                     fontSize: 12.sp,

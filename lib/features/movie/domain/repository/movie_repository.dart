@@ -7,4 +7,5 @@ abstract class MovieRepository {
   Future<List<MovieEntity>> fetchMoviesByList(String listSlug, int page);
   Future<MovieEntity> fetchMovieDetail(String slug);
   Future<List<ActorEntity>> fetchMovieActors(String slug);
+  Future<List<MovieEntity>> fetchNewMovies(int page);
 }

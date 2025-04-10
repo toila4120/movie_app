@@ -7,6 +7,7 @@ import 'package:movie_app/features/movie/domain/usecase/fectch_movie_actor_useca
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_by_list_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_detail_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movies_by_category_usecase.dart';
+import 'package:movie_app/features/movie/domain/usecase/fetch_new_movie_usecase.dart';
 import 'package:movie_app/injection_container.dart';
 
 part 'movie_event.dart';
@@ -17,6 +18,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<FetchMoviesByCategory>(_onFetchMoviesByCategory);
     on<FetchMovieDetailEvent>(_onFetchMovieDetail);
     on<FetchMovieByListEvent>(_onFetchMovieByList);
+    on<FetchNewMoviesEvent>(_onFetchNewMovies);
   }
 
   Future<void> _onFetchMoviesByCategory(
@@ -93,6 +95,36 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         loadingState: LoadingState.finished,
         movies: updatedMovies,
         hasReachedMax: movies.length < 10,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        loadingState: LoadingState.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _onFetchNewMovies(
+      FetchNewMoviesEvent event, Emitter<MovieState> emit) async {
+    if (event.page <= state.page && event.page != 1) {
+      return;
+    }
+
+    emit(state.copyWith(
+      loadingState: LoadingState.loading,
+      errorMessage: null,
+      page: event.page,
+    ));
+
+    try {
+      final useCase = getIt<FetchNewMovieUsecase>();
+      final movies = await useCase(event.page);
+      final updatedMovies =
+          event.page == 1 ? movies : [...state.movies, ...movies];
+      emit(state.copyWith(
+        loadingState: LoadingState.finished,
+        movies: updatedMovies,
+        hasReachedMax: movies.length < 24,
       ));
     } catch (e) {
       emit(state.copyWith(

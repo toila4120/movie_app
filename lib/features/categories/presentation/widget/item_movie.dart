@@ -9,6 +9,17 @@ class ItemMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String normalizeImageUrl(String posterUrl) {
+      const baseUrl = 'https://phimimg.com/';
+      if (posterUrl.startsWith(baseUrl)) {
+        return posterUrl; 
+      } else if (posterUrl.startsWith('/')) {
+        return '$baseUrl${posterUrl.substring(1)}';
+      } else {
+        return '$baseUrl$posterUrl';
+      }
+    }
+
     return CustomAppButton(
       onPressed: () {
         context.read<MovieBloc>().add(
@@ -54,7 +65,7 @@ class ItemMovie extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppBorderRadius.r16),
                       child: CachedNetworkImage(
-                        imageUrl: 'https://phimimg.com/${movieModel.posterUrl}',
+                        imageUrl: normalizeImageUrl(movieModel.posterUrl),
                         width: 120.w,
                         height: 144.w,
                         fit: BoxFit.fill,

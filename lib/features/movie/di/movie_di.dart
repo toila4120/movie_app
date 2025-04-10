@@ -5,6 +5,7 @@ import 'package:movie_app/features/movie/domain/usecase/fectch_movie_actor_useca
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_by_list_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movie_detail_usecase.dart';
 import 'package:movie_app/features/movie/domain/usecase/fetch_movies_by_category_usecase.dart';
+import 'package:movie_app/features/movie/domain/usecase/fetch_new_movie_usecase.dart';
 import 'package:movie_app/injection_container.dart';
 
 void setupMovieDi() {
@@ -22,4 +23,5 @@ void setupMovieDi() {
   getIt.registerLazySingleton(() => FetchMovieDetailUsecase(getIt()));
   getIt.registerLazySingleton(() => FetchMovieByListUsecase(getIt()));
   getIt.registerLazySingleton(() => FectchMovieActorUsecase(getIt()));
+  getIt.registerLazySingleton(() => FetchNewMovieUsecase(getIt()));
 }

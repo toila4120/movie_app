@@ -168,6 +168,7 @@ class _BannerHomeState extends State<BannerHome> {
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w500,
                                               ),
+                                              maxLines: 1,
                                             ),
                                           ],
                                         ),

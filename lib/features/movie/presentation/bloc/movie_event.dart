@@ -46,3 +46,14 @@ class FetchMovieByListEvent extends MovieEvent {
         page,
       ];
 }
+
+class FetchNewMoviesEvent extends MovieEvent {
+  final int page;
+
+  const FetchNewMoviesEvent({this.page = 1});
+
+  @override
+  List<Object?> get props => [
+        page,
+      ];
+}
