@@ -21,18 +21,30 @@ class HeaderMovieDetail extends StatelessWidget {
             BuildContext fromHeroContext,
             BuildContext toHeroContext,
           ) {
-            return FadeTransition(
-              opacity: animation,
-              child: flightDirection == HeroFlightDirection.push
-                  ? fromHeroContext.widget
-                  : toHeroContext.widget,
+            final curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOut, // Đường cong mượt mà
+            );
+
+            return ScaleTransition(
+              scale: Tween<double>(begin: 1.0, end: 1.0)
+                  .animate(curvedAnimation), // Có thể điều chỉnh scale nếu muốn
+              child: FadeTransition(
+                opacity: curvedAnimation,
+                child: flightDirection == HeroFlightDirection.push
+                    ? fromHeroContext.widget
+                    : toHeroContext.widget,
+              ),
             );
           },
           child: CachedNetworkImage(
+            key: ValueKey(movie.thumbUrl),
             imageUrl: movie.thumbUrl,
             height: MediaQuery.of(context).size.height * 0.3,
             width: double.infinity,
             fit: BoxFit.fill,
+            fadeInDuration: const Duration(milliseconds: 300),
+            fadeOutDuration: const Duration(milliseconds: 200),
             placeholder: (context, url) => Shimmer.fromColors(
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.grey.shade100,

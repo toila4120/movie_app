@@ -18,15 +18,17 @@ class NotFoundMovie extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
-                color: AppColor.greyScale500,
+                color: AppColor.primary500,
               )),
           SizedBox(height: AppPadding.tiny),
-          Text("Vui lòng thử lại với từ khóa khác",
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColor.greyScale500,
-              )),
+          Text(
+            "Vui lòng thử lại với từ khóa khác",
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColor.greyScale500,
+            ),
+          ),
         ],
       ),
     );

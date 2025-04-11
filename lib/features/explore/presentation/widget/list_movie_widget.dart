@@ -1,6 +1,7 @@
 part of '../../explore.dart';
 
 class ListMovieWidget extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final movies;
   const ListMovieWidget({
     super.key,
@@ -22,7 +23,7 @@ class _ListMovieWidgetState extends State<ListMovieWidget> {
         crossAxisCount: 3,
         mainAxisSpacing: 8.w,
         crossAxisSpacing: 8.w,
-        childAspectRatio: 186.w / 450.w,
+        childAspectRatio: 186.w / 455.w,
       ),
       itemCount: widget.movies.length,
       itemBuilder: (context, index) {
@@ -42,6 +43,7 @@ class _ListMovieWidgetState extends State<ListMovieWidget> {
 }
 
 class MovieItemWidget extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final movie;
   final VoidCallback onTap;
 
@@ -84,6 +86,7 @@ class MovieItemWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(AppBorderRadius.r8),
             child: CachedNetworkImage(
+              key: ValueKey(normalizeImageUrl(movie.posterUrl)),
               imageUrl: normalizeImageUrl(movie.posterUrl),
               height: 248.0.w,
               width: 186.0.w,
@@ -106,10 +109,11 @@ class MovieItemWidget extends StatelessWidget {
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.greyScale500,
-                ),
+            style: TextStyle(
+              fontSize: 12.0.w,
+              fontWeight: FontWeight.w500,
+              color: AppColor.greyScale500,
+            ),
           ),
         ],
       ),

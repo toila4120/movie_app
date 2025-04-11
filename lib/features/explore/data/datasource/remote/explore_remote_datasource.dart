@@ -11,8 +11,14 @@ class ExploreRemoteDatasourceImpl implements ExploreRemoteDatasource {
   @override
   Future<List<MovieModel>> searchMovie(String query, int page) async {
     try {
-      final response = await dio.get('https://phimapi.com/v1/api/tim-kiem?keyword=$query',
-          queryParameters: {'page': page,'sort_field':'_id','sort_type':'desc',});
+      final response = await dio.get(
+          'https://phimapi.com/v1/api/tim-kiem?keyword=$query',
+          queryParameters: {
+            'page': page,
+            'sort_field': '_id',
+            'sort_type': 'desc',
+            'limit': 12,
+          });
       if (response.statusCode == 200) {
         final jsonData = response.data;
         if (jsonData['status'] != 'success') {

@@ -48,6 +48,7 @@ class _BannerHomeState extends State<BannerHome> {
                                   ),
                                 )
                               : CachedNetworkImage(
+                                  key: ValueKey(banner.thumbUrl),
                                   imageUrl: banner.thumbUrl,
                                   height: double.infinity,
                                   width: double.infinity,

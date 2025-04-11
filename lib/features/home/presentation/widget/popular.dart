@@ -94,6 +94,7 @@ class _ItemFilmPopular extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
           child: CachedNetworkImage(
+            key: ValueKey(movieForBannerEntity.posterUrl),
             imageUrl: movieForBannerEntity.posterUrl,
             height: 164.w,
             width: 120.w,

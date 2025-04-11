@@ -76,31 +76,31 @@ class _AppTextFieldState extends State<AppTextField> {
           right: widget.suffixIcon == null ? AppPadding.large : 0.0,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r16.w),
           borderSide: const BorderSide(
             color: AppColor.blue,
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r16.w),
           borderSide: const BorderSide(
             color: AppColor.buttonDisabled,
           ),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r16.w),
           borderSide: const BorderSide(
             color: AppColor.buttonDisabled,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r16.w),
           borderSide: const BorderSide(
             color: AppColor.buttonDisabled,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r16.w),
           borderSide: const BorderSide(
             color: AppColor.red,
           ),

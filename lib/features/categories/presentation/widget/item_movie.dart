@@ -12,7 +12,7 @@ class ItemMovie extends StatelessWidget {
     String normalizeImageUrl(String posterUrl) {
       const baseUrl = 'https://phimimg.com/';
       if (posterUrl.startsWith(baseUrl)) {
-        return posterUrl; 
+        return posterUrl;
       } else if (posterUrl.startsWith('/')) {
         return '$baseUrl${posterUrl.substring(1)}';
       } else {
@@ -65,6 +65,7 @@ class ItemMovie extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppBorderRadius.r16),
                       child: CachedNetworkImage(
+                        key: ValueKey(normalizeImageUrl(movieModel.posterUrl)),
                         imageUrl: normalizeImageUrl(movieModel.posterUrl),
                         width: 120.w,
                         height: 144.w,
