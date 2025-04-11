@@ -1,7 +1,11 @@
 part of '../../explore.dart';
 
 class ListMovieWidget extends StatefulWidget {
-  const ListMovieWidget({super.key});
+  final movies;
+  const ListMovieWidget({
+    super.key,
+    this.movies = const [],
+  });
 
   @override
   State<ListMovieWidget> createState() => _ListMovieWidgetState();
@@ -9,75 +13,106 @@ class ListMovieWidget extends StatefulWidget {
 
 class _ListMovieWidgetState extends State<ListMovieWidget> {
   @override
-  void initState() {
-    context.read<HomeBloc>().add(FectchMovieForBannerMovies());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state.loadingState.isLoading) {
-          return const ItemShimmer();
-        }
-        if (state.bannerMovies.isEmpty) {
-          return const Center(child: Text('Không có phim nào'));
-        }
-        return GridView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: AppPadding.small,
-            mainAxisSpacing: AppPadding.small,
-            childAspectRatio: 186 / 248,
-          ),
-          itemCount: state.bannerMovies.length,
-          itemBuilder: (context, index) {
-            final movie = state.bannerMovies[index];
-            return CustomAppButton(
-              onPressed: () {
-                context
-                    .read<MovieBloc>()
-                    .add(FetchMovieDetailEvent(slug: movie.slug));
-                context.push(AppRouter.movieDetailPath);
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppBorderRadius.r8),
-                child: CachedNetworkImage(
-                  imageUrl: movie.posterUrl,
-                  height: 248.w,
-                  width: 186.w,
-                  fit: BoxFit.fill,
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(
-                      height: 248.w,
-                      width: 186.w,
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    height: 248.w,
-                    width: 186.w,
-                    color: Colors.grey.shade300,
-                    child: const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        color: Colors.grey,
-                        size: 40,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
+    return GridView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 8.w,
+        crossAxisSpacing: 8.w,
+        childAspectRatio: 186.w / 450.w,
+      ),
+      itemCount: widget.movies.length,
+      itemBuilder: (context, index) {
+        final movie = widget.movies[index];
+        return MovieItemWidget(
+          movie: movie,
+          onTap: () {
+            context
+                .read<MovieBloc>()
+                .add(FetchMovieDetailEvent(slug: movie.slug));
+            context.push(AppRouter.movieDetailPath);
           },
         );
       },
+    );
+  }
+}
+
+class MovieItemWidget extends StatelessWidget {
+  final movie;
+  final VoidCallback onTap;
+
+  const MovieItemWidget({
+    super.key,
+    required this.movie,
+    required this.onTap,
+  });
+
+  static final _placeholder = Shimmer.fromColors(
+    baseColor: Colors.grey.shade300,
+    highlightColor: Colors.grey.shade100,
+    child: Container(color: Colors.grey.shade300),
+  );
+
+  static final _errorWidget = Container(
+    color: Colors.grey.shade300,
+    child: const Center(
+      child: Icon(Icons.broken_image, color: Colors.grey, size: 40),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    String normalizeImageUrl(String posterUrl) {
+      const baseUrl = 'https://phimimg.com/';
+      if (posterUrl.startsWith(baseUrl)) {
+        return posterUrl;
+      } else if (posterUrl.startsWith('/')) {
+        return '$baseUrl${posterUrl.substring(1)}';
+      } else {
+        return '$baseUrl$posterUrl';
+      }
+    }
+
+    return CustomAppButton(
+      onPressed: onTap,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+            child: CachedNetworkImage(
+              imageUrl: normalizeImageUrl(movie.posterUrl),
+              height: 248.0.w,
+              width: 186.0.w,
+              fit: BoxFit.fill,
+              placeholder: (context, url) => SizedBox(
+                height: 248.0.w,
+                width: 186.0.w,
+                child: _placeholder,
+              ),
+              errorWidget: (context, url, error) => SizedBox(
+                height: 248.0.w,
+                width: 186.0.w,
+                child: _errorWidget,
+              ),
+            ),
+          ),
+          SizedBox(height: AppPadding.superTiny),
+          Text(
+            movie.name,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.greyScale500,
+                ),
+          ),
+        ],
+      ),
     );
   }
 }

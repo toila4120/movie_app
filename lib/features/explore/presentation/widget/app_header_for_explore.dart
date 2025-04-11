@@ -12,6 +12,14 @@ class AppHeaderForExplore extends StatelessWidget {
           Expanded(
             child: AppTextField(
               hintText: 'Search',
+              onSubmitted: (p0) {
+                context.read<ExploreBloc>().add(
+                      ExploreEventSearch(
+                        p0,
+                        1,
+                      ),
+                    );
+              },
               prefixIcon: Padding(
                 padding: EdgeInsets.all(AppPadding.small.w),
                 child: SizedBox(
