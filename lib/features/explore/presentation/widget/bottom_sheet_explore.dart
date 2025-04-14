@@ -90,7 +90,9 @@ class BottomSheetExplore extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomAppButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<ExploreBloc>().add(ResetFilterEvent());
+                      },
                       padding: EdgeInsets.symmetric(
                         vertical: AppPadding.medium,
                       ),
@@ -111,7 +113,12 @@ class BottomSheetExplore extends StatelessWidget {
                 SizedBox(width: AppPadding.medium),
                 Expanded(
                   child: CustomAppButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context
+                            .read<ExploreBloc>()
+                            .add(const FilterMovieEvent(1));
+                        context.pop();
+                      },
                       padding: EdgeInsets.symmetric(
                         vertical: AppPadding.medium,
                       ),

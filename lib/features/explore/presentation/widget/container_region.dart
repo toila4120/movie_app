@@ -35,7 +35,9 @@ class ContainerRegion extends StatelessWidget {
           height: 38,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: regionList.length - 2,
+            itemCount: regionList.length > 2
+                ? regionList.length - 2
+                : regionList.length,
             itemBuilder: (context, index) {
               final region = regionList[index];
               final isSelected = state.regions.contains(region['slug']);

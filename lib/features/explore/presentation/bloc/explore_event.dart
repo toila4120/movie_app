@@ -66,3 +66,13 @@ class UpdateSortEvent extends ExploreEvent {
 }
 
 class FetchRegionsEvent extends ExploreEvent {}
+
+class ResetFilterEvent extends ExploreEvent {}
+
+class FilterMovieEvent extends ExploreEvent {
+  final int page;
+  const FilterMovieEvent(this.page);
+
+  @override
+  List<Object> get props => [page];
+}

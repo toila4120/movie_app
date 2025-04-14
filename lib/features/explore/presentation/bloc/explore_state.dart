@@ -6,6 +6,8 @@ class ExploreState extends Equatable {
   final String errorMessage;
   final String lastQuery;
   final int page;
+  final DataSource dataSource;
+  final FilterParam? filterParam;
   final List<RegionEntities> availableRegions;
   final List<String> genres;
   final List<String> categories;
@@ -22,6 +24,8 @@ class ExploreState extends Equatable {
     required this.errorMessage,
     required this.lastQuery,
     required this.page,
+    required this.dataSource,
+    this.filterParam,
     required this.availableRegions,
     required this.genres,
     required this.categories,
@@ -39,6 +43,7 @@ class ExploreState extends Equatable {
         errorMessage: '',
         lastQuery: '',
         page: 1,
+        dataSource: DataSource.initial,
         availableRegions: [],
         genres: [],
         categories: [],
@@ -56,6 +61,8 @@ class ExploreState extends Equatable {
     String? errorMessage,
     String? lastQuery,
     int? page,
+    DataSource? dataSource,
+    FilterParam? filterParam,
     List<RegionEntities>? availableRegions,
     List<String>? genres,
     List<String>? categories,
@@ -72,6 +79,8 @@ class ExploreState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       lastQuery: lastQuery ?? this.lastQuery,
       page: page ?? this.page,
+      dataSource: dataSource ?? this.dataSource,
+      filterParam: filterParam ?? this.filterParam,
       availableRegions: availableRegions ?? this.availableRegions,
       genres: genres ?? this.genres,
       categories: categories ?? this.categories,
@@ -91,6 +100,7 @@ class ExploreState extends Equatable {
         errorMessage,
         lastQuery,
         page,
+        dataSource,
         availableRegions,
         genres,
         categories,

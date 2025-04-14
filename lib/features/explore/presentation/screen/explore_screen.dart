@@ -20,9 +20,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
           !context.read<ExploreBloc>().state.loadingState.isLoading) {
         final state = context.read<ExploreBloc>().state;
         if (!state.hasReachedMax) {
-          context.read<ExploreBloc>().add(
-                ExploreEventSearch(state.lastQuery, state.page + 1),
-              );
+          if (state.dataSource == DataSource.search) {
+            context.read<ExploreBloc>().add(
+                  ExploreEventSearch(state.lastQuery, state.page + 1),
+                );
+          } else if (state.dataSource == DataSource.filter &&
+              state.filterParam != null) {
+            context.read<ExploreBloc>().add(
+                  FilterMovieEvent(state.page + 1),
+                );
+          }
         }
       }
     });
@@ -136,16 +143,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             ListMovieWidget(movies: state.movies),
                           if (state.loadingState.isLoading)
                             const ItemListMovieShimmer(),
-                          if (state.hasReachedMax && state.movies.isNotEmpty ||
-                              state.page == 3 ||
-                              !state.loadingState.isLoading ||
-                              state.searchStatus.isInitial &&
-                                  state.movies.isEmpty)
+                          if (state.hasReachedMax && state.movies.isNotEmpty)
                             Padding(
                               padding: EdgeInsets.all(AppPadding.small),
                               child: const Center(
                                 child: Text(
-                                  'Không còn phim nào nữa, nếu vẫn không thấy phim nào thì hãy thử lại với từ khóa khác',
+                                  'Không còn phim nào nữa, hãy thử lại với bộ lọc hoặc từ khóa khác',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
