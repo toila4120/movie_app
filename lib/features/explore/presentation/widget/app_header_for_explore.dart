@@ -71,7 +71,17 @@ class _AppHeaderForExploreState extends State<AppHeaderForExplore> {
           ),
           SizedBox(width: AppPadding.small),
           CustomAppButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                isDismissible: true,
+                isScrollControlled: true,
+                backgroundColor: AppColor.transparent,
+                builder: (context) {
+                  return const BottomSheetExplore();
+                },
+              );
+            },
             child: Container(
               padding: EdgeInsets.all(AppPadding.small.w),
               decoration: BoxDecoration(

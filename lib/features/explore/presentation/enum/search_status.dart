@@ -10,6 +10,8 @@ enum SearchStatus {
   noMoreResult,
   noMoreSearchResult;
 
+  bool get isInitial => this == SearchStatus.initial;
+
   bool get isLoading => this == SearchStatus.loading;
 
   bool get isSuccess => this == SearchStatus.success;
@@ -37,11 +39,11 @@ enum SearchStatus {
 
   bool isLoadingMore() =>
       isLoading || isNoMoreData || isNoMoreResult || isNoMoreSearchResult;
-      
+
   bool isLoadingMoreResult() =>
       isLoading || isNoMoreResult || isNoMoreSearchResult;
 
   bool isLoadingMoreSearchResult() => isLoading || isNoMoreSearchResult;
-  
+
   bool isLoadingMoreData() => isLoading || isNoMoreData;
 }

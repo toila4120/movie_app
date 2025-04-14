@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
+import 'package:movie_app/features/explore/domain/entities/region_entities.dart';
+import 'package:movie_app/features/explore/domain/usecase/get_region_usecase.dart';
 import 'package:movie_app/features/explore/domain/usecase/search_movie_usecase.dart';
 import 'package:movie_app/features/explore/presentation/enum/search_status.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
@@ -17,6 +19,13 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
 
   ExploreBloc() : super(ExploreState.init()) {
     on<ExploreEventSearch>(_onExploreEventSearch);
+    on<UpdateCategoriesEvent>(_onUpdateCategoriesEvent);
+    on<UpdategGenreEvent>(_onUpdategGenreEvent);
+    on<UpdateTranslationEvent>(_onUpdateTranslationEvent);
+    on<UpdateYearEvent>(_onUpdateYearEvent);
+    on<UpdateRegionEvent>(_onUpdateRegionEvent);
+    on<UpdateSortEvent>(_onUpdateSortEvent);
+    on<FetchRegionsEvent>(_onFetchRegionsEvent);
   }
 
   Future<void> _onExploreEventSearch(
@@ -29,7 +38,6 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         event.page != 1 && state.movies.isEmpty) {
       return;
     }
-    print(' searching for ${event.query} page ${event.page}');
     if (event.query.isEmpty) {
       emit(state.copyWith(
         loadingState: LoadingState.pure,
@@ -94,6 +102,138 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         loadingState: LoadingState.error,
         searchStatus: SearchStatus.error,
         errorMessage: errorMessage,
+      ));
+    }
+  }
+
+  void _onUpdateCategoriesEvent(
+      UpdateCategoriesEvent event, Emitter<ExploreState> emit) {
+    List<String> categories = List.from(state.categories);
+
+    if (event.category == 'all' && !categories.contains('all')) {
+      categories = ['all'];
+    } else if (event.category == 'all' && categories.contains('all')) {
+      categories.remove('all');
+    } else if (categories.contains('all') && event.category != 'all') {
+      categories.remove('all');
+      if (!categories.contains(event.category)) {
+        categories.add(event.category);
+      }
+    } else if (categories.contains(event.category)) {
+      categories.remove(event.category);
+    } else {
+      categories.add(event.category);
+    }
+
+    emit(state.copyWith(categories: categories));
+  }
+
+  void _onUpdategGenreEvent(
+      UpdategGenreEvent event, Emitter<ExploreState> emit) {
+    List<String> genres = List.from(state.genres);
+
+    if (event.genre == 'all' && !genres.contains('all')) {
+      genres = ['all'];
+    } else if (event.genre == 'all' && genres.contains('all')) {
+      genres.remove('all');
+    } else if (genres.contains('all') && event.genre != 'all') {
+      genres.remove('all');
+      if (!genres.contains(event.genre)) {
+        genres.add(event.genre);
+      }
+    } else if (genres.contains(event.genre)) {
+      genres.remove(event.genre);
+    } else {
+      genres.add(event.genre);
+    }
+
+    emit(state.copyWith(genres: genres));
+  }
+
+  void _onUpdateTranslationEvent(
+      UpdateTranslationEvent event, Emitter<ExploreState> emit) {
+    List<String> translations = List.from(state.translations);
+
+    if (event.translation == 'all' && !translations.contains('all')) {
+      translations = ['all'];
+    } else if (event.translation == 'all' && translations.contains('all')) {
+      translations.remove('all');
+    } else if (translations.contains('all') && event.translation != 'all') {
+      translations.remove('all');
+      if (!translations.contains(event.translation)) {
+        translations.add(event.translation);
+      }
+    } else if (translations.contains(event.translation)) {
+      translations.remove(event.translation);
+    } else {
+      translations.add(event.translation);
+    }
+
+    emit(state.copyWith(translations: translations));
+  }
+
+  void _onUpdateYearEvent(UpdateYearEvent event, Emitter<ExploreState> emit) {
+    List<String> years = List.from(state.years);
+
+    if (event.year == 'all' && !years.contains('all')) {
+      years = ['all'];
+    } else if (event.year == 'all' && years.contains('all')) {
+      years.remove('all');
+    } else if (years.contains('all') && event.year != 'all') {
+      years.remove('all');
+      if (!years.contains(event.year)) {
+        years.add(event.year);
+      }
+    } else if (years.contains(event.year)) {
+      years.remove(event.year);
+    } else {
+      years.add(event.year);
+    }
+
+    emit(state.copyWith(years: years));
+  }
+
+  void _onUpdateRegionEvent(
+      UpdateRegionEvent event, Emitter<ExploreState> emit) {
+    List<String> regions = List.from(state.regions);
+
+    if (event.region == 'all' && !regions.contains('all')) {
+      regions = ['all'];
+    } else if (event.region == 'all' && regions.contains('all')) {
+      regions.remove('all');
+    } else if (regions.contains('all') && event.region != 'all') {
+      regions.remove('all');
+      if (!regions.contains(event.region)) {
+        regions.add(event.region);
+      }
+    } else if (regions.contains(event.region)) {
+      regions.remove(event.region);
+    } else {
+      regions.add(event.region);
+    }
+
+    emit(state.copyWith(regions: regions));
+  }
+
+  void _onUpdateSortEvent(UpdateSortEvent event, Emitter<ExploreState> emit) {
+    emit(state.copyWith(sort: event.sort));
+  }
+
+  void _onFetchRegionsEvent(
+      FetchRegionsEvent event, Emitter<ExploreState> emit) async {
+    if (state.availableRegions.isNotEmpty) return;
+    emit(state.copyWith(loadingState: LoadingState.loading));
+    try {
+      final useCase = getIt<GetRegionsUsecase>();
+      final regions = await useCase();
+      emit(state.copyWith(
+        loadingState: LoadingState.finished,
+        availableRegions: regions,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        loadingState: LoadingState.error,
+        errorMessage: e.toString(),
       ));
     }
   }

@@ -11,7 +11,6 @@ class _CategoriesListState extends State<CategoriesList> {
   @override
   void initState() {
     super.initState();
-    context.read<CategoriesBloc>().add(FetchCategories());
   }
 
   @override

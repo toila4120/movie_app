@@ -26,6 +26,9 @@ class AppContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Ẩn thanh trạng thái
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     return Stack(
       alignment: alignmentStack ?? AlignmentDirectional.topStart,
       children: [
@@ -40,19 +43,23 @@ class AppContainer extends StatelessWidget {
             appBar: appBar,
             drawer: drawer,
             resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-            body: Container(
-              decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
-                shape: BoxShape.rectangle,
-              ),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).padding.bottom,
+            extendBodyBehindAppBar: true,
+            body: SafeArea(
+              top: false,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: backgroundColor ??
+                      Theme.of(context).scaffoldBackgroundColor,
+                  shape: BoxShape.rectangle,
                 ),
-                child: child ?? const SizedBox.shrink(),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom,
+                  ),
+                  child: child ?? const SizedBox.shrink(),
+                ),
               ),
             ),
             floatingActionButton: floatingActionButton,

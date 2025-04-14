@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:movie_app/features/explore/data/model/region_model.dart';
 import 'package:movie_app/features/movie/data/model/movie_model.dart';
 
 abstract class ExploreRemoteDatasource {
   Future<List<MovieModel>> searchMovie(String query, int page);
+  Future<List<RegionModel>> getRegions();
 }
 
 class ExploreRemoteDatasourceImpl implements ExploreRemoteDatasource {
@@ -36,4 +38,20 @@ class ExploreRemoteDatasourceImpl implements ExploreRemoteDatasource {
       throw Exception('Failed to fetch movies: $e');
     }
   }
+  
+  @override
+  Future<List<RegionModel>> getRegions() async {
+    try {
+      final response = await dio.get('https://phimapi.com/quoc-gia');
+      if (response.statusCode == 200) {
+        final jsonList = response.data as List<dynamic>;
+        return jsonList.map((json) => RegionModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to fetch region: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch region: $e');
+    }
+  }
+
 }

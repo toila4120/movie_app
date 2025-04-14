@@ -11,9 +11,9 @@ class LoadingScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              strokeWidth: 4,
+            Image.asset(
+              "assets/images/loading.gif",
+              gaplessPlayback: true,
             ),
             const SizedBox(height: 20),
             Text(

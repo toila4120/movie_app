@@ -11,3 +11,4 @@ part 'src/back_widget.dart';
 part 'src/app_header.dart';
 part 'src/app_text_field.dart';
 part 'src/loading_screen.dart';
+part 'src/container_genre.dart';

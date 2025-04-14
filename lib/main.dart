@@ -19,7 +19,6 @@ void main() async {
   await Firebase.initializeApp();
   Bloc.observer = const AppBlocObserver();
   setup();
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

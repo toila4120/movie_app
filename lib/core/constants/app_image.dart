@@ -34,4 +34,5 @@ abstract class AppImage {
   static const String icLogout = "assets/images/ic_logout.png";
   static const String icBookMark = "assets/images/ic_bookmark.png";
   static const String notFoundMovie = "assets/images/not_found_movie.png";
+  static const String loadingAnimation = "assets/images/loading.gif";
 }

@@ -1,4 +1,4 @@
-part of '../../authentication.dart';
+part of '../widget.dart';
 
 class ContainerGenre extends StatelessWidget {
   final String title;

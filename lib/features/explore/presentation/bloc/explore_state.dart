@@ -6,6 +6,13 @@ class ExploreState extends Equatable {
   final String errorMessage;
   final String lastQuery;
   final int page;
+  final List<RegionEntities> availableRegions;
+  final List<String> genres;
+  final List<String> categories;
+  final List<String> translations;
+  final List<String> regions;
+  final List<String> years;
+  final String sort;
   final bool hasReachedMax;
   final SearchStatus searchStatus;
 
@@ -15,6 +22,13 @@ class ExploreState extends Equatable {
     required this.errorMessage,
     required this.lastQuery,
     required this.page,
+    required this.availableRegions,
+    required this.genres,
+    required this.categories,
+    required this.translations,
+    required this.regions,
+    required this.years,
+    required this.sort,
     required this.hasReachedMax,
     this.searchStatus = SearchStatus.initial,
   });
@@ -25,6 +39,13 @@ class ExploreState extends Equatable {
         errorMessage: '',
         lastQuery: '',
         page: 1,
+        availableRegions: [],
+        genres: [],
+        categories: [],
+        translations: [],
+        regions: [],
+        years: [],
+        sort: '',
         hasReachedMax: false,
         searchStatus: SearchStatus.initial,
       );
@@ -35,6 +56,13 @@ class ExploreState extends Equatable {
     String? errorMessage,
     String? lastQuery,
     int? page,
+    List<RegionEntities>? availableRegions,
+    List<String>? genres,
+    List<String>? categories,
+    List<String>? translations,
+    List<String>? regions,
+    List<String>? years,
+    String? sort,
     bool? hasReachedMax,
     SearchStatus? searchStatus,
   }) {
@@ -44,6 +72,13 @@ class ExploreState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       lastQuery: lastQuery ?? this.lastQuery,
       page: page ?? this.page,
+      availableRegions: availableRegions ?? this.availableRegions,
+      genres: genres ?? this.genres,
+      categories: categories ?? this.categories,
+      translations: translations ?? this.translations,
+      regions: regions ?? this.regions,
+      years: years ?? this.years,
+      sort: sort ?? this.sort,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       searchStatus: searchStatus ?? this.searchStatus,
     );
@@ -56,6 +91,13 @@ class ExploreState extends Equatable {
         errorMessage,
         lastQuery,
         page,
+        availableRegions,
+        genres,
+        categories,
+        translations,
+        regions,
+        years,
+        sort,
         hasReachedMax,
         searchStatus,
       ];

@@ -12,6 +12,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   void initState() {
+    context.read<ExploreBloc>().add(FetchRegionsEvent());
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
@@ -136,7 +137,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           if (state.loadingState.isLoading)
                             const ItemListMovieShimmer(),
                           if (state.hasReachedMax && state.movies.isNotEmpty ||
-                              state.page == 3)
+                              state.page == 3 ||
+                              !state.loadingState.isLoading ||
+                              state.searchStatus.isInitial &&
+                                  state.movies.isEmpty)
                             Padding(
                               padding: EdgeInsets.all(AppPadding.small),
                               child: const Center(
