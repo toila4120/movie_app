@@ -11,6 +11,11 @@ class _SelectGenreScreenState extends State<SelectGenreScreen> {
   List<String> selectedGenres = [];
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppContainer(
       resizeToAvoidBottomInset: true,

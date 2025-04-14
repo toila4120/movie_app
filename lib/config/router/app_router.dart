@@ -88,6 +88,12 @@ abstract class AppRouter {
     ],
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
+    redirect: (context, state) {
+      // if (state.fullPath != _homeTabName) {
+      //   return _homeTabName;
+      // }
+      return null;
+    },
     routes: <RouteBase>[
       GoRoute(
         path: _baseRoute,

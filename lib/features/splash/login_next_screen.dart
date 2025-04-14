@@ -41,15 +41,6 @@ class _LoginNextScreenState extends State<LoginNextScreen> {
               Image.asset(
                 AppImage.movieLogo,
               ),
-              //   const Text(
-              //     "Hôm này của bạn thế nào cùng NTĐ_Movie giải trí nhé",
-              //     style: TextStyle(
-              //       fontSize: 20,
-              //       color: AppColor.primary500,
-              //       fontWeight: FontWeight.w600,
-              //     ),
-              //     textAlign: TextAlign.center,
-              //   ),
               SizedBox(height: AppPadding.large),
               BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
