@@ -23,12 +23,12 @@ class HeaderMovieDetail extends StatelessWidget {
           ) {
             final curvedAnimation = CurvedAnimation(
               parent: animation,
-              curve: Curves.easeInOut, // Đường cong mượt mà
+              curve: Curves.easeInOut,
             );
 
             return ScaleTransition(
-              scale: Tween<double>(begin: 1.0, end: 1.0)
-                  .animate(curvedAnimation), // Có thể điều chỉnh scale nếu muốn
+              scale:
+                  Tween<double>(begin: 1.0, end: 1.0).animate(curvedAnimation),
               child: FadeTransition(
                 opacity: curvedAnimation,
                 child: flightDirection == HeroFlightDirection.push
@@ -86,151 +86,28 @@ class HeaderMovieDetail extends StatelessWidget {
                   color: AppColor.white,
                 ),
               ),
-              CustomAppButton(
-                onPressed: () {
-                  context.pop();
+              BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, state) {
+                  return CustomAppButton(
+                    onPressed: () {
+                      context
+                          .read<AuthenticationBloc>()
+                          .add(LikeMovieEvent(movieId: movie.slug));
+                    },
+                    child: Image.asset(
+                      AppImage.icBookMark,
+                      width: 28.w,
+                      height: 28.w,
+                      color: state.user!.likedMovies.contains(movie.slug)
+                          ? AppColor.yellow
+                          : AppColor.white,
+                    ),
+                  );
                 },
-                child: Image.asset(
-                  AppImage.icBookMark,
-                  width: 28.w,
-                  height: 28.w,
-                  color: AppColor.white,
-                ),
               ),
             ],
           ),
         ),
-        // Positioned(
-        //   bottom: 0,
-        //   child: Container(
-        //     width: MediaQuery.of(context).size.width,
-        //     padding: EdgeInsets.symmetric(
-        //       horizontal: AppPadding.large,
-        //       vertical: AppPadding.tiny,
-        //     ),
-        //     decoration: BoxDecoration(
-        //       gradient: LinearGradient(
-        //         colors: [
-        //           AppColor.white,
-        //           AppColor.white.withValues(alpha: 0.0),
-        //         ],
-        //         begin: Alignment.bottomCenter,
-        //         end: Alignment.topCenter,
-        //       ),
-        //     ),
-        //     child: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.center,
-        //       children: [
-        //         CustomAppButton(
-        //           child: CircleAvatar(
-        //             radius: 24.w,
-        //             backgroundImage: const AssetImage(AppImage.icPlay),
-        //           ),
-        //         ),
-        //         SizedBox(height: AppPadding.tiny),
-        //         Text(
-        //           movie.name,
-        //           style: TextStyle(
-        //             color: AppColor.greyScale900,
-        //             fontSize: 24.sp,
-        //             fontWeight: FontWeight.w700,
-        //           ),
-        //           textAlign: TextAlign.center,
-        //           maxLines: 2,
-        //           overflow: TextOverflow.ellipsis,
-        //         ),
-        //         SizedBox(height: AppPadding.superTiny),
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           children: [
-        //             Text(
-        //               "${movie.year}",
-        //               style: TextStyle(
-        //                 color: AppColor.greyScale500,
-        //                 fontSize: 12.sp,
-        //                 fontWeight: FontWeight.w500,
-        //               ),
-        //             ),
-        //             Container(
-        //               margin: EdgeInsets.symmetric(
-        //                 horizontal: AppPadding.superTiny,
-        //               ),
-        //               width: 4.w,
-        //               height: 4.w,
-        //               decoration: BoxDecoration(
-        //                 borderRadius:
-        //                     BorderRadius.circular(AppPadding.superTiny),
-        //                 color: AppColor.greyScale500,
-        //               ),
-        //             ),
-        //             Text(
-        //               movie.categories
-        //                   .take(2)
-        //                   .map((category) => category.name)
-        //                   .join(", "),
-        //               style: TextStyle(
-        //                 color: AppColor.greyScale500,
-        //                 fontSize: 12.sp,
-        //                 fontWeight: FontWeight.w500,
-        //               ),
-        //               textAlign: TextAlign.center,
-        //               maxLines: 2,
-        //               overflow: TextOverflow.ellipsis,
-        //             ),
-        //             Container(
-        //               margin: EdgeInsets.symmetric(
-        //                 horizontal: AppPadding.superTiny,
-        //               ),
-        //               width: 4.w,
-        //               height: 4.w,
-        //               decoration: BoxDecoration(
-        //                 borderRadius:
-        //                     BorderRadius.circular(AppPadding.superTiny),
-        //                 color: AppColor.greyScale500,
-        //               ),
-        //             ),
-        //             Text(
-        //               movie.episodeCurrent,
-        //               style: TextStyle(
-        //                 color: AppColor.greyScale500,
-        //                 fontSize: 12.sp,
-        //                 fontWeight: FontWeight.w500,
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //         SizedBox(height: AppPadding.superTiny),
-        //         Row(
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           children: [
-        //             Image.asset(
-        //               AppImage.icStar,
-        //               width: 12.w,
-        //               height: 12.w,
-        //             ),
-        //             Text(
-        //               " 4.5",
-        //               style: TextStyle(
-        //                 color: AppColor.greyScale900,
-        //                 fontSize: 12.sp,
-        //                 fontWeight: FontWeight.w700,
-        //               ),
-        //             ),
-        //             Text(
-        //               " (128 review)",
-        //               style: TextStyle(
-        //                 color: AppColor.greyScale500,
-        //                 fontSize: 12.sp,
-        //                 fontWeight: FontWeight.w500,
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
