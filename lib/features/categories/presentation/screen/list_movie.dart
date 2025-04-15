@@ -27,7 +27,7 @@ class _ListMovieState extends State<ListMovie> {
       builder: (context, state) {
         return AppContainer(
           resizeToAvoidBottomInset: true,
-          backgroundColor: AppColor.backGroundScreen,
+          // backgroundColor: AppColor.backGroundScreen,
           child: Column(
             children: [
               AppHeader(

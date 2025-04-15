@@ -65,7 +65,7 @@ class _AppTextFieldState extends State<AppTextField> {
       minLines: 1,
       inputFormatters: widget.inputFormatters,
       style: TextStyle(
-        color: AppColor.secondLight,
+        // color: AppColor.secondLight,
         fontSize: 12.sp,
         fontWeight: FontWeight.w500,
       ),

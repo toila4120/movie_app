@@ -23,55 +23,40 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((_) {
-    runApp(
-      const MyApp(),
-    );
+    runApp(const MyApp());
   });
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  MyAppState createState() => MyAppState();
-}
-
-class MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => CategoriesBloc(),
-          ),
-          BlocProvider(
-            create: (context) => AuthenticationBloc(),
-          ),
-          BlocProvider(
-            create: (context) => AppBloc(),
-          ),
-          BlocProvider(
-            create: (context) => MovieBloc(),
-          ),
-          BlocProvider(
-            create: (context) => HomeBloc(),
-          ),
-          BlocProvider(
-            create: (context) => ExploreBloc(),
-          ),
-        ],
-        child: ScreenUtilInit(
-          designSize: const Size(411, 467),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) => MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            routerConfig: AppRouter.router,
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CategoriesBloc()),
+        BlocProvider(create: (context) => AuthenticationBloc()),
+        BlocProvider(create: (context) => AppBloc()),
+        BlocProvider(create: (context) => MovieBloc()),
+        BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => ExploreBloc()),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(411, 467),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) => BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: ThemeMode.system,
+              routerConfig: AppRouter.router,
+            );
+          },
         ),
-      );
-    });
+      ),
+    );
   }
 }

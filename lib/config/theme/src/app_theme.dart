@@ -65,9 +65,9 @@ abstract final class AppTheme {
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
-        primaryColor: AppColor.primaryLight,
-        primaryColorDark: AppColor.primaryDark,
-        primaryColorLight: AppColor.primaryLight,
+        primaryColor: AppColor.scaffoldLight,
+        primaryColorDark: AppColor.scaffoldDark,
+        primaryColorLight: AppColor.greyScale500,
         scaffoldBackgroundColor: AppColor.scaffoldLight,
         brightness: Brightness.light,
         fontFamily: fontFamily,
@@ -110,7 +110,7 @@ abstract final class AppTheme {
             ),
             foregroundColor: WidgetStateProperty.all(Colors.white),
             padding: WidgetStateProperty.all(
-               EdgeInsets.symmetric(
+              EdgeInsets.symmetric(
                 horizontal: AppPadding.large,
                 vertical: AppPadding.small,
               ),
@@ -131,14 +131,14 @@ abstract final class AppTheme {
 
   static ThemeData get darkTheme => ThemeData(
         useMaterial3: true,
-        primaryColor: AppColor.primaryDark,
-        primaryColorDark: AppColor.primaryDark,
-        primaryColorLight: AppColor.primaryLight,
+        primaryColor: AppColor.scaffoldDark,
+        primaryColorDark: AppColor.scaffoldLight,
+        primaryColorLight: AppColor.greyScale500,
         scaffoldBackgroundColor: AppColor.scaffoldDark,
         brightness: Brightness.dark,
         fontFamily: fontFamily,
         textTheme: _appTextTheme.apply(
-          bodyColor: Colors.white70, // Màu văn bản chính cho theme tối
+          bodyColor: Colors.white70,
           displayColor: Colors.white70,
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -176,7 +176,7 @@ abstract final class AppTheme {
             ),
             foregroundColor: WidgetStateProperty.all(Colors.white),
             padding: WidgetStateProperty.all(
-               EdgeInsets.symmetric(
+              EdgeInsets.symmetric(
                 horizontal: AppPadding.large,
                 vertical: AppPadding.small,
               ),

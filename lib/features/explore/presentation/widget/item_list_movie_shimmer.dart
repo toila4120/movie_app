@@ -8,26 +8,26 @@ class ItemListMovieShimmer extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _buildShimmerItem(),
+          child: _buildShimmerItem(context),
         ),
         SizedBox(width: AppPadding.small),
         Expanded(
-          child: _buildShimmerItem(),
+          child: _buildShimmerItem(context),
         ),
         SizedBox(width: AppPadding.small),
         Expanded(
-          child: _buildShimmerItem(),
+          child: _buildShimmerItem(context),
         ),
       ],
     );
   }
 
-  Widget _buildShimmerItem() {
+  Widget _buildShimmerItem(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(AppPadding.small),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppBorderRadius.r16),
-        color: AppColor.white,
+        color: Theme.of(context).primaryColorLight,
         border: Border.all(
           color: AppColor.greyScale200,
         ),

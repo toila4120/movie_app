@@ -56,7 +56,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 'Thể loại phim',
                 style: TextStyle(
                   fontSize: 16.sp,
-                  color: AppColor.greyScale900,
+                  // color: AppColor.greyScale200,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -137,7 +137,7 @@ class _ItemCategory extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
           border: Border.all(
-            color: AppColor.greyScale200,
+            color: AppColor.transparent,
           ),
         ),
         child: Row(
@@ -168,6 +168,7 @@ class _ItemCategory extends StatelessWidget {
                   topRight: Radius.circular(AppBorderRadius.r8.w),
                   bottomRight: Radius.circular(AppBorderRadius.r8.w),
                 ),
+                border: Border.all(color: AppColor.transparent),
               ),
               child: Center(
                 child: Text(

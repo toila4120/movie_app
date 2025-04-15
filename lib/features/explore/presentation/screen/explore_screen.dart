@@ -47,6 +47,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       builder: (context, state) {
         return AppContainer(
           resizeToAvoidBottomInset: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: Column(
             children: [
               const AppHeaderForExplore(),

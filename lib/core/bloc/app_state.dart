@@ -4,11 +4,13 @@ class AppState extends Equatable {
   final UserModel? userModel;
   final LoadingState isLoading;
   final String? error;
+  final ThemeMode themeMode;
 
   const AppState({
     this.userModel,
     this.isLoading = LoadingState.pure,
     this.error,
+    this.themeMode = ThemeMode.dark,
   });
 
   factory AppState.init() {
@@ -16,6 +18,7 @@ class AppState extends Equatable {
       userModel: null,
       isLoading: LoadingState.pure,
       error: null,
+      themeMode: ThemeMode.system,
     );
   }
 
@@ -23,14 +26,21 @@ class AppState extends Equatable {
     UserModel? userModel,
     LoadingState? isLoading,
     String? error,
+    ThemeMode? themeMode,
   }) {
     return AppState(
       userModel: userModel ?? this.userModel,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 
   @override
-  List<Object?> get props => [userModel, isLoading, error];
+  List<Object?> get props => [
+        userModel,
+        isLoading,
+        error,
+        themeMode,
+      ];
 }

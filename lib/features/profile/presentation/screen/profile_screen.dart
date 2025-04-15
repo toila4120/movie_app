@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w600,
-                            color: AppColor.greyScale900,
+                            // color: AppColor.greyScale900,
                           ),
                         ),
                         CustomAppButton(
@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
-                                color: AppColor.greyScale900,
+                                // color: AppColor.greyScale900,
                               ),
                             ),
                             Text(
@@ -131,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(height: AppPadding.large),
                     Text(
-                      "Profile Settings",
+                      "Cài đặt cá nhân",
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -155,11 +155,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
-                                "Watch History",
+                                "Lịch sử xem",
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.greyScale900,
+                                  // color: AppColor.greyScale900,
                                 ),
                               ),
                             ],
@@ -168,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             AppImage.icRight,
                             width: 20.w,
                             height: 20.w,
-                            color: AppColor.greyScale900,
+                            color: Theme.of(context).primaryColorDark,
                           )
                         ],
                       ),
@@ -190,11 +190,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
-                                "Liked Movies",
+                                "Phim đã thích",
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.greyScale900,
+                                  // color: AppColor.greyScale900,
                                 ),
                               ),
                             ],
@@ -203,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             AppImage.icRight,
                             width: 20.w,
                             height: 20.w,
-                            color: AppColor.greyScale900,
+                            color: Theme.of(context).primaryColorDark,
                           )
                         ],
                       ),
@@ -225,11 +225,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
-                                "Downloaded Movies",
+                                "Phim đã tải",
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.greyScale900,
+                                  // color: AppColor.greyScale900,
                                 ),
                               ),
                             ],
@@ -238,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             AppImage.icRight,
                             width: 20.w,
                             height: 20.w,
-                            color: AppColor.greyScale900,
+                            color: Theme.of(context).primaryColorDark,
                           )
                         ],
                       ),
@@ -263,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
-                                "Sign Out",
+                                "Đăng xuất",
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
@@ -276,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             AppImage.icRight,
                             width: 20.w,
                             height: 20.w,
-                            color: AppColor.greyScale900,
+                            color: Theme.of(context).primaryColorDark,
                           )
                         ],
                       ),

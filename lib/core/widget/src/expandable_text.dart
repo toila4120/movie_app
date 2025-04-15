@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movie_app/config/theme/theme.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
@@ -39,11 +38,10 @@ class _ExpandableTextState extends State<ExpandableText> {
       },
       child: RichText(
         text: TextSpan(
-          style: TextStyle(
-            color: AppColor.greyScale900,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w400,
-          ),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+              ),
           children: [
             TextSpan(text: isExpanded ? widget.text : "$firstPart... "),
             if (!isExpanded)

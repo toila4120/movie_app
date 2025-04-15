@@ -41,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
-                  color: AppColor.greyScale900,
                 ),
               ),
               SizedBox(height: AppPadding.large),
@@ -148,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                     },
                     radius: AppBorderRadius.r8,
-                    backgroundColor: AppColor.primary200,
+                    backgroundColor: AppColor.primary500,
                     child: state.isLoading.isLoading
                         ? SizedBox(
                             height: 16.w,

@@ -6,13 +6,13 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      // backgroundColor: Colors.grey.shade200,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/images/loading.gif",
+              AppImage.loadingAnimation,
               gaplessPlayback: true,
             ),
             const SizedBox(height: 20),
@@ -20,7 +20,7 @@ class LoadingScreen extends StatelessWidget {
               'Đang tải dữ liệu...',
               style: TextStyle(
                 fontSize: 18.w,
-                color: Colors.grey.shade800,
+                // color: Colors.grey.shade800,
                 fontWeight: FontWeight.w500,
               ),
             ),

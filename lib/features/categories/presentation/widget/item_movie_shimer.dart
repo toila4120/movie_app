@@ -15,7 +15,7 @@ class ItemMovieShimer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppBorderRadius.r16),
-        color: AppColor.white,
+        color: Theme.of(context).primaryColorLight.withValues(alpha: 0.1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,39 +23,76 @@ class ItemMovieShimer extends StatelessWidget {
           Row(
             children: [
               Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: SizedBox(
+                baseColor: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey.shade700
+                    : Colors.grey.shade300,
+                highlightColor: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey.shade500
+                    : Colors.grey.shade100,
+                child: Container(
                   height: 88.w,
                   width: 120.w,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(AppBorderRadius.r8),
+                  ),
                 ),
               ),
+              SizedBox(width: AppPadding.small),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: SizedBox(
+                    baseColor: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
+                    highlightColor:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey.shade500
+                            : Colors.grey.shade100,
+                    child: Container(
                       height: 20.w,
                       width: 120.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(AppBorderRadius.r4),
+                      ),
                     ),
                   ),
                   SizedBox(height: AppPadding.superTiny),
                   Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: SizedBox(
+                    baseColor: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
+                    highlightColor:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey.shade500
+                            : Colors.grey.shade100,
+                    child: Container(
                       height: 20.w,
                       width: 50.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(AppBorderRadius.r4),
+                      ),
                     ),
                   ),
                   SizedBox(height: AppPadding.superTiny),
                   Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: SizedBox(
+                    baseColor: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
+                    highlightColor:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey.shade500
+                            : Colors.grey.shade100,
+                    child: Container(
                       height: 20.w,
                       width: 100.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(AppBorderRadius.r4),
+                      ),
                     ),
                   ),
                 ],
@@ -63,11 +100,19 @@ class ItemMovieShimer extends StatelessWidget {
             ],
           ),
           Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
-            child: SizedBox(
+            baseColor: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey.shade700
+                : Colors.grey.shade300,
+            highlightColor: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey.shade500
+                : Colors.grey.shade100,
+            child: Container(
               height: 20.w,
               width: 20.w,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
             ),
           ),
         ],

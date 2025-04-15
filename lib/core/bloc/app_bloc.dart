@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/features/authentication/data/model/user_model.dart';

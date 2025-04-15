@@ -59,7 +59,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w700,
-                                  color: AppColor.greyScale900,
+                                  // color: AppColor.greyScale900,
                                 ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -96,7 +96,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w700,
-                                      color: AppColor.greyScale800,
+                                      // color: AppColor.greyScale800,
                                     ),
                                   ),
                                   SizedBox(width: AppPadding.small),
@@ -211,7 +211,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                 "Thể loại: ${state.movie!.categories.map((category) => category.name).join(", ")}",
                                 style: TextStyle(
                                   fontSize: 12.sp,
-                                  color: AppColor.greyScale900,
+                                  // color: AppColor.greyScale900,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -225,7 +225,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ? Text(
                                       "Danh sách diễn viên: ${state.movie!.actor.map((cast) => cast).join(", ")}",
                                       style: TextStyle(
-                                        color: AppColor.greyScale900,
+                                        // color: AppColor.greyScale900,
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -259,8 +259,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                                 Text(
                                                   state.actor![index].name!,
                                                   style: TextStyle(
-                                                    color:
-                                                        AppColor.greyScale900,
+                                                    // color:
+                                                    //     AppColor.greyScale900,
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
                                                   ),

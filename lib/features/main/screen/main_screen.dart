@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/core/core.dart';
 import 'package:movie_app/features/main/widget/bottom_navigator_bar.dart';
-import 'package:movie_app/config/router/app_router.dart'; // Import AppRouter để truy cập homeTabPath
+import 'package:movie_app/config/router/app_router.dart';
 
 class MainScreen extends StatefulWidget {
   final StatefulNavigationShell shell;
@@ -32,8 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   bool _shouldShowBottomNavBar(BuildContext context) {
     final routerState = GoRouterState.of(context);
     final currentLocation = routerState.uri.toString();
-    return currentLocation !=
-        AppRouter.playMoviePath; 
+    return currentLocation != AppRouter.playMoviePath;
   }
 
   Future<bool> _onBackPressed() async {
@@ -68,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
         await _onBackPressed();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         bottomNavigationBar: _shouldShowBottomNavBar(context)
             ? BottomNavigatorBar(
                 onTap: (value) => _onTabChange(value, context),

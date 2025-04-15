@@ -41,7 +41,7 @@ class _SelectGenreScreenState extends State<SelectGenreScreen> {
                       style: TextStyle(
                         fontSize: 24.sp,
                         fontWeight: FontWeight.w500,
-                        color: AppColor.greyScale900,
+                        // color: AppColor.greyScale900,
                       ),
                     ),
                   ],
@@ -52,7 +52,7 @@ class _SelectGenreScreenState extends State<SelectGenreScreen> {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.greyScale600,
+                    // color: AppColor.greyScale600,
                   ),
                 ),
                 SizedBox(height: AppPadding.large),

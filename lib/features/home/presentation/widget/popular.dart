@@ -17,7 +17,7 @@ class Popular extends StatelessWidget {
                     'Phim nổi bật',
                     style: TextStyle(
                       fontSize: 16.sp,
-                      color: AppColor.greyScale900,
+                      // color: AppColor.greyScale200,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -131,7 +131,7 @@ class _ItemFilmPopular extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 12.sp,
-              color: AppColor.greyScale900,
+              color: AppColor.greyScale500,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,

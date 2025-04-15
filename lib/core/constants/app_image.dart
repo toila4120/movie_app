@@ -20,7 +20,7 @@ abstract class AppImage {
   static const String icBack1 = "assets/images/ic_back_1.png";
   static const String icHeart = "assets/images/ic_heart.png";
   static const String icStar = "assets/images/ic_star.png";
-  static const String movieLogo = "assets/images/movie_logo.jpg";
+  static const String movieLogo = "assets/images/movie_logo.png";
   static const String icEmail = "assets/images/ic_email.png";
   static const String icKey = "assets/images/ic_key.png";
   static const String icEye = "assets/images/ic_eye.png";

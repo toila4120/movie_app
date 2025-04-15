@@ -10,7 +10,7 @@ class AppHeader extends StatelessWidget {
   final Widget? extendWidget;
   final CrossAxisAlignment? crossAxisAlignmentMainRow;
   final TextStyle? titleStyle;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color? colorTitle;
   final Function()? onBackPress;
 
@@ -25,7 +25,7 @@ class AppHeader extends StatelessWidget {
     this.hintContent,
     this.hintTitle,
     this.titleStyle,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.colorTitle,
     this.onBackPress,
   });
@@ -33,7 +33,16 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor,
+      // color: Theme.of(context).primaryColor,
+      decoration: BoxDecoration(
+          color: backgroundColor ?? Theme.of(context).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).primaryColorDark.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 0),
+            ),
+          ]),
       child: Column(
         children: [
           Padding(
@@ -51,7 +60,6 @@ class AppHeader extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
-                          color: colorTitle ?? AppColor.secondLight,
                         ).merge(
                           titleStyle,
                         ),

@@ -19,14 +19,14 @@ class BottomNavigatorBar extends StatelessWidget {
         bottom: MediaQuery.of(context).padding.bottom,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(28),
           topRight: Radius.circular(28),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: Theme.of(context).primaryColorDark.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 0),
           ),

@@ -21,6 +21,7 @@ class BackWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Image.asset(
         AppImage.icBack,
+        color: Theme.of(context).primaryColorDark,
       ),
     );
   }

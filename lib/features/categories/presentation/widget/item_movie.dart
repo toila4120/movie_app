@@ -37,9 +37,10 @@ class ItemMovie extends StatelessWidget {
           vertical: AppPadding.tiny,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
-          color: AppColor.white,
-        ),
+            borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+            border: Border.all(
+              color: Theme.of(context).primaryColorDark.withValues(alpha: 0.1),
+            )),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -103,7 +104,7 @@ class ItemMovie extends StatelessWidget {
                           movieModel.name,
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: AppColor.greyScale900,
+                            // color: AppColor.greyScale900,
                             fontWeight: FontWeight.w500,
                           ),
                           maxLines: 2,
@@ -138,7 +139,7 @@ class ItemMovie extends StatelessWidget {
               AppImage.icRight,
               width: 16.w,
               height: 16.w,
-              color: AppColor.greyScale900,
+              color: Theme.of(context).primaryColorDark,
             ),
           ],
         ),

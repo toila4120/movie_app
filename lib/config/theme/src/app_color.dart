@@ -8,7 +8,7 @@ abstract final class AppColor {
   static const Color transparent = Colors.transparent;
 
   static const Color scaffoldLight = Colors.white;
-  static const Color scaffoldDark = Colors.white;
+  static const Color scaffoldDark = Color(0xFF181a20);
 
   static const Color primaryLight = Color(0xFF0280FF);
   static const Color primaryDark = Color(0xFF0280FF);

@@ -17,11 +17,11 @@ class _AppHeaderForExploreState extends State<AppHeaderForExplore> {
     });
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   void _onSearchChanged(String query) {
     context.read<ExploreBloc>().add(ExploreEventSearch(query, 1));
@@ -72,6 +72,8 @@ class _AppHeaderForExploreState extends State<AppHeaderForExplore> {
           SizedBox(width: AppPadding.small),
           CustomAppButton(
             onPressed: () {
+              _controller.clear();
+              _controller.dispose;
               showModalBottomSheet(
                 context: context,
                 isDismissible: true,

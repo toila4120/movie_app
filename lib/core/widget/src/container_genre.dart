@@ -24,7 +24,7 @@ class ContainerGenre extends StatelessWidget {
           vertical: AppPadding.small,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.primary500 : AppColor.white,
+          color: isSelected ? AppColor.primary500 : AppColor.transparent,
           borderRadius: BorderRadius.circular(AppPadding.medium),
           border: Border.all(
             color: AppColor.primary500,

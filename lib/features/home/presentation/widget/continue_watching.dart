@@ -15,7 +15,7 @@ class ContinueWatching extends StatelessWidget {
                 'Video đang xem',
                 style: TextStyle(
                   fontSize: 16.sp,
-                  color: AppColor.greyScale900,
+                  // color: AppColor.greyScale200,
                   fontWeight: FontWeight.w700,
                 ),
               ),

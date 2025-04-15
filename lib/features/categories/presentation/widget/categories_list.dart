@@ -95,7 +95,7 @@ class _Itemcategories extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColor.white,
+          // color: AppColor.white,
           border: Border.all(
             color: AppColor.greyScale200,
           ),

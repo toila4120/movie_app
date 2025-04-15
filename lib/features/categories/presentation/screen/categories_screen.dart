@@ -12,7 +12,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return AppContainer(
       resizeToAvoidBottomInset: true,
-      backgroundColor: AppColor.backGroundScreen,
+      // backgroundColor: AppColor.backGroundScreen,
       child: Column(
         children: [
           const AppHeader(
