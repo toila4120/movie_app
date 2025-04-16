@@ -109,7 +109,7 @@ class ItemMovieShimer extends StatelessWidget {
             child: Container(
               height: 20.w,
               width: 20.w,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
               ),

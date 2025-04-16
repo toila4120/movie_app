@@ -36,6 +36,8 @@ abstract class AppRouter {
   static const String _chooseAvatarScreenName = 'choose_avatar_screen';
   static const String chooseAvatarScreenPath =
       '/profile_tab/choose_avatar_screen';
+  static const String _likeMovieScreenName = 'like_movie_screen';
+  static const String likeMovieScreenPath = '/profile_tab/like_movie_screen';
   static const String _splashLoginScreenName = 'splash_login_screen';
   static const String splashLoginScreenPath = '/splash_login_screen';
   static const String _chattingTabName = 'chatting_tab';
@@ -89,9 +91,6 @@ abstract class AppRouter {
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     redirect: (context, state) {
-      // if (state.fullPath != _homeTabName) {
-      //   return _homeTabName;
-      // }
       return null;
     },
     routes: <RouteBase>[
@@ -224,6 +223,16 @@ abstract class AppRouter {
                       child: const ChooseAvatarScreen(),
                     ),
                   ),
+                  GoRoute(
+                    name: _likeMovieScreenName,
+                    path: '/$_likeMovieScreenName',
+                    pageBuilder: (context, state) =>
+                        _buildPageWithDefaultTransition(
+                      context: context,
+                      state: state,
+                      child: const LikeMovieScreen(),
+                    ),
+                  )
                 ],
               ),
             ],

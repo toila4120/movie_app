@@ -5,6 +5,7 @@ import 'package:movie_app/features/categories/di/categories_di.dart';
 import 'package:movie_app/features/explore/di/explore_di.dart';
 import 'package:movie_app/features/home/di/home_di.dart';
 import 'package:movie_app/features/movie/di/movie_di.dart';
+import 'package:movie_app/features/profile/di/profile_di.dart';
 
 final getIt = GetIt.instance;
 
@@ -15,4 +16,5 @@ void setup() {
   setupMovieDi();
   setupHomeDi();
   setupExpolereDi();
+  setupProfileDi();
 }

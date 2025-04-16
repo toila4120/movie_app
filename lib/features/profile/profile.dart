@@ -10,6 +10,11 @@ import 'package:movie_app/core/core.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/core/utils/app_assets.dart';
 import 'package:movie_app/core/bloc/app_bloc.dart';
+import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:movie_app/features/categories/categories.dart';
+import 'package:movie_app/features/categories/presentation/widget/item_movie_shimer.dart';
+import 'package:movie_app/features/profile/presentation/bloc/profile_bloc.dart';
 
 part 'presentation/screen/profile_screen.dart';
 part 'presentation/screen/choose_avatar_screen.dart';
+part 'presentation/screen/like_movie_screen.dart';

@@ -291,6 +291,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       emit(state.copyWith(
         movies: [],
         dataSource: DataSource.filter,
+        loadingState: LoadingState.loading,
       ));
     }
     if (state.hasReachedMax && event.page != 1 ||

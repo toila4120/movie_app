@@ -72,7 +72,7 @@ abstract final class AppTheme {
         brightness: Brightness.light,
         fontFamily: fontFamily,
         textTheme: _appTextTheme.apply(
-          bodyColor: Colors.black87, // Màu văn bản chính cho theme sáng
+          bodyColor: AppColor.greyScale900, // Màu văn bản chính cho theme sáng
           displayColor: Colors.black87,
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -138,7 +138,7 @@ abstract final class AppTheme {
         brightness: Brightness.dark,
         fontFamily: fontFamily,
         textTheme: _appTextTheme.apply(
-          bodyColor: Colors.white70,
+          bodyColor: AppColor.greyScale100,
           displayColor: Colors.white70,
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(

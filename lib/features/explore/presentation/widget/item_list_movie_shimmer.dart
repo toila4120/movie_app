@@ -5,20 +5,19 @@ class ItemListMovieShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildShimmerItem(context),
-        ),
-        SizedBox(width: AppPadding.small),
-        Expanded(
-          child: _buildShimmerItem(context),
-        ),
-        SizedBox(width: AppPadding.small),
-        Expanded(
-          child: _buildShimmerItem(context),
-        ),
-      ],
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: AppPadding.small,
+        mainAxisSpacing: AppPadding.small,
+        childAspectRatio: 0.7,
+      ),
+      itemCount: 18,
+      itemBuilder: (context, index) {
+        return _buildShimmerItem(context);
+      },
     );
   }
 
@@ -36,7 +35,7 @@ class ItemListMovieShimmer extends StatelessWidget {
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
         child: Container(
-          height: 148.w,
+          height: 148.w, 
           color: Colors.grey.shade300,
         ),
       ),

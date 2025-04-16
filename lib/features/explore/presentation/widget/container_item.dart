@@ -23,7 +23,8 @@ class ContainerItem extends StatelessWidget {
           vertical: AppPadding.superTiny,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.primary500 : AppColor.white,
+          color:
+              isSelected ? AppColor.primary500 : Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(AppBorderRadius.r16.w),
           border: Border.all(
             color: AppColor.primary500,

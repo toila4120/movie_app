@@ -8,7 +8,7 @@ class BottomSheetExplore extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppPadding.medium),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppBorderRadius.r20.w),
         ),
