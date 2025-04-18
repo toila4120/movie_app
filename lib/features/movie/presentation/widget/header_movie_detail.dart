@@ -93,6 +93,9 @@ class HeaderMovieDetail extends StatelessWidget {
                       context
                           .read<AuthenticationBloc>()
                           .add(LikeMovieEvent(movieId: movie.slug));
+                      context
+                          .read<ProfileBloc>()
+                          .add(RemoveFavoriteMovieEvent(slug: movie.slug));
                     },
                     child: Image.asset(
                       AppImage.icBookMark,

@@ -15,3 +15,27 @@ class GetFavoriteMoviesEvent extends ProfileEvent {
         user,
       ];
 }
+
+class AddFavoriteMovieEvent extends ProfileEvent {
+  final MovieEntity movie;
+  const AddFavoriteMovieEvent({
+    required this.movie,
+  });
+
+  @override
+  List<Object> get props => [
+        movie,
+      ];
+}
+
+class RemoveFavoriteMovieEvent extends ProfileEvent {
+  final String slug;
+  const RemoveFavoriteMovieEvent({
+    required this.slug,
+  });
+
+  @override
+  List<Object> get props => [
+        slug,
+      ];
+}

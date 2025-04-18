@@ -32,9 +32,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: AppContainer(
         resizeToAvoidBottomInset: true,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const AppHeader(),
-            Expanded(
+            Flexible(
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: AppPadding.large,
@@ -48,17 +48,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Register',
+                          'Đăng ký',
                           style: TextStyle(
                             fontSize: 24.sp,
                             fontWeight: FontWeight.w700,
-                            // color: AppColor.greyScale900,
                           ),
                         ),
                         SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _nameController,
-                          hintText: 'Name',
+                          hintText: 'Tên',
                           prefixIcon: Padding(
                             padding: EdgeInsets.all(AppPadding.small),
                             child: Image.asset(
@@ -84,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _passwordController,
-                          hintText: 'Password',
+                          hintText: 'Mật khẩu',
                           obscureText: _isObscureText,
                           prefixIcon: Padding(
                             padding: EdgeInsets.all(AppPadding.small),
@@ -112,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(height: AppPadding.large),
                         AppTextField(
                           controller: _confirmPasswordController,
-                          hintText: 'Confirm Password',
+                          hintText: 'Xác nhận mật khẩu',
                           obscureText: _isObscureText,
                           prefixIcon: Padding(
                             padding: EdgeInsets.all(AppPadding.small),
@@ -169,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                     )
                                   : Text(
-                                      'Sign Up',
+                                      'Đăng ký',
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
@@ -192,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             SizedBox(width: AppPadding.tiny),
                             Text(
-                              'Or',
+                              'Hoặc',
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
@@ -228,7 +227,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onPressed: () {
                                 context.go(AppRouter.loginScreenPath);
                               },
-                              text: 'Login',
+                              text: 'Đăng nhập',
                               textStyle: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,

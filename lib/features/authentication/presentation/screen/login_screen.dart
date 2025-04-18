@@ -19,6 +19,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(FectchMovieForBannerMovies());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {

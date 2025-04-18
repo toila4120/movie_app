@@ -17,7 +17,6 @@ class Popular extends StatelessWidget {
                     'Phim nổi bật',
                     style: TextStyle(
                       fontSize: 16.sp,
-                      // color: AppColor.greyScale200,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

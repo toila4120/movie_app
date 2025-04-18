@@ -12,6 +12,7 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileState.init()) {
     on<GetFavoriteMoviesEvent>(_onGetFavoriteMoviesEvent);
+    on<RemoveFavoriteMovieEvent>(_onRemoveFavoriteMovieEvent);
   }
 
   Future<void> _onGetFavoriteMoviesEvent(
@@ -30,6 +31,33 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: e.toString(),
+      ));
+    }
+  }
+
+  void _onRemoveFavoriteMovieEvent(
+      RemoveFavoriteMovieEvent event, Emitter<ProfileState> emit) {
+    try {
+      final updatedMovies = List<MovieEntity>.from(state.movies ?? []);
+      final movieExists = updatedMovies.any((movie) => movie.slug == event.slug);
+
+      if (movieExists) {
+        updatedMovies.removeWhere((movie) => movie.slug == event.slug);
+        emit(state.copyWith(
+          isLoading: LoadingState.finished,
+          movies: updatedMovies,
+          error: null,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: LoadingState.finished,
+          error: 'Không tìm thấy phim với slug: ${event.slug}',
+        ));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: 'Không thể xóa phim: ${e.toString()}',
       ));
     }
   }

@@ -11,9 +11,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     context.read<CategoriesBloc>().add(FetchCategories());
-    context.read<HomeBloc>().add(
-          FectchMovieForBannerMovies(),
-        );
     super.initState();
   }
 

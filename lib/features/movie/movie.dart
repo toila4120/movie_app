@@ -15,6 +15,7 @@ import 'package:movie_app/features/authentication/presentation/bloc/authenticati
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movie/presentation/widget/item_container.dart';
+import 'package:movie_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:pod_player/pod_player.dart';
 import 'package:shimmer/shimmer.dart';
 
