@@ -1,8 +1,8 @@
 part of 'home_bloc.dart';
 
 class HomeState extends Equatable {
-  final List<MovieForBannerEntity> bannerMovies;
-  final List<MovieForBannerEntity> newMovies;
+  final List<MovieEntity> bannerMovies;
+  final List<MovieEntity> newMovies;
   final List<MovieWithGenre> popularMovies;
   final LoadingState loadingState;
   final String errorMessage;
@@ -26,8 +26,8 @@ class HomeState extends Equatable {
   }
 
   HomeState copyWith({
-    List<MovieForBannerEntity>? bannerMovies,
-    List<MovieForBannerEntity>? newMovies,
+    List<MovieEntity>? bannerMovies,
+    List<MovieEntity>? newMovies,
     List<MovieWithGenre>? popularMovies,
     LoadingState? loadingState,
     String? errorMessage,

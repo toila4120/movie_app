@@ -1,7 +1,13 @@
 part of '../../home.dart';
 
 class Popular extends StatelessWidget {
-  const Popular({super.key});
+  final String? title;
+  final String? slug;
+  const Popular({
+    super.key,
+    this.title = 'Phim nổi bật',
+    this.slug = 'phim-moi-cap-nhat-v3',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,7 @@ class Popular extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Phim nổi bật',
+                    title ?? 'Phim nổi bật',
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
@@ -29,8 +35,8 @@ class Popular extends StatelessWidget {
                     context.push(
                       AppRouter.listMoviePath,
                       extra: {
-                        'input': 'Phim nổi bật',
-                        'input2': 'phim-moi-cap-nhat-v3',
+                        'input': title,
+                        'input2': slug,
                       },
                     );
                   },
@@ -44,35 +50,89 @@ class Popular extends StatelessWidget {
               ],
             ),
             SizedBox(height: AppPadding.tiny),
-            SizedBox(
-              height: 190.w,
-              child: ListView.builder(
-                itemCount: state.bannerMovies.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: index == 0
-                        ? EdgeInsets.only(
-                            right: AppPadding.superTiny,
-                          )
-                        : EdgeInsets.symmetric(
-                            horizontal: AppPadding.superTiny,
+            slug == "phim-moi-cap-nhat-v3"
+                ? SizedBox(
+                    height: 190.w,
+                    child: ListView.builder(
+                      itemCount: state.bannerMovies.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: index == 0
+                              ? EdgeInsets.only(
+                                  right: AppPadding.superTiny,
+                                )
+                              : EdgeInsets.symmetric(
+                                  horizontal: AppPadding.superTiny,
+                                ),
+                          child: CustomAppButton(
+                            onPressed: () {
+                              context
+                                  .read<MovieBloc>()
+                                  .add(FetchMovieDetailEvent(
+                                    slug: state.bannerMovies[index].slug,
+                                  ));
+                              context.push(AppRouter.movieDetailPath);
+                            },
+                            child: _ItemFilmPopular(
+                              movieForBannerEntity: state.bannerMovies[index],
+                            ),
                           ),
-                    child: CustomAppButton(
-                      onPressed: () {
-                        context.read<MovieBloc>().add(FetchMovieDetailEvent(
-                              slug: state.bannerMovies[index].slug,
-                            ));
-                        context.push(AppRouter.movieDetailPath);
+                        );
                       },
-                      child: _ItemFilmPopular(
-                        movieForBannerEntity: state.bannerMovies[index],
-                      ),
                     ),
-                  );
-                },
-              ),
-            )
+                  )
+                : SizedBox(
+                    height: 190.w,
+                    child: ListView.builder(
+                      // Flatten the movies from all MovieWithGenre items
+                      itemCount: state.popularMovies.fold<int>(
+                          0, (sum, genre) => sum + (genre.movies?.length ?? 0)),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        // Find the movie at the flattened index
+                        int currentIndex = 0;
+                        MovieEntity? targetMovie;
+                        for (var genre in state.popularMovies) {
+                          if (genre.movies != null) {
+                            for (var movie in genre.movies!) {
+                              if (currentIndex == index) {
+                                targetMovie = movie;
+                                break;
+                              }
+                              currentIndex++;
+                            }
+                          }
+                          if (targetMovie != null) break;
+                        }
+
+                        if (targetMovie == null) return SizedBox.shrink();
+
+                        return Container(
+                          padding: index == 0
+                              ? EdgeInsets.only(
+                                  right: AppPadding.superTiny,
+                                )
+                              : EdgeInsets.symmetric(
+                                  horizontal: AppPadding.superTiny,
+                                ),
+                          child: CustomAppButton(
+                            onPressed: () {
+                              context
+                                  .read<MovieBloc>()
+                                  .add(FetchMovieDetailEvent(
+                                    slug: targetMovie!.slug,
+                                  ));
+                              context.push(AppRouter.movieDetailPath);
+                            },
+                            child: _ItemFilmPopular(
+                              movieForBannerEntity: targetMovie,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
           ],
         );
       },
@@ -81,7 +141,7 @@ class Popular extends StatelessWidget {
 }
 
 class _ItemFilmPopular extends StatelessWidget {
-  final MovieForBannerEntity movieForBannerEntity;
+  final MovieEntity movieForBannerEntity;
   const _ItemFilmPopular({
     required this.movieForBannerEntity,
   });

@@ -135,7 +135,7 @@ class _BannerHomeState extends State<BannerHome> {
                                               ),
                                             ),
                                             Text(
-                                              banner.category
+                                              banner.categories
                                                   .take(3)
                                                   .map((countries) =>
                                                       countries.name)

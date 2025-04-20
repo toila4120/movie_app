@@ -50,7 +50,11 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(height: AppPadding.small),
                               const Popular(),
                               SizedBox(height: AppPadding.small),
-                              
+                              BlocBuilder<HomeBloc, HomeState>(
+                                builder: (context, state) {
+                                  return Popular();
+                                },
+                              ),
                             ],
                           ),
                         ),
