@@ -14,7 +14,6 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       FetchCategories event, Emitter<CategoriesState> emit) async {
     emit(
         state.copyWith(loadingState: LoadingState.loading, errorMessage: null));
-
     try {
       final useCase = getIt<GetAllCategories>();
       final categories = await useCase();

@@ -1,6 +1,7 @@
 import 'package:movie_app/features/categories/domain/entities/categories_entities.dart';
 import 'package:movie_app/features/home/data/datasource/home_remote_datasource.dart';
 import 'package:movie_app/features/home/domain/entities/movie_for_banner_entity.dart';
+import 'package:movie_app/features/home/domain/entities/movie_with_genre.dart';
 import 'package:movie_app/features/home/domain/repository/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -57,6 +58,16 @@ class HomeRepositoryImpl implements HomeRepository {
           .toList();
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<List<MovieWithGenre>> getMoviesByListGenre(
+      List<CategoryEntity> genre) async {
+    try {
+      return await homeRemoteDatasource.fetchMoviesByListGenre(genre);
+    } catch (e) {
+      throw Exception('Error in getMoviesByListGenre: $e');
     }
   }
 }

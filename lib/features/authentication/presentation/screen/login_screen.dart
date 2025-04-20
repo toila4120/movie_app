@@ -12,6 +12,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isObscureText = true;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isAuthSuccess = false; // Theo dõi trạng thái đăng nhập
+  bool _isCategoriesLoaded = false; // Theo dõi trạng thái tải danh mục
 
   @override
   void dispose() {
@@ -20,21 +22,45 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    context.read<HomeBloc>().add(FetchMovieForBannerMovies());
+    context.read<CategoriesBloc>().add(FetchCategories());
     super.initState();
-    context.read<HomeBloc>().add(FectchMovieForBannerMovies());
+  }
+
+  void _navigateIfReady(BuildContext context) {
+    if (_isAuthSuccess && _isCategoriesLoaded) {
+      context.read<AppBloc>().add(FetchUserEvent(
+          uid: context.read<AuthenticationBloc>().state.user!.uid));
+      context.go(AppRouter.splashLoginScreenPath);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthenticationBloc, AuthenticationState>(
-      listener: (context, state) {
-        if (state.isLoading.isError) {
-          showToast(context, message: state.error!);
-        } else if (state.isLoading.isFinished && state.action.isLogin()) {
-          context.read<AppBloc>().add(FetchUserEvent(uid: state.user!.uid));
-          context.go(AppRouter.splashLoginScreenPath);
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            if (state.isLoading.isError) {
+              showToast(context, message: state.error!);
+            } else if (state.isLoading.isFinished && state.action.isLogin()) {
+              _isAuthSuccess = true; // Đánh dấu đăng nhập thành công
+              _navigateIfReady(context); // Kiểm tra và chuyển màn nếu sẵn sàng
+            }
+          },
+        ),
+        BlocListener<CategoriesBloc, CategoriesState>(
+          listener: (context, state) {
+            if (state.loadingState == LoadingState.finished) {
+              _isCategoriesLoaded = true; // Đánh dấu danh mục đã tải
+              _navigateIfReady(context); // Kiểm tra và chuyển màn nếu sẵn sàng
+            } else if (state.loadingState == LoadingState.error) {
+              showToast(context,
+                  message: state.errorMessage ?? 'Lỗi khi tải danh mục');
+            }
+          },
+        ),
+      ],
       child: AppContainer(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPadding.large),

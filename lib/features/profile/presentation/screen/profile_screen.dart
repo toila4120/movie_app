@@ -102,19 +102,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Icon(
                                     state.user!.subscriptionPlan!.icon,
-                                    color: state
-                                            .user!.subscriptionPlan!.isGold
+                                    color: state.user!.subscriptionPlan!.isGold
                                         ? AppColor.yellow
-                                        : state.user!.subscriptionPlan!
-                                                .isSilver
+                                        : state.user!.subscriptionPlan!.isSilver
                                             ? AppColor.greyScale500
                                             : AppColor.white,
                                     size: 16.w,
                                   ),
                                   SizedBox(width: AppPadding.tiny),
                                   Text(
-                                    state.user!.subscriptionPlan!
-                                        .displayName,
+                                    state.user!.subscriptionPlan!.displayName,
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       color: AppColor.greyScale900,
@@ -134,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
-                        color: AppColor.greyScale500,
+                        // color: AppColor.greyScale400,
                       ),
                     ),
                     SizedBox(height: AppPadding.medium),
@@ -178,8 +175,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         context
                             .read<AppBloc>()
                             .add(FetchUserEvent(uid: state.user!.uid));
-                        context.read<ProfileBloc>().add(
-                            GetFavoriteMoviesEvent(user: state.user!));
+                        context
+                            .read<ProfileBloc>()
+                            .add(GetFavoriteMoviesEvent(user: state.user!));
                         context.push(
                           AppRouter.likeMovieScreenPath,
                         );

@@ -10,7 +10,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    context.read<CategoriesBloc>().add(FetchCategories());
     super.initState();
   }
 
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       child: RefreshIndicator(
         onRefresh: () async {
           context.read<HomeBloc>().add(
-                FectchMovieForBannerMovies(),
+                FetchMovieForBannerMovies(),
               );
         },
         child: ScrollConfiguration(
@@ -51,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(height: AppPadding.small),
                               const Popular(),
                               SizedBox(height: AppPadding.small),
-                              const Popular(),
+                              
                             ],
                           ),
                         ),

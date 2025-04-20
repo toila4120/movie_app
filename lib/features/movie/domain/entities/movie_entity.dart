@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:movie_app/features/categories/domain/entities/categories_entities.dart';
 
 class MovieEntity extends Equatable {
   final String id;
@@ -85,20 +86,20 @@ class MovieEntity extends Equatable {
       ];
 }
 
-class CategoryEntity extends Equatable {
-  final String id;
-  final String name;
-  final String slug;
+// class CategoryEntity extends Equatable {
+//   final String id;
+//   final String name;
+//   final String slug;
 
-  const CategoryEntity({
-    required this.id,
-    required this.name,
-    required this.slug,
-  });
+//   const CategoryEntity({
+//     required this.id,
+//     required this.name,
+//     required this.slug,
+//   });
 
-  @override
-  List<Object?> get props => [id, name, slug];
-}
+//   @override
+//   List<Object?> get props => [id, name, slug];
+// }
 
 class CountryEntity extends Equatable {
   final String id;

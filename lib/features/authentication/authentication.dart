@@ -6,6 +6,7 @@ import 'package:movie_app/config/router/app_router.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/core.dart';
+import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';

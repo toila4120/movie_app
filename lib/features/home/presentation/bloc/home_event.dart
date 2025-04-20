@@ -7,12 +7,18 @@ sealed class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FectchMovieForBannerMovies extends HomeEvent {}
+class FetchMovieForBannerMovies extends HomeEvent {}
 
-class FectchMovieForHanhDongMovies extends HomeEvent {}
+class FetchMovieForNewMovies extends HomeEvent {}
 
-class FectchMovieForNewMovies extends HomeEvent {}
+class FetchMovieWithGenre extends HomeEvent {
+  final List<CategoryEntity> genres;
+  const FetchMovieWithGenre({
+    required this.genres,
+  });
 
-class FectchMovieForPhieuLuuMovies extends HomeEvent {}
-
-class FectchMovieForKinhDiMovies extends HomeEvent {}
+  @override
+  List<Object> get props => [
+        genres,
+      ];
+}
