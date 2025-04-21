@@ -10,21 +10,34 @@ class Movie extends StatefulWidget {
 }
 
 class _MovieState extends State<Movie> {
-  late final PodPlayerController controller;
+  late final VideoPlayerController _videoPlayerController;
+  late final ChewieController _chewieController;
 
   @override
   void initState() {
-    controller = PodPlayerController(
-      playVideoFrom: PlayVideoFrom.network(
-        widget.url,
-      ),
-    )..initialise();
     super.initState();
+    _videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.url));
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      autoInitialize: true,
+      autoPlay: false,
+      allowFullScreen: true,
+      errorBuilder: (context, errorMessage) {
+        return Center(
+          child: Text(
+            errorMessage,
+            style: const TextStyle(color: Colors.white),
+          ),
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
@@ -34,7 +47,10 @@ class _MovieState extends State<Movie> {
       child: Scaffold(
         body: Column(
           children: [
-            PodVideoPlayer(controller: controller),
+            AspectRatio(
+              aspectRatio: _videoPlayerController.value.aspectRatio,
+              child: Chewie(controller: _chewieController),
+            ),
           ],
         ),
       ),
