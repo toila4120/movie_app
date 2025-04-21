@@ -66,7 +66,7 @@ class _MovieDetailState extends State<MovieDetail> {
                               ),
                               SizedBox(height: AppPadding.small),
                               Row(
-                                children: [
+                                children: <Widget>[
                                   Icon(
                                     Icons.star_half_rounded,
                                     color: AppColor.primary500,
@@ -100,14 +100,22 @@ class _MovieDetailState extends State<MovieDetail> {
                                     ),
                                   ),
                                   SizedBox(width: AppPadding.small),
-                                  ItemContainer(
-                                    title: state.movie!.countries
-                                        .map((countries) => countries.name)
-                                        .join(", "),
-                                  ),
-                                  SizedBox(width: AppPadding.tiny),
-                                  ItemContainer(
-                                    title: state.movie!.lang,
+                                  Flexible(
+                                    child: Wrap(
+                                      spacing: AppPadding.tiny,
+                                      runSpacing: AppPadding.tiny,
+                                      children: [
+                                        ItemContainer(
+                                          title: state.movie!.countries
+                                              .map(
+                                                  (countries) => countries.name)
+                                              .join(", "),
+                                        ),
+                                        ItemContainer(
+                                          title: state.movie!.lang,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
