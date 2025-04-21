@@ -12,7 +12,7 @@ class ItemContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 24.w,
+      height: 26.w,
       padding: EdgeInsets.symmetric(
         horizontal: AppPadding.tiny,
         vertical: AppPadding.superTiny,
@@ -28,10 +28,12 @@ class ItemContainer extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 10.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: AppColor.primary500,
           ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
         ),
       ),
     );

@@ -173,9 +173,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomAppButton(
                       onPressed: () {
                         context
-                            .read<AppBloc>()
-                            .add(FetchUserEvent(uid: state.user!.uid));
-                        context
                             .read<ProfileBloc>()
                             .add(GetFavoriteMoviesEvent(user: state.user!));
                         context.push(
@@ -200,7 +197,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                  // color: AppColor.greyScale900,
                                 ),
                               ),
                             ],
