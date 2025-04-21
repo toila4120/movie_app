@@ -28,12 +28,10 @@ class ProfileRemoteDatasourceImpl implements ProfileRemoteDatasource {
   @override
   Future<List<MovieModel>> getFavoriteMovies(List<String> slugs) async {
     try {
-      final List<MovieModel> favoriteMovies = [];
-      for (final slug in slugs) {
-        final movie = await getMovieBySlug(slug);
-        favoriteMovies.add(movie);
-      }
-      return favoriteMovies;
+      final List<Future<MovieModel>> favoriteMovies = slugs.map((slug) async {
+        return await getMovieBySlug(slug);
+      }).toList();
+      return await Future.wait(favoriteMovies);
     } catch (e) {
       throw Exception('Error fetching favorite movies: $e');
     }
