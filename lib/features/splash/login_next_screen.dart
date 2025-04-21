@@ -21,6 +21,8 @@ class _LoginNextScreenState extends State<LoginNextScreen> {
   @override
   void initState() {
     context.read<HomeBloc>().add(FetchMovieForBannerMovies());
+    final categories = context.read<CategoriesBloc>().state.categories;
+    context.read<HomeBloc>().add(FetchMovieWithGenre(genres: categories));
     super.initState();
   }
 
@@ -31,11 +33,6 @@ class _LoginNextScreenState extends State<LoginNextScreen> {
         BlocListener<HomeBloc, HomeState>(
           listener: (context, homeState) {
             if (homeState.loadingState.isFinished) {
-              final categories =
-                  context.read<CategoriesBloc>().state.categories;
-              context
-                  .read<HomeBloc>()
-                  .add(FetchMovieWithGenre(genres: categories));
               context.go(AppRouter.homeTabPath);
             }
           },
@@ -63,7 +60,7 @@ class _LoginNextScreenState extends State<LoginNextScreen> {
               SizedBox(height: AppPadding.large),
               BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
-                  return state.loadingState.isLoading
+                  return state.loadingPopularMovies.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : const SizedBox();
                 },

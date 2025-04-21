@@ -22,8 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    context.read<HomeBloc>().add(FetchMovieForBannerMovies());
-    context.read<CategoriesBloc>().add(FetchCategories());
+    if (context.read<CategoriesBloc>().state.categories.isNotEmpty) {
+      _isCategoriesLoaded = true;
+    }
     super.initState();
   }
 
@@ -44,16 +45,16 @@ class _LoginScreenState extends State<LoginScreen> {
             if (state.isLoading.isError) {
               showToast(context, message: state.error!);
             } else if (state.isLoading.isFinished && state.action.isLogin()) {
-              _isAuthSuccess = true; // Đánh dấu đăng nhập thành công
-              _navigateIfReady(context); // Kiểm tra và chuyển màn nếu sẵn sàng
+              _isAuthSuccess = true;
+              _navigateIfReady(context);
             }
           },
         ),
         BlocListener<CategoriesBloc, CategoriesState>(
           listener: (context, state) {
             if (state.loadingState == LoadingState.finished) {
-              _isCategoriesLoaded = true; // Đánh dấu danh mục đã tải
-              _navigateIfReady(context); // Kiểm tra và chuyển màn nếu sẵn sàng
+              _isCategoriesLoaded = true;
+              _navigateIfReady(context);
             } else if (state.loadingState == LoadingState.error) {
               showToast(context,
                   message: state.errorMessage ?? 'Lỗi khi tải danh mục');

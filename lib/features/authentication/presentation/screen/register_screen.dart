@@ -143,9 +143,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: AppPadding.medium),
                               onPressed: () {
-                                context.read<CategoriesBloc>().add(
-                                      FetchCategories(),
-                                    );
                                 context.read<AuthenticationBloc>().add(
                                       AuthenticationRegisterEvent(
                                         name: _nameController.text,

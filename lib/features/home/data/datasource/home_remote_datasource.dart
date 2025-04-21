@@ -76,16 +76,16 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   Future<List<MovieWithGenre>> fetchMoviesByListGenre(
       List<CategoryEntity> genres) async {
     try {
-      final List<MovieWithGenre> movies = [];
-      for (var genre in genres) {
-        final movie = await fetchMoviesByGenre(genre.slug);
-        final MovieWithGenre movieWithGenre = MovieWithGenre(
+      final List<Future<MovieWithGenre>> futures = genres.map((genre) async {
+        final movies = await fetchMoviesByGenre(genre.slug);
+        return MovieWithGenre(
           genre: genre,
-          movies: movie,
+          movies: movies,
           title: genre.name,
         );
-        movies.add(movieWithGenre);
-      }
+      }).toList();
+
+      final List<MovieWithGenre> movies = await Future.wait(futures);
       return movies;
     } catch (e) {
       throw Exception('Error fetching list movies with list genre: $e');

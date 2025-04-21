@@ -3,10 +3,12 @@ part of '../../home.dart';
 class Popular extends StatelessWidget {
   final String? title;
   final String? slug;
+  final List<MovieEntity>? movies;
   const Popular({
     super.key,
     this.title = 'Phim nổi bật',
     this.slug = 'phim-moi-cap-nhat-v3',
+    this.movies,
   });
 
   @override
@@ -29,9 +31,16 @@ class Popular extends StatelessWidget {
                 ),
                 CustomAppButton(
                   onPressed: () {
-                    context.read<MovieBloc>().add(const FetchNewMoviesEvent(
-                          page: 1,
-                        ));
+                    movies == null
+                        ? context
+                            .read<MovieBloc>()
+                            .add(const FetchNewMoviesEvent(
+                              page: 1,
+                            ))
+                        : context.read<MovieBloc>().add(FetchMoviesByCategory(
+                              categorySlug: slug!,
+                              page: 1,
+                            ));
                     context.push(
                       AppRouter.listMoviePath,
                       extra: {
@@ -50,7 +59,7 @@ class Popular extends StatelessWidget {
               ],
             ),
             SizedBox(height: AppPadding.tiny),
-            slug == "phim-moi-cap-nhat-v3"
+            movies == null
                 ? SizedBox(
                     height: 190.w,
                     child: ListView.builder(
@@ -85,29 +94,9 @@ class Popular extends StatelessWidget {
                 : SizedBox(
                     height: 190.w,
                     child: ListView.builder(
-                      // Flatten the movies from all MovieWithGenre items
-                      itemCount: state.popularMovies.fold<int>(
-                          0, (sum, genre) => sum + (genre.movies?.length ?? 0)),
+                      itemCount: movies!.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        // Find the movie at the flattened index
-                        int currentIndex = 0;
-                        MovieEntity? targetMovie;
-                        for (var genre in state.popularMovies) {
-                          if (genre.movies != null) {
-                            for (var movie in genre.movies!) {
-                              if (currentIndex == index) {
-                                targetMovie = movie;
-                                break;
-                              }
-                              currentIndex++;
-                            }
-                          }
-                          if (targetMovie != null) break;
-                        }
-
-                        if (targetMovie == null) return SizedBox.shrink();
-
                         return Container(
                           padding: index == 0
                               ? EdgeInsets.only(
@@ -121,12 +110,12 @@ class Popular extends StatelessWidget {
                               context
                                   .read<MovieBloc>()
                                   .add(FetchMovieDetailEvent(
-                                    slug: targetMovie!.slug,
+                                    slug: movies![index].slug,
                                   ));
                               context.push(AppRouter.movieDetailPath);
                             },
                             child: _ItemFilmPopular(
-                              movieForBannerEntity: targetMovie,
+                              movieForBannerEntity: movies![index],
                             ),
                           ),
                         );
@@ -148,13 +137,24 @@ class _ItemFilmPopular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String normalizeImageUrl(String posterUrl) {
+      const baseUrl = 'https://phimimg.com/';
+      if (posterUrl.startsWith(baseUrl)) {
+        return posterUrl;
+      } else if (posterUrl.startsWith('/')) {
+        return '$baseUrl${posterUrl.substring(1)}';
+      } else {
+        return '$baseUrl$posterUrl';
+      }
+    }
+
     return Column(
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
           child: CachedNetworkImage(
             key: ValueKey(movieForBannerEntity.posterUrl),
-            imageUrl: movieForBannerEntity.posterUrl,
+            imageUrl: normalizeImageUrl(movieForBannerEntity.posterUrl),
             height: 164.w,
             width: 120.w,
             fit: BoxFit.fill,

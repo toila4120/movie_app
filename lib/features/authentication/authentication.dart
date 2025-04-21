@@ -10,9 +10,7 @@ import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
-import 'package:movie_app/features/categories/presentation/bloc/categories_event.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_state.dart';
-import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 
 part 'presentation/screen/login_screen.dart';
 part 'presentation/screen/register_screen.dart';

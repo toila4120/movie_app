@@ -42,18 +42,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       FetchMovieWithGenre event, Emitter<HomeState> emit) async {
     try {
       emit(state.copyWith(
-        loadingState: LoadingState.loading,
+        loadingPopularMovies: LoadingState.loading,
         errorMessage: null,
       ));
       final useCase = getIt<GetMoviesByListGenre>();
       final movies = await useCase(event.genres);
       emit(state.copyWith(
         popularMovies: movies,
-        loadingState: LoadingState.finished,
+        loadingPopularMovies: LoadingState.finished,
       ));
     } catch (e) {
       emit(state.copyWith(
-        loadingState: LoadingState.error,
+        loadingPopularMovies: LoadingState.error,
         errorMessage: e.toString(),
       ));
     }
