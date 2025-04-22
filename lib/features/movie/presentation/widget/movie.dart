@@ -119,7 +119,7 @@ class _MovieState extends State<Movie> {
   }
 
   void _startTrackingPosition() {
-    _positionTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    _positionTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
       if (_videoPlayerController.value.isPlaying) {
         setState(() {
           _currentPosition = _videoPlayerController.value.position;
