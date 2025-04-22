@@ -58,42 +58,80 @@ class UserEntity extends Equatable {
 }
 
 // Class đại diện cho một bộ phim đã xem
+class WatchedEpisode {
+  final Duration duration; // Thời gian xem
+  final String serverName; // Tên server (Vietsub, Lồng Tiếng, Thuyết Minh)
+
+  const WatchedEpisode({
+    required this.duration,
+    required this.serverName,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'duration': duration.inSeconds,
+      'serverName': serverName,
+    };
+  }
+
+  factory WatchedEpisode.fromJson(Map<String, dynamic> json) {
+    return WatchedEpisode(
+      duration: Duration(seconds: json['duration'] as int),
+      serverName: json['serverName'] as String,
+    );
+  }
+}
+
 class WatchedMovie {
-  final String movieId; // ID của phim
-  final bool isSeries; // Phim bộ (true) hay phim lẻ (false)
-  final Map<int, Duration> watchedEpisodes; // Tập và thời gian xem của tập đó
+  final String movieId;
+  final bool isSeries;
+  final String name;
+  final String thumbUrl;
+  final int episodeTotal;
+  final int time;
+  final Map<int, WatchedEpisode> watchedEpisodes;
 
   const WatchedMovie({
     required this.movieId,
     required this.isSeries,
+    required this.name,
+    required this.thumbUrl,
+    required this.episodeTotal,
+    required this.time,
     this.watchedEpisodes = const {},
   });
 
-  // Chuyển WatchedMovie thành JSON để lưu vào Firestore
   Map<String, dynamic> toJson() {
     return {
       'movieId': movieId,
       'isSeries': isSeries,
+      'name': name,
+      'thumbUrl': thumbUrl,
+      'episodeTotal': episodeTotal,
+      'time': time,
       'watchedEpisodes': watchedEpisodes.map(
-        (episode, duration) => MapEntry(
+        (episode, watchedEpisode) => MapEntry(
           episode.toString(),
-          duration.inSeconds, // Lưu thời gian dưới dạng giây
+          watchedEpisode.toJson(),
         ),
       ),
     };
   }
 
-  // Tạo WatchedMovie từ JSON khi đọc từ Firestore
   factory WatchedMovie.fromJson(Map<String, dynamic> json) {
     final watchedEpisodesJson =
         json['watchedEpisodes'] as Map<String, dynamic>? ?? {};
     return WatchedMovie(
       movieId: json['movieId'] as String,
       isSeries: json['isSeries'] as bool,
+      name: json['name'] as String,
+      thumbUrl: json['thumbUrl'] as String,
+      episodeTotal: json['episodeTotal'] as int? ?? 0,
+      time: json['time'] as int? ?? 0,
       watchedEpisodes: watchedEpisodesJson.map(
-        (episode, duration) => MapEntry(
+        (episode, data) => MapEntry(
           int.parse(episode),
-          Duration(seconds: duration as int),
+          WatchedEpisode.fromJson(data as Map<String, dynamic>),
         ),
       ),
     );

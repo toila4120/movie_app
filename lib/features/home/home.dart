@@ -9,6 +9,8 @@ import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
 import 'package:movie_app/core/widget/widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movie_app/features/authentication/domain/entities/user_entity.dart';
+import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';

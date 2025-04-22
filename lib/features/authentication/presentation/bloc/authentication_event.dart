@@ -78,16 +78,36 @@ class UpdateWatchedMovieEvent extends AuthenticationEvent {
   final bool isSeries;
   final int episode;
   final Duration watchedDuration;
+  final String name;
+  final String thumbUrl;
+  final int episodeTotal;
+  final String serverName; // Thêm serverName
+  final int time;
 
   const UpdateWatchedMovieEvent({
     required this.movieId,
     required this.isSeries,
     required this.episode,
     required this.watchedDuration,
+    required this.name,
+    required this.thumbUrl,
+    required this.episodeTotal,
+    required this.serverName,
+    required this.time,
   });
 
   @override
-  List<Object?> get props => [movieId, isSeries, episode, watchedDuration];
+  List<Object?> get props => [
+        movieId,
+        isSeries,
+        episode,
+        watchedDuration,
+        name,
+        thumbUrl,
+        episodeTotal,
+        serverName,
+        time,
+      ];
 }
 
 class UpdateSubscriptionPlanEvent extends AuthenticationEvent {

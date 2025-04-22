@@ -7,6 +7,7 @@ import 'package:movie_app/features/chatting/presentation/screen/chatting_screen.
 import 'package:movie_app/features/explore/explore.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
+import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/movie.dart';
 import 'package:movie_app/features/profile/profile.dart';
 import 'package:movie_app/features/splash/login_next_screen.dart';
@@ -157,11 +158,22 @@ abstract class AppRouter {
                           pageBuilder: (context, state) {
                             final extra =
                                 state.extra as Map<String, dynamic>? ?? {};
-                            final url = extra['url'] as String;
+                            final movie = extra['movie'] as MovieEntity;
+                            final episodeIndex =
+                                extra['episodeIndex'] as int? ?? 0;
+                            final serverIndex =
+                                extra['serverIndex'] as int? ?? 0;
+                            final currentPosition =
+                                extra['currentPosition'] as int? ?? 0;
                             return _buildPageWithDefaultTransition(
                               context: context,
                               state: state,
-                              child: Movie(url: url),
+                              child: Movie(
+                                movie: movie,
+                                episodeIndex: episodeIndex,
+                                serverIndex: serverIndex,
+                                currentPosition: currentPosition,
+                              ),
                             );
                           },
                         ),

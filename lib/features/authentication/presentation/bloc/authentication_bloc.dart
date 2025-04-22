@@ -310,9 +310,7 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     if (state.user == null) {
-      emit(state.copyWith(
-        error: 'User not logged in.',
-      ));
+      emit(state.copyWith(error: 'User not logged in.'));
       return;
     }
 
@@ -322,24 +320,38 @@ class AuthenticationBloc
         updatedWatchedMovies.indexWhere((m) => m.movieId == event.movieId);
 
     if (movieIndex == -1) {
-      // Phim chưa được xem, thêm mới
       final newWatchedMovie = WatchedMovie(
         movieId: event.movieId,
         isSeries: event.isSeries,
-        watchedEpisodes: {event.episode: event.watchedDuration},
+        name: event.name,
+        thumbUrl: event.thumbUrl,
+        episodeTotal: event.episodeTotal,
+        time: event.time,
+        watchedEpisodes: {
+          event.episode: WatchedEpisode(
+            duration: event.watchedDuration,
+            serverName: event.serverName,
+          ),
+        },
       );
       updatedWatchedMovies.add(newWatchedMovie);
     } else {
-      // Phim đã được xem, cập nhật thời gian xem
       final existingMovie = updatedWatchedMovies[movieIndex];
       final updatedEpisodes =
-          Map<int, Duration>.from(existingMovie.watchedEpisodes);
-      updatedEpisodes[event.episode] = event.watchedDuration;
+          Map<int, WatchedEpisode>.from(existingMovie.watchedEpisodes);
+      updatedEpisodes[event.episode] = WatchedEpisode(
+        duration: event.watchedDuration,
+        serverName: event.serverName,
+      );
 
       final updatedMovie = WatchedMovie(
         movieId: existingMovie.movieId,
         isSeries: existingMovie.isSeries,
+        name: existingMovie.name,
+        thumbUrl: existingMovie.thumbUrl,
+        episodeTotal: existingMovie.episodeTotal,
         watchedEpisodes: updatedEpisodes,
+        time: existingMovie.time,
       );
       updatedWatchedMovies[movieIndex] = updatedMovie;
     }
