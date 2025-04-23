@@ -79,9 +79,7 @@ class MiniPlayer extends StatelessWidget {
                     size: 20.w,
                   ),
                   onPressed: () {
-                    context
-                        .read<MiniPlayerBloc>()
-                        .add(const MaximizeMiniPlayer());
+                    context.read<MiniPlayerBloc>().add(MaximizeMiniPlayer());
                   },
                 ),
                 IconButton(

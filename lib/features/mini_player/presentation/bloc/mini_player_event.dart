@@ -64,9 +64,4 @@ class UpdateCurrentPosition extends MiniPlayerEvent {
   List<Object?> get props => [position];
 }
 
-class MaximizeMiniPlayer extends MiniPlayerEvent {
-  const MaximizeMiniPlayer();
-
-  @override
-  List<Object?> get props => [];
-}
+class MaximizeMiniPlayer extends MiniPlayerEvent {}

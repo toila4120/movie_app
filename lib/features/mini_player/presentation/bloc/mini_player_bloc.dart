@@ -15,7 +15,6 @@ part 'mini_player_state.dart';
 class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
   Timer? _positionTimer;
   final AuthenticationBloc authenticationBloc;
-  BuildContext? routerContext; // Store the context with GoRouter access
 
   MiniPlayerBloc({
     required this.authenticationBloc,
@@ -54,7 +53,6 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
         event.size.width - 200.w,
         event.size.height - 120.w - 50.w,
       ),
-      isPlay: true,
     ));
 
     _startTrackingPosition(event.controller, emit);
@@ -85,10 +83,6 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
 
   void _onMaximizeMiniPlayer(
       MaximizeMiniPlayer event, Emitter<MiniPlayerState> emit) {
-    if (routerContext == null) {
-      return;
-    }
-
     AppRouter.router.push(AppRouter.playMoviePath, extra: {
       'movie': state.movie,
       'episodeIndex': state.episodeIndex,

@@ -20,7 +20,6 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
-
   await Firebase.initializeApp();
   Bloc.observer = const AppBlocObserver();
   SystemChrome.setPreferredOrientations([
@@ -67,10 +66,14 @@ class MyApp extends StatelessWidget {
                 return Overlay(
                   initialEntries: [
                     OverlayEntry(
-                      builder: (context) => Stack(
+                      builder: (overlayContext) => Stack(
                         children: [
                           child!,
-                          const MiniPlayer(),
+                          Builder(
+                            builder: (miniPlayerContext) {
+                              return const MiniPlayer();
+                            },
+                          ),
                         ],
                       ),
                     ),
