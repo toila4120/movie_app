@@ -16,6 +16,7 @@ import 'package:movie_app/core/widget/src/expandable_text.dart';
 import 'package:movie_app/core/widget/widget.dart';
 import 'package:movie_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_bloc.dart';
 import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/movie/presentation/widget/item_container.dart';

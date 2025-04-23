@@ -9,8 +9,10 @@ import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/features/explore/presentation/bloc/explore_bloc.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
+import 'package:movie_app/features/mini_player/presentation/widget/mini_player.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_bloc.dart';
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/config/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +20,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
+
   await Firebase.initializeApp();
   Bloc.observer = const AppBlocObserver();
   SystemChrome.setPreferredOrientations([
@@ -42,6 +45,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ProfileBloc()),
         BlocProvider(create: (context) => CategoriesBloc()),
         BlocProvider(create: (context) => AuthenticationBloc()),
+        BlocProvider(
+          create: (context) => MiniPlayerBloc(
+            authenticationBloc: context.read<AuthenticationBloc>(),
+          ),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(411, 467),
@@ -55,6 +63,20 @@ class MyApp extends StatelessWidget {
               darkTheme: AppTheme.darkTheme,
               themeMode: ThemeMode.system,
               routerConfig: AppRouter.router,
+              builder: (context, child) {
+                return Overlay(
+                  initialEntries: [
+                    OverlayEntry(
+                      builder: (context) => Stack(
+                        children: [
+                          child!,
+                          const MiniPlayer(),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),

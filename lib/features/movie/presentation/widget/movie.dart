@@ -5,6 +5,7 @@ class Movie extends StatefulWidget {
   final int episodeIndex;
   final int serverIndex;
   final int currentPosition;
+
   const Movie({
     super.key,
     required this.movie,
@@ -19,21 +20,16 @@ class Movie extends StatefulWidget {
 
 class _MovieState extends State<Movie> {
   late final VideoPlayerController _videoPlayerController;
-  late final ChewieController _chewieController;
+  late ChewieController _chewieController;
   Timer? _positionTimer;
   Duration _currentPosition = Duration.zero;
   AuthenticationBloc? _authBloc;
+  final bool _isDisposed = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _authBloc = context.read<AuthenticationBloc>();
-  }
-
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused) {
-      _videoPlayerController.pause();
-    }
   }
 
   @override
@@ -62,8 +58,8 @@ class _MovieState extends State<Movie> {
 
   void _restoreWatchedPosition() {
     final currentPositionDuration = Duration(seconds: widget.currentPosition);
-
-    final authState = context.read<AuthenticationBloc>().state;
+    final authState =
+        _authBloc?.state ?? context.read<AuthenticationBloc>().state;
     final watchedMovies = authState.user?.watchedMovies ?? [];
     final watchedMovie = watchedMovies.firstWhere(
       (m) => m.movieId == widget.movie.slug,
@@ -85,7 +81,6 @@ class _MovieState extends State<Movie> {
     final initialPosition =
         widget.currentPosition > 0 ? currentPositionDuration : watchedDuration;
 
-    // Kiểm tra thời lượng video
     _videoPlayerController.initialize().then((_) {
       final videoDuration = _videoPlayerController.value.duration;
       if (initialPosition > videoDuration) {
@@ -98,13 +93,26 @@ class _MovieState extends State<Movie> {
     });
   }
 
+  void _startTrackingPosition() {
+    _positionTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      if (_videoPlayerController.value.isPlaying) {
+        setState(() {
+          _currentPosition = _videoPlayerController.value.position;
+        });
+        _saveWatchedPosition();
+      }
+    });
+  }
+
   void _saveWatchedPosition() {
-    if (_authBloc == null) return;
+    if (_authBloc == null) {
+      return;
+    }
     final server = widget.movie.episodes[widget.serverIndex];
     _authBloc!.add(
       UpdateWatchedMovieEvent(
         movieId: widget.movie.slug,
-        isSeries: widget.movie.type == 'series',
+        isSeries: widget.movie.episodeTotal == '1',
         episode: widget.episodeIndex + 1,
         watchedDuration: _currentPosition,
         name: widget.movie.name,
@@ -118,38 +126,44 @@ class _MovieState extends State<Movie> {
     );
   }
 
-  void _startTrackingPosition() {
-    _positionTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
-      if (_videoPlayerController.value.isPlaying) {
-        setState(() {
-          _currentPosition = _videoPlayerController.value.position;
-        });
-        _saveWatchedPosition();
-      }
-    });
-  }
-
   @override
   void dispose() {
-    _videoPlayerController.pause();
-    _saveWatchedPosition();
-    _positionTimer?.cancel();
-    _videoPlayerController.dispose();
-    _chewieController.dispose();
+    if (_isDisposed) {
+      _videoPlayerController.pause();
+      _positionTimer?.cancel();
+      _chewieController.dispose();
+      _videoPlayerController.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            AspectRatio(
-              aspectRatio: _videoPlayerController.value.aspectRatio,
-              child: Chewie(controller: _chewieController),
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<MiniPlayerBloc>().add(ShowMiniPlayer(
+              movie: widget.movie,
+              controller: _videoPlayerController,
+              episodeIndex: widget.episodeIndex,
+              serverIndex: widget.serverIndex,
+              position: _currentPosition,
+              size: Size(
+                MediaQuery.of(context).size.width,
+                MediaQuery.of(context).size.height,
+              ),
+            ));
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: [
+              AspectRatio(
+                aspectRatio: _videoPlayerController.value.aspectRatio,
+                child: Chewie(controller: _chewieController),
+              ),
+            ],
+          ),
         ),
       ),
     );
