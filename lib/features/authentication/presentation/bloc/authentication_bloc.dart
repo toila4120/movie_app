@@ -319,8 +319,11 @@ class AuthenticationBloc
     final movieIndex =
         updatedWatchedMovies.indexWhere((m) => m.movieId == event.movieId);
 
+    WatchedMovie updatedMovie;
+
     if (movieIndex == -1) {
-      final newWatchedMovie = WatchedMovie(
+      // Create new movie entry
+      updatedMovie = WatchedMovie(
         movieId: event.movieId,
         isSeries: event.isSeries,
         name: event.name,
@@ -334,8 +337,9 @@ class AuthenticationBloc
           ),
         },
       );
-      updatedWatchedMovies.add(newWatchedMovie);
+      updatedWatchedMovies.add(updatedMovie);
     } else {
+      // Update existing movie
       final existingMovie = updatedWatchedMovies[movieIndex];
       final updatedEpisodes =
           Map<int, WatchedEpisode>.from(existingMovie.watchedEpisodes);
@@ -344,7 +348,7 @@ class AuthenticationBloc
         serverName: event.serverName,
       );
 
-      final updatedMovie = WatchedMovie(
+      updatedMovie = WatchedMovie(
         movieId: existingMovie.movieId,
         isSeries: existingMovie.isSeries,
         name: existingMovie.name,
@@ -355,6 +359,10 @@ class AuthenticationBloc
       );
       updatedWatchedMovies[movieIndex] = updatedMovie;
     }
+
+    // Move the updated movie to the top of the list
+    updatedWatchedMovies.removeWhere((m) => m.movieId == updatedMovie.movieId);
+    updatedWatchedMovies.insert(0, updatedMovie);
 
     final updatedUser = UserModel(
       uid: state.user!.uid,

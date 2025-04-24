@@ -39,7 +39,7 @@ class _MovieDetailState extends State<MovieDetail> {
               (m) => m.movieId == movie.id,
               orElse: () => WatchedMovie(
                 movieId: movie.slug,
-                isSeries: movie.type == 'series',
+                isSeries: movie.episodeTotal == "1",
                 name: movie.name,
                 thumbUrl: movie.thumbUrl,
                 episodeTotal: int.tryParse(movie.episodeTotal) ?? 0,
@@ -128,20 +128,12 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                 ),
                                 SizedBox(width: AppPadding.small),
-                                Flexible(
-                                  child: Wrap(
-                                    spacing: AppPadding.tiny,
-                                    runSpacing: AppPadding.tiny,
-                                    children: [
-                                      ItemContainer(
-                                        title: movie.countries
-                                            .map((c) => c.name)
-                                            .join(", "),
-                                      ),
-                                      ItemContainer(title: movie.lang),
-                                    ],
-                                  ),
-                                ),
+                                // ItemContainer(
+                                //   title: movie.countries
+                                //       .map((c) => c.name)
+                                //       .join(", "),
+                                // ),
+                                ItemContainer(title: movie.lang),
                               ],
                             ),
                             SizedBox(height: AppPadding.medium),
@@ -244,13 +236,23 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: AppPadding.medium),
+                            SizedBox(height: AppPadding.small),
                             Text(
                               "Thể loại: ${movie.categories.map((c) => c.name).join(", ")}",
                               style: TextStyle(
-                                  fontSize: 12.sp, fontWeight: FontWeight.w400),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                            SizedBox(height: AppPadding.small),
+                            SizedBox(height: AppPadding.tiny),
+                            Text(
+                              "Quốc gia: ${movie.countries.map((c) => c.name).join(", ")}",
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: AppPadding.tiny),
                             ExpandableText(
                                 text: HtmlUnescape().convert(movie.content)),
                             SizedBox(height: AppPadding.medium),
