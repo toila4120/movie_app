@@ -45,7 +45,7 @@ class AuthenticationBloc
     if (email.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Email can't be empty.",
+        error: "Email không được bỏ trống.",
       ));
       return;
     }
@@ -53,7 +53,7 @@ class AuthenticationBloc
     if (!validateEmail(email)) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Invalid email format.",
+        error: "Email không đúng định dạng.",
       ));
       return;
     }
@@ -61,7 +61,7 @@ class AuthenticationBloc
     if (password.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Password can't be empty.",
+        error: "Mật khẩu không được để trống.",
       ));
       return;
     }
@@ -78,11 +78,11 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: e.code == 'user-not-found'
-            ? 'No user found for that email.'
+            ? 'Không tìm thấy người dùng với email này.'
             : e.code == 'wrong-password'
-                ? 'Wrong password provided for that user.'
+                ? 'Mật khẩu không đúng được cung cấp cho người dùng đó.'
                 : e.code == 'invalid-email'
-                    ? 'Invalid email provided.'
+                    ? 'Email không hợp lệ được cung cấp.'
                     : e.code,
       ));
     } catch (e) {
@@ -111,7 +111,7 @@ class AuthenticationBloc
     if (name.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Name can't be empty.",
+        error: "Tên không được để trống.",
       ));
       return;
     }
@@ -119,7 +119,7 @@ class AuthenticationBloc
     if (email.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Email can't be empty.",
+        error: "Email không được để trống.",
       ));
       return;
     }
@@ -127,7 +127,7 @@ class AuthenticationBloc
     if (!validateEmail(email)) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Invalid email format.",
+        error: "Định dạng email không hợp lệ.",
       ));
       return;
     }
@@ -135,7 +135,7 @@ class AuthenticationBloc
     if (password.isEmpty || passwordConfirm.isEmpty) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Password can't be empty.",
+        error: "Mật khẩu không được để trống.",
       ));
       return;
     }
@@ -143,7 +143,7 @@ class AuthenticationBloc
     if (password != passwordConfirm) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: "Passwords do not match.",
+        error: "Mật khẩu không khớp.",
       ));
       return;
     }
@@ -166,17 +166,17 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: e.code == 'weak-password'
-            ? 'The password provided is too weak.'
+            ? 'Mật khẩu cung cấp quá yếu.'
             : e.code == 'email-already-in-use'
-                ? 'The account already exists for that email.'
+                ? 'Tài khoản đã tồn tại với email này.'
                 : e.code == 'invalid-email'
-                    ? 'Invalid email provided.'
-                    : e.code,
+                    ? 'Email cung cấp không hợp lệ.'
+                    : 'Đã xảy ra lỗi. Vui lòng thử lại.',
       ));
     } catch (e) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: e.toString(),
+        error: 'Đã xảy ra lỗi. Vui lòng thử lại.',
       ));
     }
   }
@@ -255,15 +255,15 @@ class AuthenticationBloc
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: e.code == 'account-exists-with-different-credential'
-            ? 'Account exists with a different credential.'
+            ? 'Tài khoản đã tồn tại với một thông tin xác thực khác.'
             : e.code == 'invalid-credential'
-                ? 'Invalid credential provided.'
-                : e.code,
+                ? 'Thông tin xác thực cung cấp không hợp lệ.'
+                : 'Đã xảy ra lỗi. Vui lòng thử lại.',
       ));
     } catch (e) {
       emit(state.copyWith(
         isLoading: LoadingState.error,
-        error: e.toString(),
+        error: 'Đã xảy ra lỗi. Vui lòng thử lại.',
       ));
     }
   }
@@ -274,7 +274,7 @@ class AuthenticationBloc
   ) async {
     if (state.user == null) {
       emit(state.copyWith(
-        error: 'User not logged in.',
+        error: 'Người dùng chưa đăng nhập.',
       ));
       return;
     }
@@ -310,7 +310,7 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     if (state.user == null) {
-      emit(state.copyWith(error: 'User not logged in.'));
+      emit(state.copyWith(error: 'Người dùng chưa đăng nhập.'));
       return;
     }
 
@@ -389,7 +389,7 @@ class AuthenticationBloc
   ) async {
     if (state.user == null) {
       emit(state.copyWith(
-        error: 'User not logged in.',
+        error: 'Người dùng chưa đăng nhập.',
       ));
       return;
     }
@@ -421,7 +421,7 @@ class AuthenticationBloc
   ) async {
     if (state.user == null) {
       emit(state.copyWith(
-        error: 'User not logged in.',
+        error: 'Người dùng chưa đăng nhập.',
       ));
       return;
     }

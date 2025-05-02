@@ -14,7 +14,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+    return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return AppContainer(
           resizeToAvoidBottomInset: true,
@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Profile",
+                          "Trang cá nhân",
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w600,
@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         CircleAvatar(
                           radius: 36.w,
                           backgroundImage: AssetImage(
-                            AppAssets.getAvatarPath(state.user!.avatar),
+                            AppAssets.getAvatarPath(state.userModel!.avatar),
                           ),
                           backgroundColor: AppColor.blue1,
                         ),
@@ -73,14 +73,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              state.user!.name,
+                              state.userModel!.name,
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             Text(
-                              state.user!.email,
+                              state.userModel!.email,
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -96,22 +96,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.circular(AppBorderRadius.r8.w),
-                                color: state.user!.subscriptionPlan!.color,
+                                color: state.userModel!.subscriptionPlan!.color,
                               ),
                               child: Row(
                                 children: [
                                   Icon(
-                                    state.user!.subscriptionPlan!.icon,
-                                    color: state.user!.subscriptionPlan!.isGold
+                                    state.userModel!.subscriptionPlan!.icon,
+                                    color: state
+                                            .userModel!.subscriptionPlan!.isGold
                                         ? AppColor.yellow
-                                        : state.user!.subscriptionPlan!.isSilver
+                                        : state.userModel!.subscriptionPlan!
+                                                .isSilver
                                             ? AppColor.greyScale500
                                             : AppColor.white,
                                     size: 16.w,
                                   ),
                                   SizedBox(width: AppPadding.tiny),
                                   Text(
-                                    state.user!.subscriptionPlan!.displayName,
+                                    state.userModel!.subscriptionPlan!
+                                        .displayName,
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       color: AppColor.greyScale900,
@@ -173,9 +176,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: AppPadding.large),
                     CustomAppButton(
                       onPressed: () {
-                        context
-                            .read<ProfileBloc>()
-                            .add(GetFavoriteMoviesEvent(user: state.user!));
+                        context.read<ProfileBloc>().add(
+                            GetFavoriteMoviesEvent(user: state.userModel!));
                         context.push(
                           AppRouter.likeMovieScreenPath,
                         );

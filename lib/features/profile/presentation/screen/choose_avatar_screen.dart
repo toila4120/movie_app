@@ -42,7 +42,7 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
           child: Column(
             children: [
               const AppHeader(
-                title: 'Choose Avatar',
+                title: 'Chọn Avatar',
               ),
               Expanded(
                 child: ScrollConfiguration(
@@ -82,7 +82,7 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                         ),
                         SizedBox(height: AppPadding.large),
                         Text(
-                          "Select your avatar",
+                          "Chọn avatar mà bạn thích",
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
@@ -132,13 +132,14 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                             context.read<AppBloc>().add(UpdateAvatarEvent(
                                   newAvatar: _selectedAvatarIndex,
                                 ));
+                            showToast(context, message: 'Cập nhật thành công!');
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),
                             backgroundColor: Colors.black,
                             foregroundColor: Colors.white,
                           ),
-                          child: const Text('Done'),
+                          child: const Text('Xác nhận'),
                         ),
                       ],
                     ),
