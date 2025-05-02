@@ -298,18 +298,9 @@ class _MovieDetailState extends State<MovieDetail> {
                                     ),
                                   ),
                             SizedBox(height: AppPadding.medium),
-                            // Text(
-                            //   "Chọn server",
-                            //   style: TextStyle(
-                            //     color: AppColor.greyScale900,
-                            //     fontSize: 16.sp,
-                            //   ),
-                            // ),
-                            SizedBox(height: AppPadding.superTiny),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // SizedBox(height: AppPadding.medium),
                                 Text(
                                   "Danh sách tập",
                                   style: TextStyle(
@@ -349,10 +340,6 @@ class _MovieDetailState extends State<MovieDetail> {
                                     .serverData[index];
                                 final watchedEpisode =
                                     watchedMovie.watchedEpisodes[index + 1];
-                                final watchedDuration =
-                                    watchedEpisode?.duration ?? Duration.zero;
-                                final progress =
-                                    watchedDuration.inSeconds / (60 * 60);
                                 return Column(
                                   children: [
                                     Row(
@@ -360,19 +347,26 @@ class _MovieDetailState extends State<MovieDetail> {
                                         Expanded(
                                           child: Row(
                                             children: [
-                                              CachedNetworkImage(
-                                                imageUrl: movie.thumbUrl,
-                                                height: 60.w,
-                                                width: 60.w,
-                                                fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
-                                                    Container(
-                                                  color: AppColor.greyScale100,
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Container(
-                                                  color: AppColor.greyScale100,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        AppBorderRadius.r8.w),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: movie.thumbUrl,
+                                                  height: 60.w,
+                                                  width: 60.w,
+                                                  fit: BoxFit.cover,
+                                                  placeholder: (context, url) =>
+                                                      Container(
+                                                    color:
+                                                        AppColor.greyScale100,
+                                                  ),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Container(
+                                                    color:
+                                                        AppColor.greyScale100,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(width: AppPadding.small),
@@ -389,19 +383,6 @@ class _MovieDetailState extends State<MovieDetail> {
                                                         fontSize: 14.sp,
                                                         fontWeight:
                                                             FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                    LinearProgressIndicator(
-                                                      value: progress.clamp(
-                                                          0.0, 1.0),
-                                                      minHeight:
-                                                          AppPadding.superTiny,
-                                                      backgroundColor:
-                                                          AppColor.greyScale200,
-                                                      valueColor:
-                                                          const AlwaysStoppedAnimation<
-                                                              Color>(
-                                                        AppColor.primary500,
                                                       ),
                                                     ),
                                                     if (watchedEpisode != null)
