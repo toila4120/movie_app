@@ -136,7 +136,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(height: AppPadding.medium),
                     CustomAppButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(AppRouter.watchedMovieScreenPath);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -155,7 +157,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                  // color: AppColor.greyScale900,
                                 ),
                               ),
                             ],

@@ -10,29 +10,12 @@ class ItemWatching extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String normalizeImageUrl(String posterUrl) {
-      const baseUrl = 'https://phimimg.com/';
-      if (posterUrl.startsWith(baseUrl)) {
-        return posterUrl;
-      } else if (posterUrl.startsWith('/')) {
-        return '$baseUrl${posterUrl.substring(1)}';
-      } else {
-        return '$baseUrl$posterUrl';
-      }
-    }
-
     final latestEpisode = watchedMovie.watchedEpisodes.keys.isNotEmpty
         ? watchedMovie.watchedEpisodes.keys.reduce((a, b) => a > b ? a : b)
         : 1;
     final latestWatchedEpisode = watchedMovie.watchedEpisodes[latestEpisode];
     final serverName = latestWatchedEpisode?.serverName ?? 'Unknown';
     final durationInMinutes = latestWatchedEpisode?.duration.inMinutes ?? 0;
-    // final progress = watchedMovie.isSeries
-    //     ? watchedMovie.watchedEpisodes[latestEpisode]!.duration.inSeconds /
-    //         (watchedMovie.time.toDouble() * 60)
-    //     : watchedMovie.watchedEpisodes[latestEpisode]!.duration.inSeconds
-    //             .toDouble() /
-    //         (watchedMovie.time.toDouble() * 60);
 
     return CustomAppButton(
       onPressed: () async {
@@ -138,18 +121,22 @@ class ItemWatching extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        watchedMovie.isSeries
+                            ? SizedBox(height: AppPadding.superTiny)
+                            : const SizedBox(height: 0),
+                        watchedMovie.isSeries
+                            ? Text(
+                                "Tập ${latestEpisode.toString()}",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: AppColor.greyScale500,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : const SizedBox(height: 0),
                         SizedBox(height: AppPadding.superTiny),
                         Text(
-                          "Đã xem ${watchedMovie.watchedEpisodes[latestEpisode]?.duration.inMinutes.toString()}/${watchedMovie.time.toString()} phút",
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: AppColor.greyScale500,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: AppPadding.superTiny),
-                        Text(
-                          durationInMinutes.toString(),
+                          "Đã xem ${((durationInMinutes / watchedMovie.time) * 100).toStringAsFixed(1)}%",
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColor.greyScale500,

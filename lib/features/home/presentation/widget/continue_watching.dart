@@ -157,8 +157,8 @@ class _ItemFilmContinue extends StatelessWidget {
                             ),
                             Text(
                               watchedMovie.isSeries
-                                  ? "Tập $latestEpisode/${watchedMovie.episodeTotal} - $durationInMinutes phút"
-                                  : "$durationInMinutes phút",
+                                  ? "Tập $latestEpisode/${watchedMovie.episodeTotal} - ${((durationInMinutes / watchedMovie.time) * 100).toStringAsFixed(1)}%"
+                                  : "${((durationInMinutes / watchedMovie.time) * 100).toStringAsFixed(1)}%",
                               style: TextStyle(
                                 fontSize: 10.sp,
                                 color: AppColor.white,

@@ -9,6 +9,7 @@ import 'package:movie_app/config/router/app_router.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
+import 'package:movie_app/core/utils/normalize_image_url.dart';
 import 'package:movie_app/core/widget/widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:movie_app/features/authentication/domain/entities/user_entity.dart';
