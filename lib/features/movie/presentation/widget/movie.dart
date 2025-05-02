@@ -139,20 +139,26 @@ class _MovieState extends State<Movie> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        context.read<MiniPlayerBloc>().add(ShowMiniPlayer(
-              movie: widget.movie,
-              controller: _videoPlayerController,
-              episodeIndex: widget.episodeIndex,
-              serverIndex: widget.serverIndex,
-              position: _currentPosition,
-              size: Size(
-                MediaQuery.of(context).size.width,
-                MediaQuery.of(context).size.height,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        context.read<MiniPlayerBloc>().add(
+              ShowMiniPlayer(
+                movie: widget.movie,
+                controller: _videoPlayerController,
+                episodeIndex: widget.episodeIndex,
+                serverIndex: widget.serverIndex,
+                position: _currentPosition,
+                size: Size(
+                  MediaQuery.of(context).size.width,
+                  MediaQuery.of(context).size.height,
+                ),
               ),
-            ));
-        return true;
+            );
+        if (context.mounted) {
+          Navigator.of(context).pop();
+        }
       },
       child: SafeArea(
         child: Scaffold(

@@ -171,11 +171,11 @@ class WatchedMovie extends Equatable {
       lang: 'Vi', // Giá trị mặc định
       year: DateTime.now().year, // Giá trị mặc định (năm hiện tại)
       voteAverage: 0.0, // Giá trị mặc định
-      actor: [], // Không có thông tin actor, để trống
-      director: [], // Không có thông tin director, để trống
-      categories: [], // Không có thông tin categories, để trống
-      countries: [], // Không có thông tin countries, để trống
-      episodes: [], // Không có thông tin episodes, để trống
+      actor: const [], // Không có thông tin actor, để trống
+      director: const [], // Không có thông tin director, để trống
+      categories: const [], // Không có thông tin categories, để trống
+      countries: const [], // Không có thông tin countries, để trống
+      episodes: const [], // Không có thông tin episodes, để trống
       modified: DateTime.now(), // Giá trị mặc định (thời gian hiện tại)
     );
   }
