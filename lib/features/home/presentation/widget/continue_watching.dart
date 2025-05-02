@@ -170,41 +170,6 @@ class _ItemFilmContinue extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // CustomAppButton(
-                      //   onPressed: () async {
-                      //     context.read<MovieBloc>().add(FetchMovieDetailEvent(
-                      //           slug: watchedMovie.movieId,
-                      //         ));
-                      //     await Future.delayed(
-                      //         const Duration(milliseconds: 1000));
-                      //     final movie = context.read<MovieBloc>().state.movie;
-                      //     if (movie != null) {
-                      //       final serverIndex = movie.episodes.indexWhere(
-                      //                 (server) =>
-                      //                     server.serverName == serverName,
-                      //               ) >=
-                      //               0
-                      //           ? movie.episodes.indexWhere(
-                      //               (server) => server.serverName == serverName)
-                      //           : 0;
-                      //       context.push(AppRouter.playMoviePath, extra: {
-                      //         'movie': movie,
-                      //         'episodeIndex': latestEpisode - 1,
-                      //         'serverIndex': serverIndex,
-                      //         'currentPosition': watchedMovie
-                      //                 .watchedEpisodes[latestEpisode]
-                      //                 ?.duration
-                      //                 .inSeconds ??
-                      //             0,
-                      //       });
-                      //     }
-                      //   },
-                      //   child: Image.asset(
-                      //     AppImage.icPlay1,
-                      //     height: 18.w,
-                      //     width: 18.w,
-                      //   ),
-                      // ),
                     ],
                   ),
                   SizedBox(height: AppPadding.tiny),
