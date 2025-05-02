@@ -48,22 +48,6 @@ class _MovieDetailState extends State<MovieDetail> {
                     60,
               ),
             );
-
-            final latestEpisode = watchedMovie.watchedEpisodes.keys.isNotEmpty
-                ? watchedMovie.watchedEpisodes.keys
-                    .reduce((a, b) => a > b ? a : b)
-                : 1;
-            final latestWatchedEpisode =
-                watchedMovie.watchedEpisodes[latestEpisode];
-            final latestServerName = latestWatchedEpisode?.serverName;
-            _selectedServerIndex = movie.episodes.indexWhere(
-                      (server) => server.serverName == latestServerName,
-                    ) >=
-                    0
-                ? movie.episodes.indexWhere(
-                    (server) => server.serverName == latestServerName)
-                : 0;
-
             return AppContainer(
               resizeToAvoidBottomInset: true,
               child: ScrollConfiguration(
@@ -350,7 +334,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                        AppBorderRadius.r8.w),
+                                                  AppBorderRadius.r8.w,
+                                                ),
                                                 child: CachedNetworkImage(
                                                   imageUrl: movie.thumbUrl,
                                                   height: 60.w,

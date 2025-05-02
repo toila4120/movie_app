@@ -51,8 +51,9 @@ class ContinueWatching extends StatelessWidget {
                         ? EdgeInsets.only(right: AppPadding.superTiny)
                         : EdgeInsets.symmetric(
                             horizontal: AppPadding.superTiny),
-                    child:
-                        _ItemFilmContinue(watchedMovie: watchedMovies[index]),
+                    child: _ItemFilmContinue(
+                      watchedMovie: watchedMovies[index],
+                    ),
                   );
                 },
               ),
@@ -75,7 +76,6 @@ class _ItemFilmContinue extends StatelessWidget {
         ? watchedMovie.watchedEpisodes.keys.reduce((a, b) => a > b ? a : b)
         : 1;
     final latestWatchedEpisode = watchedMovie.watchedEpisodes[latestEpisode];
-    // final serverName = latestWatchedEpisode?.serverName ?? 'Unknown';
     final durationInMinutes = latestWatchedEpisode?.duration.inMinutes ?? 0;
     final progress = watchedMovie.isSeries
         ? watchedMovie.watchedEpisodes[latestEpisode]!.duration.inMinutes /
