@@ -26,7 +26,18 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onTabChange(int newIndex, BuildContext context) {
-    widget.shell.goBranch(newIndex);
+    const tabRoutes = [
+      AppRouter.homeTabPath,
+      AppRouter.exploreScreenPath,
+      AppRouter.chattingTabPath,
+      AppRouter.profileTabPath,
+    ];
+
+    if (newIndex == widget.shell.currentIndex) {
+      GoRouter.of(context).go(tabRoutes[newIndex]);
+    } else {
+      widget.shell.goBranch(newIndex);
+    }
   }
 
   bool _shouldShowBottomNavBar(BuildContext context) {
