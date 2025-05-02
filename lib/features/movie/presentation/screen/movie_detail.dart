@@ -239,8 +239,9 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ? Text(
                                     "Danh sách diễn viên: ${movie.actor.join(", ")}",
                                     style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w400),
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   )
                                 : SizedBox(
                                     height: 76.w,
@@ -288,7 +289,6 @@ class _MovieDetailState extends State<MovieDetail> {
                                 Text(
                                   "Danh sách tập",
                                   style: TextStyle(
-                                    color: AppColor.greyScale900,
                                     fontSize: 16.sp,
                                   ),
                                 ),
@@ -308,6 +308,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                       _selectedServerIndex = value!;
                                     });
                                   },
+                                  underline: const SizedBox.shrink(),
                                 ),
                               ],
                             ),
@@ -363,8 +364,6 @@ class _MovieDetailState extends State<MovieDetail> {
                                                     Text(
                                                       episode.name,
                                                       style: TextStyle(
-                                                        color: AppColor
-                                                            .greyScale900,
                                                         fontSize: 14.sp,
                                                         fontWeight:
                                                             FontWeight.w700,
