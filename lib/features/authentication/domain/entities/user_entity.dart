@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:movie_app/features/authentication/domain/entities/subscription_plan.dart';
+import 'package:movie_app/features/movie/domain/entities/movie_entity.dart';
 
 class UserEntity extends Equatable {
   final String uid;
@@ -82,7 +83,7 @@ class WatchedEpisode {
   }
 }
 
-class WatchedMovie {
+class WatchedMovie extends Equatable {
   final String movieId;
   final bool isSeries;
   final String name;
@@ -136,4 +137,57 @@ class WatchedMovie {
       ),
     );
   }
+
+  MovieEntity toMovieEntity() {
+    final int watchedCount = watchedEpisodes.length;
+    // Tổng số tập
+    final String totalEpisodes = episodeTotal.toString();
+    // Định dạng time thành "Tập đã xem / Tổng số tập"
+    final String timeDisplay = '$watchedCount/$totalEpisodes';
+
+    // Tập hiện tại (tập mới nhất đã xem)
+    final String episodeCurrent = watchedEpisodes.isNotEmpty
+        ? watchedEpisodes.keys.reduce((a, b) => a > b ? a : b).toString()
+        : '0';
+
+    return MovieEntity(
+      id: movieId,
+      name: name,
+      slug: movieId, // Sử dụng movieId làm slug
+      originName: name, // Sử dụng name làm originName
+      content: '', // Không có thông tin content, để trống
+      type: isSeries ? 'series' : 'single',
+      status: 'completed', // Giá trị mặc định
+      posterUrl: thumbUrl, // Sử dụng thumbUrl làm posterUrl
+      thumbUrl: thumbUrl,
+      subDocquyen: false, // Giá trị mặc định
+      chieurap: false, // Giá trị mặc định
+      trailerUrl: '', // Không có thông tin trailer, để trống
+      time: timeDisplay,
+      episodeCurrent:
+          'Tập: $episodeCurrent', // Sử dụng episodeCurrent đã tính toán
+      episodeTotal: episodeTotal.toString(),
+      quality: 'HD', // Giá trị mặc định
+      lang: 'Vi', // Giá trị mặc định
+      year: DateTime.now().year, // Giá trị mặc định (năm hiện tại)
+      voteAverage: 0.0, // Giá trị mặc định
+      actor: [], // Không có thông tin actor, để trống
+      director: [], // Không có thông tin director, để trống
+      categories: [], // Không có thông tin categories, để trống
+      countries: [], // Không có thông tin countries, để trống
+      episodes: [], // Không có thông tin episodes, để trống
+      modified: DateTime.now(), // Giá trị mặc định (thời gian hiện tại)
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        movieId,
+        isSeries,
+        name,
+        thumbUrl,
+        episodeTotal,
+        time,
+        watchedEpisodes,
+      ];
 }

@@ -32,7 +32,9 @@ class ContinueWatching extends StatelessWidget {
                     color: AppColor.primary500,
                     fontWeight: FontWeight.w500,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(AppRouter.watchedMovieScreenPath);
+                  },
                 ),
               ],
             ),
@@ -76,11 +78,11 @@ class _ItemFilmContinue extends StatelessWidget {
     final serverName = latestWatchedEpisode?.serverName ?? 'Unknown';
     final durationInMinutes = latestWatchedEpisode?.duration.inMinutes ?? 0;
     final progress = watchedMovie.isSeries
-        ? watchedMovie.watchedEpisodes[latestEpisode]!.duration.inSeconds /
-            (watchedMovie.time.toDouble() * 60)
-        : watchedMovie.watchedEpisodes[latestEpisode]!.duration.inSeconds
+        ? watchedMovie.watchedEpisodes[latestEpisode]!.duration.inMinutes /
+            (watchedMovie.time.toDouble())
+        : watchedMovie.watchedEpisodes[latestEpisode]!.duration.inMinutes
                 .toDouble() /
-            (watchedMovie.time.toDouble() * 60);
+            (watchedMovie.time.toDouble());
 
     return GestureDetector(
       onTap: () {

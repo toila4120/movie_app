@@ -113,7 +113,7 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
     authenticationBloc.add(
       UpdateWatchedMovieEvent(
         movieId: state.movie!.slug,
-        isSeries: state.movie!.episodeTotal == '1',
+        isSeries: state.movie!.episodeTotal != '1',
         episode: state.episodeIndex! + 1,
         watchedDuration: state.currentPosition!,
         name: state.movie!.name,

@@ -65,7 +65,7 @@ class _MovieState extends State<Movie> {
       (m) => m.movieId == widget.movie.slug,
       orElse: () => WatchedMovie(
         movieId: widget.movie.slug,
-        isSeries: widget.movie.episodeTotal == '1',
+        isSeries: widget.movie.episodeTotal != '1',
         name: widget.movie.name,
         thumbUrl: widget.movie.thumbUrl,
         episodeTotal: int.tryParse(widget.movie.episodeTotal) ?? 0,
@@ -112,7 +112,7 @@ class _MovieState extends State<Movie> {
     _authBloc!.add(
       UpdateWatchedMovieEvent(
         movieId: widget.movie.slug,
-        isSeries: widget.movie.episodeTotal == '1',
+        isSeries: widget.movie.episodeTotal != '1',
         episode: widget.episodeIndex + 1,
         watchedDuration: _currentPosition,
         name: widget.movie.name,

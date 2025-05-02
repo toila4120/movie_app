@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/router/app_navigator_observer.dart';
 import 'package:movie_app/features/authentication/authentication.dart';
 import 'package:movie_app/features/categories/categories.dart';
+import 'package:movie_app/features/categories/presentation/screen/watched_movies_screen.dart';
 import 'package:movie_app/features/chatting/presentation/screen/chatting_screen.dart';
 import 'package:movie_app/features/explore/explore.dart';
 import 'package:movie_app/features/home/home.dart';
@@ -45,6 +46,8 @@ abstract class AppRouter {
   static const String chattingTabPath = '/chatting_tab';
   static const String _exploreScreenTabName = 'explore_tab';
   static const String exploreScreenPath = '/explore_tab';
+  static const String _watchedMovieScreenName = 'watched_movie_screen';
+  static const String watchedMovieScreenPath = '/home_tab/watched_movie_screen';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -138,6 +141,17 @@ abstract class AppRouter {
                         context: context,
                         state: state,
                         child: ListMovie(title: input, slug: input2),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    name: _watchedMovieScreenName,
+                    path: '/$_watchedMovieScreenName',
+                    pageBuilder: (context, state) {
+                      return _buildPageWithDefaultTransition(
+                        context: context,
+                        state: state,
+                        child: const WatchedMoviesScreen(),
                       );
                     },
                   ),

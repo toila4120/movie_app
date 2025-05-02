@@ -1,10 +1,11 @@
-part of '../../categories.dart';
+part of '../../home.dart';
 
-class ItemMovie extends StatelessWidget {
-  final MovieEntity movieModel;
-  const ItemMovie({
+class ItemWatching extends StatelessWidget {
+  final WatchedMovie watchedMovie;
+
+  const ItemWatching({
     super.key,
-    required this.movieModel,
+    required this.watchedMovie,
   });
 
   @override
@@ -20,16 +21,43 @@ class ItemMovie extends StatelessWidget {
       }
     }
 
+    final latestEpisode = watchedMovie.watchedEpisodes.keys.isNotEmpty
+        ? watchedMovie.watchedEpisodes.keys.reduce((a, b) => a > b ? a : b)
+        : 1;
+    final latestWatchedEpisode = watchedMovie.watchedEpisodes[latestEpisode];
+    final serverName = latestWatchedEpisode?.serverName ?? 'Unknown';
+    final durationInMinutes = latestWatchedEpisode?.duration.inMinutes ?? 0;
+    // final progress = watchedMovie.isSeries
+    //     ? watchedMovie.watchedEpisodes[latestEpisode]!.duration.inSeconds /
+    //         (watchedMovie.time.toDouble() * 60)
+    //     : watchedMovie.watchedEpisodes[latestEpisode]!.duration.inSeconds
+    //             .toDouble() /
+    //         (watchedMovie.time.toDouble() * 60);
+
     return CustomAppButton(
-      onPressed: () {
-        context.read<MovieBloc>().add(
-              FetchMovieDetailEvent(
-                slug: movieModel.slug,
-              ),
-            );
-        context.push(
-          AppRouter.movieDetailPath,
-        );
+      onPressed: () async {
+        context.read<MovieBloc>().add(FetchMovieDetailEvent(
+              slug: watchedMovie.movieId,
+            ));
+        await Future.delayed(const Duration(milliseconds: 1000));
+        final movie = context.read<MovieBloc>().state.movie;
+        if (movie != null) {
+          final serverIndex = movie.episodes.indexWhere(
+                    (server) => server.serverName == serverName,
+                  ) >=
+                  0
+              ? movie.episodes
+                  .indexWhere((server) => server.serverName == serverName)
+              : 0;
+          context.push(AppRouter.playMoviePath, extra: {
+            'movie': movie,
+            'episodeIndex': latestEpisode - 1,
+            'serverIndex': serverIndex,
+            'currentPosition': watchedMovie
+                    .watchedEpisodes[latestEpisode]?.duration.inSeconds ??
+                0,
+          });
+        }
       },
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -37,10 +65,11 @@ class ItemMovie extends StatelessWidget {
           vertical: AppPadding.tiny,
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppBorderRadius.r16),
-            border: Border.all(
-              color: Theme.of(context).primaryColorDark.withValues(alpha: 0.1),
-            )),
+          borderRadius: BorderRadius.circular(AppBorderRadius.r16),
+          border: Border.all(
+            color: Theme.of(context).primaryColorDark.withValues(alpha: 0.1),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -48,7 +77,7 @@ class ItemMovie extends StatelessWidget {
               child: Row(
                 children: [
                   Hero(
-                    tag: movieModel.slug,
+                    tag: watchedMovie.movieId,
                     flightShuttleBuilder: (
                       BuildContext flightContext,
                       Animation<double> animation,
@@ -66,9 +95,9 @@ class ItemMovie extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppBorderRadius.r16),
                       child: CachedNetworkImage(
-                        key: ValueKey(normalizeImageUrl(movieModel.posterUrl)),
-                        imageUrl: normalizeImageUrl(movieModel.posterUrl),
-                        width: 120.w,
+                        key: ValueKey(normalizeImageUrl(watchedMovie.thumbUrl)),
+                        imageUrl: normalizeImageUrl(watchedMovie.thumbUrl),
+                        width: 200.w,
                         height: 144.w,
                         fit: BoxFit.fill,
                         placeholder: (context, url) => Shimmer.fromColors(
@@ -101,7 +130,7 @@ class ItemMovie extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          movieModel.name,
+                          watchedMovie.name,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -111,7 +140,7 @@ class ItemMovie extends StatelessWidget {
                         ),
                         SizedBox(height: AppPadding.superTiny),
                         Text(
-                          movieModel.episodeCurrent,
+                          "Đã xem ${watchedMovie.watchedEpisodes[latestEpisode]?.duration.inMinutes.toString()}/${watchedMovie.time.toString()} phút",
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColor.greyScale500,
@@ -120,7 +149,7 @@ class ItemMovie extends StatelessWidget {
                         ),
                         SizedBox(height: AppPadding.superTiny),
                         Text(
-                          movieModel.lang,
+                          durationInMinutes.toString(),
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColor.greyScale500,

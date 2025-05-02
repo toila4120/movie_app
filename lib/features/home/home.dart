@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,3 +23,4 @@ part 'presentation/widget/banner_home.dart';
 part 'presentation/widget/continue_watching.dart';
 part 'presentation/widget/popular.dart';
 part 'presentation/widget/category_widget.dart';
+part 'presentation/widget/item_watching.dart';

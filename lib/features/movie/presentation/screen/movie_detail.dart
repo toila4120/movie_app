@@ -39,7 +39,7 @@ class _MovieDetailState extends State<MovieDetail> {
               (m) => m.movieId == movie.id,
               orElse: () => WatchedMovie(
                 movieId: movie.slug,
-                isSeries: movie.episodeTotal == "1",
+                isSeries: movie.episodeTotal != "1",
                 name: movie.name,
                 thumbUrl: movie.thumbUrl,
                 episodeTotal: int.tryParse(movie.episodeTotal) ?? 0,
@@ -128,11 +128,6 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                 ),
                                 SizedBox(width: AppPadding.small),
-                                // ItemContainer(
-                                //   title: movie.countries
-                                //       .map((c) => c.name)
-                                //       .join(", "),
-                                // ),
                                 ItemContainer(title: movie.lang),
                               ],
                             ),
@@ -303,36 +298,43 @@ class _MovieDetailState extends State<MovieDetail> {
                                     ),
                                   ),
                             SizedBox(height: AppPadding.medium),
-                            Text(
-                              "Chọn server",
-                              style: TextStyle(
-                                color: AppColor.greyScale900,
-                                fontSize: 16.sp,
-                              ),
-                            ),
+                            // Text(
+                            //   "Chọn server",
+                            //   style: TextStyle(
+                            //     color: AppColor.greyScale900,
+                            //     fontSize: 16.sp,
+                            //   ),
+                            // ),
                             SizedBox(height: AppPadding.superTiny),
-                            DropdownButton<int>(
-                              value: _selectedServerIndex,
-                              items:
-                                  movie.episodes.asMap().entries.map((entry) {
-                                return DropdownMenuItem<int>(
-                                  value: entry.key,
-                                  child: Text(entry.value.serverName),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedServerIndex = value!;
-                                });
-                              },
-                            ),
-                            SizedBox(height: AppPadding.medium),
-                            Text(
-                              "Episodes",
-                              style: TextStyle(
-                                color: AppColor.greyScale900,
-                                fontSize: 16.sp,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // SizedBox(height: AppPadding.medium),
+                                Text(
+                                  "Danh sách tập",
+                                  style: TextStyle(
+                                    color: AppColor.greyScale900,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                DropdownButton<int>(
+                                  value: _selectedServerIndex,
+                                  items: movie.episodes
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                    return DropdownMenuItem<int>(
+                                      value: entry.key,
+                                      child: Text(entry.value.serverName),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedServerIndex = value!;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
                             SizedBox(height: AppPadding.superTiny),
                             ListView.builder(
