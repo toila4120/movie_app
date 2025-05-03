@@ -16,24 +16,43 @@ class MiniPlayer extends StatelessWidget {
             state.chewieController == null) {
           return const SizedBox.shrink();
         }
+        final screenSize = MediaQuery.of(context).size;
+
+        double adjustedDx = state.miniPlayerPosition.dx.clamp(
+          0.0,
+          screenSize.width - 200.w,
+        );
+        double adjustedDy = state.miniPlayerPosition.dy.clamp(
+          0.0,
+          screenSize.height - 110.w - MediaQuery.of(context).padding.bottom,
+        );
+
+        if (adjustedDx != state.miniPlayerPosition.dx ||
+            adjustedDy != state.miniPlayerPosition.dy) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<MiniPlayerBloc>().add(
+                  UpdateMiniPlayerPosition(Offset(adjustedDx, adjustedDy)),
+                );
+          });
+        }
 
         return Positioned(
-          left: state.miniPlayerPosition.dx,
-          top: state.miniPlayerPosition.dy,
+          left: adjustedDx,
+          top: adjustedDy,
           child: Draggable(
             feedback: _buildMiniPlayer(context, state),
             childWhenDragging: const SizedBox.shrink(),
             onDragEnd: (details) {
-              final screenSize = MediaQuery.of(context).size;
-              double newDx = details.offset.dx.clamp(
-                0,
+              final newDx = details.offset.dx.clamp(
+                0.0,
                 screenSize.width - 200.w,
               );
-              double newDy = details.offset.dy.clamp(
-                  0,
-                  screenSize.height -
-                      120 -
-                      MediaQuery.of(context).padding.bottom.w);
+              final newDy = details.offset.dy.clamp(
+                0.0,
+                screenSize.height -
+                    110.w -
+                    MediaQuery.of(context).padding.bottom,
+              );
               context
                   .read<MiniPlayerBloc>()
                   .add(UpdateMiniPlayerPosition(Offset(newDx, newDy)));
@@ -54,7 +73,7 @@ class MiniPlayer extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -69,6 +88,9 @@ class MiniPlayer extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -103,7 +125,7 @@ class MiniPlayer extends StatelessWidget {
                     icon: Icon(
                       state.isPlay ? Icons.pause : Icons.play_arrow,
                       color: Colors.white,
-                      size: 20,
+                      size: 20.w,
                     ),
                     onPressed: () {
                       context

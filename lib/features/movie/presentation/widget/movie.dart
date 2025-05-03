@@ -25,6 +25,7 @@ class _MovieState extends State<Movie> {
   Duration _currentPosition = Duration.zero;
   AuthenticationBloc? _authBloc;
   final bool _isDisposed = false;
+  bool _isControllerInitialized = false;
 
   @override
   void didChangeDependencies() {
@@ -35,6 +36,10 @@ class _MovieState extends State<Movie> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     final server = widget.movie.episodes[widget.serverIndex];
     final episode = server.serverData[widget.episodeIndex];
     _videoPlayerController =
@@ -43,11 +48,16 @@ class _MovieState extends State<Movie> {
       videoPlayerController: _videoPlayerController,
       autoInitialize: true,
       autoPlay: true,
-      allowFullScreen: true,
+      allowFullScreen: false,
+      fullScreenByDefault: true,
       errorBuilder: (context, errorMessage) {
         return Center(
-          child:
-              Text(errorMessage, style: const TextStyle(color: Colors.white)),
+          child: Text(
+            errorMessage,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
         );
       },
     );
@@ -90,6 +100,9 @@ class _MovieState extends State<Movie> {
         _videoPlayerController.seekTo(initialPosition);
         _currentPosition = initialPosition;
       }
+      setState(() {
+        _isControllerInitialized = true;
+      });
     });
   }
 
@@ -135,6 +148,10 @@ class _MovieState extends State<Movie> {
       _videoPlayerController.dispose();
     }
     super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override
@@ -162,14 +179,21 @@ class _MovieState extends State<Movie> {
       },
       child: SafeArea(
         child: Scaffold(
-          body: Column(
-            children: [
-              AspectRatio(
-                aspectRatio: _videoPlayerController.value.aspectRatio,
-                child: Chewie(controller: _chewieController),
-              ),
-            ],
-          ),
+          body: _isControllerInitialized
+              ? Column(
+                  children: [
+                    Expanded(
+                      child: AspectRatio(
+                        aspectRatio:
+                            _videoPlayerController.value.aspectRatio != 0
+                                ? _videoPlayerController.value.aspectRatio
+                                : 16 / 9,
+                        child: Chewie(controller: _chewieController),
+                      ),
+                    ),
+                  ],
+                )
+              : const Center(child: CircularProgressIndicator()),
         ),
       ),
     );
