@@ -52,6 +52,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 24.w,
                             height: 24.w,
                             color: Theme.of(context).primaryColorDark,
+                            cacheWidth: 48,
+                            cacheHeight: 48,
                           ),
                         )
                       ],
@@ -62,10 +64,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         CircleAvatar(
                           radius: 36.w,
-                          backgroundImage: AssetImage(
-                            AppAssets.getAvatarPath(state.userModel!.avatar),
-                          ),
                           backgroundColor: AppColor.blue1,
+                          child: ClipOval(
+                            child: Image.asset(
+                              AppAssets.getAvatarPath(state.userModel!.avatar),
+                              width: 72.w,
+                              height: 72.w,
+                              cacheWidth: 200,
+                              cacheHeight: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         SizedBox(width: AppPadding.small),
                         Column(
@@ -153,6 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 AppImage.icPlay2,
                                 width: 20.w,
                                 height: 20.w,
+                                cacheWidth: 40,
+                                cacheHeight: 40,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
@@ -169,6 +180,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 20.w,
                             height: 20.w,
                             color: Theme.of(context).primaryColorDark,
+                            cacheWidth: 40,
+                            cacheHeight: 40,
                           )
                         ],
                       ),
@@ -193,6 +206,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 AppImage.icHeart1,
                                 width: 20.w,
                                 height: 20.w,
+                                cacheWidth: 40,
+                                cacheHeight: 40,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
@@ -209,6 +224,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 20.w,
                             height: 20.w,
                             color: Theme.of(context).primaryColorDark,
+                            cacheWidth: 40,
+                            cacheHeight: 40,
                           )
                         ],
                       ),
@@ -227,6 +244,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 AppImage.icDownload,
                                 width: 20.w,
                                 height: 20.w,
+                                cacheWidth: 40,
+                                cacheHeight: 40,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
@@ -234,7 +253,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
-                                  // color: AppColor.greyScale900,
                                 ),
                               ),
                             ],
@@ -244,6 +262,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 20.w,
                             height: 20.w,
                             color: Theme.of(context).primaryColorDark,
+                            cacheWidth: 40,
+                            cacheHeight: 40,
                           )
                         ],
                       ),
@@ -265,6 +285,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 AppImage.icLogout,
                                 width: 20.w,
                                 height: 20.w,
+                                cacheWidth: 40,
+                                cacheHeight: 40,
                               ),
                               SizedBox(width: AppPadding.small),
                               Text(
@@ -282,6 +304,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 20.w,
                             height: 20.w,
                             color: Theme.of(context).primaryColorDark,
+                            cacheWidth: 40,
+                            cacheHeight: 40,
                           )
                         ],
                       ),

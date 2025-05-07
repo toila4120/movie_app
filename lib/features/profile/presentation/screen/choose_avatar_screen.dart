@@ -14,6 +14,11 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
   void initState() {
     super.initState();
     _selectedAvatarIndex = context.read<AppBloc>().state.userModel!.avatar;
+
+    // Preload all avatar images to improve performance
+    for (String avatarPath in AppAssets.avatars) {
+      precacheImage(AssetImage(avatarPath), context);
+    }
   }
 
   @override
@@ -76,6 +81,8 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                                 ),
                                 width: 200.w,
                                 height: 200.w,
+                                cacheWidth: 400,
+                                cacheHeight: 400,
                               ),
                             ),
                           ],
@@ -120,6 +127,8 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                                   child: Image.asset(
                                     AppAssets.avatars[index],
                                     fit: BoxFit.cover,
+                                    cacheWidth: 150,
+                                    cacheHeight: 150,
                                   ),
                                 ),
                               );
@@ -136,8 +145,8 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),
-                            backgroundColor: Colors.black,
-                            foregroundColor: Colors.white,
+                            backgroundColor: AppColor.primary600,
+                            foregroundColor: AppColor.white,
                           ),
                           child: const Text('Xác nhận'),
                         ),
