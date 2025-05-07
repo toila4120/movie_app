@@ -10,9 +10,9 @@ class ChattingScreen extends StatefulWidget {
 class _ChattingScreenState extends State<ChattingScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  // bool _isDebugMode = false;
+  bool _isDebugMode = true;
   bool _hasBlocError = false;
-  // String? _errorMessage;
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -131,7 +131,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                 ),
                 SizedBox(height: 24.h),
                 Text(
-                  'Không thể tải Movie AI Assistant',
+                  'Không thể tải trợ lý xem phim AI',
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -144,34 +144,34 @@ class _ChattingScreenState extends State<ChattingScreen> {
                   style: TextStyle(fontSize: 14.sp),
                   textAlign: TextAlign.center,
                 ),
-                // if (_errorMessage != null && _isDebugMode) ...[
-                //   SizedBox(height: 24.h),
-                //   Container(
-                //     padding: EdgeInsets.all(12.w),
-                //     decoration: BoxDecoration(
-                //       color: Colors.grey.shade200,
-                //       borderRadius: BorderRadius.circular(8.r),
-                //     ),
-                //     child: Text(
-                //       'Chi tiết lỗi: $_errorMessage',
-                //       style: TextStyle(
-                //         fontSize: 12.sp,
-                //         fontFamily: 'monospace',
-                //       ),
-                //     ),
-                //   ),
-                // ],
-                // SizedBox(height: 24.h),
-                // ElevatedButton.icon(
-                //   onPressed: () {
-                //     setState(() {
-                //       _isDebugMode = !_isDebugMode;
-                //     });
-                //   },
-                //   icon: Icon(
-                //       _isDebugMode ? Icons.visibility_off : Icons.bug_report),
-                //   label: Text(_isDebugMode ? 'Ẩn chi tiết' : 'Hiện chi tiết'),
-                // ),
+                if (_errorMessage != null && _isDebugMode) ...[
+                  SizedBox(height: 24.h),
+                  Container(
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Text(
+                      'Chi tiết lỗi: $_errorMessage',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                  ),
+                ],
+                SizedBox(height: 24.h),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _isDebugMode = !_isDebugMode;
+                    });
+                  },
+                  icon: Icon(
+                      _isDebugMode ? Icons.visibility_off : Icons.bug_report),
+                  label: Text(_isDebugMode ? 'Ẩn chi tiết' : 'Hiện chi tiết'),
+                ),
               ],
             ),
           ),
@@ -220,34 +220,25 @@ class _ChattingScreenState extends State<ChattingScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Theme.of(context).primaryColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 1,
-            offset: const Offset(0, 1),
+            color: Theme.of(context).primaryColorLight.withValues(alpha: 0.1),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
         children: [
           Text(
-            'Movie AI Assistant',
+            'Trợ lý xem phim AI',
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
           const Spacer(),
-          // Debug button
-          // IconButton(
-          //   icon: const Icon(Icons.bug_report, size: 18),
-          //   onPressed: () {
-          //     setState(() {
-          //       _isDebugMode = true;
-          //     });
-          //   },
-          // ),
           IconButton(
             icon: const Icon(Icons.delete_outline),
             onPressed: () {
@@ -262,7 +253,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   Widget _buildInitialPrompt() {
     return Padding(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.large),
       child: Container(
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
@@ -277,7 +268,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Movie AI Assistant',
+              'Trợ lý xem phim AI',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.sp,
@@ -292,7 +283,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
             _buildSuggestionChip('Tôi muốn xem phim kinh dị Hàn Quốc'),
             _buildSuggestionChip(
                 'Gợi ý phim hành động có nhiều cảnh đánh nhau'),
-            _buildSuggestionChip('Phim về zombie hay nhất'),
+            _buildSuggestionChip('Phim về tình cảm hay nhất'),
           ],
         ),
       ),
@@ -314,17 +305,16 @@ class _ChattingScreenState extends State<ChattingScreen> {
         margin: EdgeInsets.only(bottom: 8.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
           ),
         ),
         child: Text(
           text,
           style: TextStyle(
             fontSize: 13.sp,
-            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
@@ -336,15 +326,18 @@ class _ChattingScreenState extends State<ChattingScreen> {
       builder: (context, state) {
         return Container(
           padding: EdgeInsets.all(8.w).copyWith(
+            left: 16.w,
+            right: 16.w,
             bottom: 8.h + MediaQuery.of(context).viewInsets.bottom,
           ),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 3,
-                offset: const Offset(0, -1),
+                color:
+                    Theme.of(context).primaryColorLight.withValues(alpha: 0.1),
+                blurRadius: 5,
+                offset: const Offset(2, 0),
               ),
             ],
           ),
@@ -356,17 +349,16 @@ class _ChattingScreenState extends State<ChattingScreen> {
                   decoration: InputDecoration(
                     hintText: 'Hỏi về phim bạn muốn xem...',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24.r),
+                      borderRadius: BorderRadius.circular(AppBorderRadius.r28),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     fillColor: Theme.of(context)
-                        .colorScheme
-                        .surfaceVariant
-                        .withValues(alpha: 0.5),
+                        .primaryColorLight
+                        .withValues(alpha: 0.1),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 16.w,
-                      vertical: 10.h,
+                      vertical: 10.w,
                     ),
                     isDense: true,
                   ),
@@ -391,8 +383,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
               ),
               SizedBox(width: 8.w),
               SizedBox(
-                width: 48.w,
-                height: 48.w,
+                width: 43.w,
+                height: 43.w,
                 child: ElevatedButton(
                   onPressed: state.isLoading
                       ? null
@@ -422,8 +414,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
                           height: 20.w,
                           child: CircularProgressIndicator(
                             strokeWidth: 2.w,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).colorScheme.onPrimary,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              AppColor.white,
                             ),
                           ),
                         )

@@ -127,6 +127,7 @@ abstract final class AppTheme {
           color: AppColor.divider,
           thickness: 0.5,
         ),
+        cardColor: AppColor.greyScale100,
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -193,5 +194,6 @@ abstract final class AppTheme {
           color: AppColor.divider,
           thickness: 0.5,
         ),
+        cardColor: AppColor.greyScale800,
       );
 }
