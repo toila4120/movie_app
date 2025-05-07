@@ -53,7 +53,7 @@ class BottomNavigatorBar extends StatelessWidget {
           ),
           Expanded(
             child: BottomNavigatorBarItem(
-              iconPath: AppImage.icActivityTab,
+              iconPath: AppImage.icChat,
               label: 'Trò chuyện',
               isActive: currentIndex == 2,
               onTap: () => onTap(2),
