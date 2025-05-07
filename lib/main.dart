@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/app_bloc_observer.dart';
 import 'package:movie_app/config/theme/theme.dart';
+import 'package:movie_app/core/utils/env_validator.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
+import 'package:movie_app/features/chatting/presentation/bloc/chat_bloc.dart';
 import 'package:movie_app/features/explore/presentation/bloc/explore_bloc.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:movie_app/features/mini_player/presentation/widget/mini_player.dart';
@@ -16,9 +19,31 @@ import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_blo
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/config/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Try to load .env file with robust error handling
+  try {
+    await dotenv.load(fileName: ".env");
+    debugPrint("✅ .env file loaded successfully");
+  } catch (e) {
+    debugPrint("⚠️ Error loading .env file: $e");
+    // Create a backup .env with test key if not exists
+    try {
+      File envFile = File('.env');
+      if (!await envFile.exists()) {
+        await envFile.writeAsString('GEMINI_API_KEY=test_key');
+        debugPrint("✅ Created fallback .env file");
+        await dotenv.load(fileName: ".env");
+      }
+    } catch (e) {
+      debugPrint("⚠️ Couldn't create fallback .env file: $e");
+    }
+  }
+
+  EnvValidator.validateEnv();
   setup();
   await Firebase.initializeApp();
   Bloc.observer = const AppBlocObserver();
@@ -44,6 +69,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ProfileBloc()),
         BlocProvider(create: (context) => CategoriesBloc()),
         BlocProvider(create: (context) => AuthenticationBloc()),
+        BlocProvider(create: (context) => getIt<ChatBloc>()),
         BlocProvider(
           create: (context) => MiniPlayerBloc(
             authenticationBloc: context.read<AuthenticationBloc>(),

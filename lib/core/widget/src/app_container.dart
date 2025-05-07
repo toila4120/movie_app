@@ -52,23 +52,14 @@ class AppContainer extends StatelessWidget {
                       Theme.of(context).scaffoldBackgroundColor,
                   shape: BoxShape.rectangle,
                 ),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).padding.bottom,
-                  ),
-                  child: child ?? const SizedBox.shrink(),
-                ),
+                child: child ?? const SizedBox.shrink(),
               ),
             ),
             floatingActionButton: floatingActionButton,
             bottomNavigationBar: bottomNavigationBar,
           ),
         ),
-        coverScreenWidget == null
-            ? const SizedBox.shrink()
-            : coverScreenWidget!,
+        if (coverScreenWidget != null) coverScreenWidget!,
       ],
     );
   }

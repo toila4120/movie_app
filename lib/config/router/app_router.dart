@@ -4,7 +4,7 @@ import 'package:movie_app/config/router/app_navigator_observer.dart';
 import 'package:movie_app/features/authentication/authentication.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/categories/presentation/screen/watched_movies_screen.dart';
-import 'package:movie_app/features/chatting/presentation/screen/chatting_screen.dart';
+import 'package:movie_app/features/chatting/chatting.dart';
 import 'package:movie_app/features/explore/explore.dart';
 import 'package:movie_app/features/home/home.dart';
 import 'package:movie_app/features/main/screen/main_screen.dart';
