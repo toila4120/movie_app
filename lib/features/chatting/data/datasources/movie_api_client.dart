@@ -51,4 +51,36 @@ class MovieApiClient {
       return null;
     }
   }
+
+  /// Checks multiple movies concurrently using their slugs
+  /// Returns a list of movie data for existing movies, null for non-existing ones
+  Future<List<Map<String, dynamic>?>> checkMultipleMovies(
+      List<String> slugs) async {
+    if (slugs.isEmpty) {
+      if (kDebugMode) {
+        debugPrint('⚠️ Empty slugs list provided to checkMultipleMovies');
+      }
+      return [];
+    }
+
+    try {
+      if (kDebugMode) {
+        debugPrint('Checking multiple movies: $slugs');
+      }
+
+      // Sử dụng Future.wait để gọi đồng thời các API
+      final futures = slugs.map((slug) => checkMovieExists(slug)).toList();
+      final results = await Future.wait(futures);
+
+      return results;
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Error when checking multiple movies: $e');
+      }
+      return List.filled(
+        slugs.length,
+        null,
+      ); // Trả về danh sách null nếu có lỗi
+    }
+  }
 }

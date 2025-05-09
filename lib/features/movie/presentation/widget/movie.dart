@@ -36,10 +36,14 @@ class _MovieState extends State<Movie> {
   @override
   void initState() {
     super.initState();
+    // Đặt định hướng màn hình ngang
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    // Ẩn thanh trạng thái và thanh điều hướng
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     final server = widget.movie.episodes[widget.serverIndex];
     final episode = server.serverData[widget.episodeIndex];
     _videoPlayerController =
@@ -48,15 +52,13 @@ class _MovieState extends State<Movie> {
       videoPlayerController: _videoPlayerController,
       autoInitialize: true,
       autoPlay: true,
-      allowFullScreen: false,
+      allowFullScreen: false, // Sửa thành true
       fullScreenByDefault: true,
       errorBuilder: (context, errorMessage) {
         return Center(
           child: Text(
             errorMessage,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
+            style: const TextStyle(color: Colors.white),
           ),
         );
       },
@@ -100,6 +102,8 @@ class _MovieState extends State<Movie> {
         _videoPlayerController.seekTo(initialPosition);
         _currentPosition = initialPosition;
       }
+      // Kích hoạt chế độ toàn màn hình
+      _chewieController.enterFullScreen();
       setState(() {
         _isControllerInitialized = true;
       });
@@ -152,6 +156,9 @@ class _MovieState extends State<Movie> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    // Khôi phục giao diện hệ thống
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
   }
 
   @override
@@ -177,24 +184,11 @@ class _MovieState extends State<Movie> {
           Navigator.of(context).pop();
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: _isControllerInitialized
-              ? Column(
-                  children: [
-                    Expanded(
-                      child: AspectRatio(
-                        aspectRatio:
-                            _videoPlayerController.value.aspectRatio != 0
-                                ? _videoPlayerController.value.aspectRatio
-                                : 16 / 9,
-                        child: Chewie(controller: _chewieController),
-                      ),
-                    ),
-                  ],
-                )
-              : const Center(child: CircularProgressIndicator()),
-        ),
+      child: Scaffold(
+        body: _isControllerInitialized
+            ? Chewie(
+                controller: _chewieController) // Loại bỏ Column và AspectRatio
+            : const Center(child: CircularProgressIndicator()),
       ),
     );
   }
