@@ -4,11 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
 import 'package:movie_app/core/utils/app_utils.dart';
 import 'package:movie_app/features/authentication/data/model/user_model.dart';
-import 'package:movie_app/features/authentication/domain/entities/subscription_plan.dart';
 import 'package:movie_app/features/authentication/domain/entities/user_entity.dart';
+import 'package:movie_app/features/authentication/domain/usecase/get_remember_me_status_usecase.dart';
+import 'package:movie_app/features/authentication/domain/usecase/get_saved_credentials_usecase.dart';
 import 'package:movie_app/features/authentication/domain/usecase/login_usecase.dart';
 import 'package:movie_app/features/authentication/domain/usecase/login_with_google_usecase.dart';
 import 'package:movie_app/features/authentication/domain/usecase/register_usecase.dart';
+import 'package:movie_app/features/authentication/domain/usecase/save_remember_me_status_usecase.dart';
+import 'package:movie_app/features/authentication/domain/usecase/save_user_credentials_usecase.dart';
 import 'package:movie_app/features/authentication/domain/usecase/update_display_name_usecase.dart';
 import 'package:movie_app/features/authentication/domain/usecase/update_user_usecase.dart';
 import 'package:movie_app/injection_container.dart';
@@ -18,15 +21,170 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc() : super(AuthenticationState.init()) {
+  final LoginUseCase _loginUseCase;
+  final SaveUserCredentialsUseCase _saveUserCredentialsUseCase;
+  final GetSavedCredentialsUseCase _getSavedCredentialsUseCase;
+  final SaveRememberMeStatusUseCase _saveRememberMeStatusUseCase;
+  final GetRememberMeStatusUseCase _getRememberMeStatusUseCase;
+
+  AuthenticationBloc(
+    this._loginUseCase,
+    this._saveUserCredentialsUseCase,
+    this._getSavedCredentialsUseCase,
+    this._saveRememberMeStatusUseCase,
+    this._getRememberMeStatusUseCase,
+  ) : super(AuthenticationState.init()) {
     on<AuthenticationLoginEvent>(_onAuthencationLoginEvent);
     on<AuthenticationRegisterEvent>(_onAuthencationRegisterEvent);
     // on<AuthenticationForgotPasswordEvent>(_onAuthencationForgotPasswordEvent);
     on<AuthenticationGoogleLoginEvent>(_onAuthenticationGoogleLoginEvent);
     on<LikeMovieEvent>(_onLikeMovieEvent);
     on<UpdateWatchedMovieEvent>(_onUpdateWatchedMovieEvent);
-    on<UpdateSubscriptionPlanEvent>(_onUpdateSubscriptionPlanEvent);
+    // on<UpdateSubscriptionPlanEvent>(_onUpdateSubscriptionPlanEvent);
     on<UpdateGenresEvent>(_onUpdateGenresEvent);
+    on<CheckSavedCredentialsEvent>(_onCheckSavedCredentialsEvent);
+    on<SaveRememberMeEvent>(_onSaveRememberMeEvent);
+    on<LogoutEvent>(_onLogoutEvent);
+  }
+
+  Future<void> _onSaveRememberMeEvent(
+    SaveRememberMeEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    await _saveRememberMeStatusUseCase(event.rememberMe);
+
+    if (event.rememberMe) {
+      await _saveUserCredentialsUseCase(event.email, event.password);
+    } else {
+      // Clear saved credentials if remember me is turned off
+      await _saveUserCredentialsUseCase('', '');
+    }
+  }
+
+  Future<void> _onCheckSavedCredentialsEvent(
+    CheckSavedCredentialsEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    print("\n==== BẮT ĐẦU KIỂM TRA THÔNG TIN ĐĂNG NHẬP ====");
+    final isRememberMe = await _getRememberMeStatusUseCase();
+    print("🔍 Remember Me đã bật: $isRememberMe");
+
+    if (isRememberMe) {
+      emit(state.copyWith(isLoading: LoadingState.loading));
+
+      final credentials = await _getSavedCredentialsUseCase();
+      if (credentials != null) {
+        final email = credentials['email'];
+        final password = credentials['password'];
+
+        print("📧 Email đã lưu: $email");
+        print(
+            "🔑 Loại mật khẩu đã lưu: ${password == 'google_login' ? 'GOOGLE' : 'EMAIL/PASSWORD'}");
+
+        // Nếu email hoặc password trống, có thể đã đăng xuất trước đó
+        if (email == null ||
+            password == null ||
+            email.isEmpty ||
+            password.isEmpty) {
+          print("❌ Email hoặc mật khẩu trống, không thể tự động đăng nhập");
+          emit(state.copyWith(isLoading: LoadingState.finished));
+          return;
+        }
+
+        if (password == "google_login") {
+          print("🔄 Đang thử đăng nhập tự động bằng Google...");
+          // Nếu là đăng nhập Google đã lưu
+          try {
+            // Ưu tiên sử dụng GoogleSignIn trực tiếp thay vì FirebaseAuth
+            final googleLoginUseCase = getIt<LoginWithGoogleUsecase>();
+            try {
+              print("🔄 Đang gọi GoogleLoginUseCase...");
+              final user = await googleLoginUseCase();
+              print("✅ Đăng nhập Google thành công: ${user.email}");
+
+              emit(state.copyWith(
+                isLoading: LoadingState.finished,
+                user: user,
+                action: AuthAction.login,
+                isRememberMe: true,
+              ));
+              return;
+            } catch (e) {
+              print("❌ Lỗi đăng nhập Google: $e");
+              // Thử lại với forceWebAuth
+              print("🔄 Thử lại GoogleLoginUseCase với force web view...");
+              try {
+                final user = await googleLoginUseCase();
+                print(
+                    "✅ Đăng nhập Google thành công sau khi thử lại: ${user.email}");
+
+                emit(state.copyWith(
+                  isLoading: LoadingState.finished,
+                  user: user,
+                  action: AuthAction.login,
+                  isRememberMe: true,
+                ));
+                return;
+              } catch (e2) {
+                print("❌ Lỗi đăng nhập Google lần 2: $e2");
+                emit(state.copyWith(
+                  isLoading: LoadingState.error,
+                  error:
+                      "Không thể tự động đăng nhập bằng Google, vui lòng đăng nhập lại.",
+                  savedEmail: email,
+                  isRememberMe: true,
+                ));
+              }
+            }
+          } catch (e) {
+            print("❌ Lỗi chung khi đăng nhập Google: $e");
+            emit(state.copyWith(
+              isLoading: LoadingState.error,
+              error:
+                  "Không thể tự động đăng nhập bằng Google, vui lòng đăng nhập lại.",
+              savedEmail: email,
+              isRememberMe: true,
+            ));
+          }
+        } else if (email.isNotEmpty && password.isNotEmpty) {
+          print("🔄 Đang thử đăng nhập tự động bằng email/mật khẩu...");
+          // Đăng nhập tự động với email/password
+          try {
+            final user = await _loginUseCase(email, password);
+            print("✅ Đăng nhập email/mật khẩu thành công: ${user.email}");
+
+            emit(state.copyWith(
+              isLoading: LoadingState.finished,
+              user: user,
+              action: AuthAction.login,
+              isRememberMe: true,
+            ));
+            return;
+          } catch (e) {
+            print("❌ Lỗi đăng nhập email/mật khẩu: $e");
+            // Nếu đăng nhập tự động không thành công, vẫn hiện form đăng nhập với thông tin đã lưu
+            emit(state.copyWith(
+              isLoading: LoadingState.error,
+              error: "Không thể tự động đăng nhập, vui lòng đăng nhập lại.",
+              savedEmail: email,
+              savedPassword: password,
+              isRememberMe: true,
+            ));
+          }
+        }
+      } else {
+        print("❌ Không tìm thấy thông tin đăng nhập đã lưu");
+        emit(state.copyWith(
+          isLoading: LoadingState.finished,
+        ));
+      }
+    } else {
+      print("❌ Remember Me chưa được bật");
+      emit(state.copyWith(
+        isLoading: LoadingState.finished,
+      ));
+    }
+    print("==== KẾT THÚC KIỂM TRA THÔNG TIN ĐĂNG NHẬP ====\n");
   }
 
   Future<void> _onAuthencationLoginEvent(
@@ -67,12 +225,23 @@ class AuthenticationBloc
     }
 
     try {
-      final loginUseCase = getIt<LoginUseCase>();
-      final user = await loginUseCase(email, password);
+      final user = await _loginUseCase(email, password);
+
+      // Save credentials if remember me is checked
+      if (event.rememberMe) {
+        await _saveRememberMeStatusUseCase(true);
+        await _saveUserCredentialsUseCase(email, password);
+      } else {
+        await _saveRememberMeStatusUseCase(false);
+        // Clear stored credentials
+        await _saveUserCredentialsUseCase('', '');
+      }
+
       emit(state.copyWith(
         isLoading: LoadingState.finished,
         user: user,
         action: AuthAction.login,
+        isRememberMe: event.rememberMe,
       ));
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
@@ -246,10 +415,25 @@ class AuthenticationBloc
     try {
       final googleLoginUseCase = getIt<LoginWithGoogleUsecase>();
       final user = await googleLoginUseCase();
+
+      // Lưu trạng thái Remember Me cho đăng nhập Google
+      if (event.rememberMe) {
+        await _saveRememberMeStatusUseCase(true);
+        // Lưu thông tin đăng nhập Google - lưu ý rằng chúng ta chỉ lưu email
+        // vì đăng nhập Google không sử dụng mật khẩu thông thường
+        await _saveUserCredentialsUseCase(user.email, "google_login");
+        print("Đã lưu thông tin đăng nhập Google: ${user.email}");
+      } else {
+        // Ngay cả khi không tích Remember me, vẫn cần đặt lại thông tin cũ nếu có
+        await _saveRememberMeStatusUseCase(false);
+        await _saveUserCredentialsUseCase('', '');
+      }
+
       emit(state.copyWith(
         isLoading: LoadingState.finished,
         user: user,
         action: AuthAction.login,
+        isRememberMe: event.rememberMe,
       ));
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
@@ -261,6 +445,7 @@ class AuthenticationBloc
                 : 'Đã xảy ra lỗi. Vui lòng thử lại.',
       ));
     } catch (e) {
+      print("Lỗi đăng nhập Google: $e");
       emit(state.copyWith(
         isLoading: LoadingState.error,
         error: 'Đã xảy ra lỗi. Vui lòng thử lại.',
@@ -383,37 +568,37 @@ class AuthenticationBloc
     }
   }
 
-  Future<void> _onUpdateSubscriptionPlanEvent(
-    UpdateSubscriptionPlanEvent event,
-    Emitter<AuthenticationState> emit,
-  ) async {
-    if (state.user == null) {
-      emit(state.copyWith(
-        error: 'Người dùng chưa đăng nhập.',
-      ));
-      return;
-    }
+  // Future<void> _onUpdateSubscriptionPlanEvent(
+  //   UpdateSubscriptionPlanEvent event,
+  //   Emitter<AuthenticationState> emit,
+  // ) async {
+  //   if (state.user == null) {
+  //     emit(state.copyWith(
+  //       error: 'Người dùng chưa đăng nhập.',
+  //     ));
+  //     return;
+  //   }
 
-    final updatedUser = UserModel(
-      uid: state.user!.uid,
-      email: state.user!.email,
-      name: state.user!.name,
-      avatar: state.user!.avatar,
-      subscriptionPlan: event.subscriptionPlan,
-      likedMovies: state.user!.likedMovies,
-      watchedMovies: state.user!.watchedMovies,
-    );
+  //   final updatedUser = UserModel(
+  //     uid: state.user!.uid,
+  //     email: state.user!.email,
+  //     name: state.user!.name,
+  //     avatar: state.user!.avatar,
+  //     subscriptionPlan: event.subscriptionPlan,
+  //     likedMovies: state.user!.likedMovies,
+  //     watchedMovies: state.user!.watchedMovies,
+  //   );
 
-    try {
-      final updateUserUseCase = getIt<UpdateUserUseCase>();
-      await updateUserUseCase(updatedUser);
-      emit(state.copyWith(
-        user: updatedUser,
-      ));
-    } catch (e) {
-      emit(state.copyWith(error: e.toString()));
-    }
-  }
+  //   try {
+  //     final updateUserUseCase = getIt<UpdateUserUseCase>();
+  //     await updateUserUseCase(updatedUser);
+  //     emit(state.copyWith(
+  //       user: updatedUser,
+  //     ));
+  //   } catch (e) {
+  //     emit(state.copyWith(error: e.toString()));
+  //   }
+  // }
 
   Future<void> _onUpdateGenresEvent(
     UpdateGenresEvent event,
@@ -447,5 +632,17 @@ class AuthenticationBloc
     } catch (e) {
       emit(state.copyWith(error: e.toString()));
     }
+  }
+
+  Future<void> _onLogoutEvent(
+    LogoutEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    // Xóa thông tin "Remember me" và thông tin đăng nhập đã lưu
+    await _saveRememberMeStatusUseCase(false);
+    await _saveUserCredentialsUseCase('', '');
+
+    // Đặt lại trạng thái
+    emit(AuthenticationState.init());
   }
 }

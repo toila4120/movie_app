@@ -3,61 +3,65 @@ part of 'authentication_bloc.dart';
 enum AuthAction {
   none,
   login,
-  register;
+  register,
+  forgotPassword,
+  googleLogin,
+}
 
-  bool isNone() => this == none;
-  bool isLogin() => this == login;
-  bool isRegister() => this == register;
+extension AuthActionExt on AuthAction {
+  bool isLogin() => this == AuthAction.login;
+  bool isRegister() => this == AuthAction.register;
+  bool isForgotPassword() => this == AuthAction.forgotPassword;
+  bool isGoogleLogin() => this == AuthAction.googleLogin;
 }
 
 class AuthenticationState extends Equatable {
   final LoadingState isLoading;
-  final String? error;
   final UserEntity? user;
-  final bool isPasswordResetEmailSent;
+  final String? error;
   final AuthAction action;
+  final bool isRememberMe;
+  final String? savedEmail;
+  final String? savedPassword;
 
   const AuthenticationState({
     required this.isLoading,
-    this.error,
     this.user,
-    this.isPasswordResetEmailSent = false,
-    this.action = AuthAction.none,
+    this.error,
+    required this.action,
+    this.isRememberMe = false,
+    this.savedEmail,
+    this.savedPassword,
   });
 
   factory AuthenticationState.init() {
     return const AuthenticationState(
       isLoading: LoadingState.pure,
-      error: null,
-      user: null,
-      isPasswordResetEmailSent: false,
       action: AuthAction.none,
     );
   }
 
   AuthenticationState copyWith({
     LoadingState? isLoading,
-    String? error,
     UserEntity? user,
-    bool? isPasswordResetEmailSent,
+    String? error,
     AuthAction? action,
+    bool? isRememberMe,
+    String? savedEmail,
+    String? savedPassword,
   }) {
     return AuthenticationState(
       isLoading: isLoading ?? this.isLoading,
-      error: error ?? this.error,
       user: user ?? this.user,
-      isPasswordResetEmailSent:
-          isPasswordResetEmailSent ?? this.isPasswordResetEmailSent,
+      error: error,
       action: action ?? this.action,
+      isRememberMe: isRememberMe ?? this.isRememberMe,
+      savedEmail: savedEmail ?? this.savedEmail,
+      savedPassword: savedPassword ?? this.savedPassword,
     );
   }
 
   @override
-  List<Object?> get props => [
-        isLoading,
-        error,
-        user,
-        isPasswordResetEmailSent,
-        action,
-      ];
+  List<Object?> get props =>
+      [isLoading, user, error, action, isRememberMe, savedEmail, savedPassword];
 }

@@ -9,7 +9,33 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   void signOut() async {
-    await FirebaseAuth.instance.signOut();
+    print("\n==== BẮT ĐẦU ĐĂNG XUẤT ====");
+    try {
+      // Đăng xuất khỏi Firebase
+      await FirebaseAuth.instance.signOut();
+      print("✅ Đã đăng xuất khỏi Firebase");
+
+      // Đăng xuất khỏi Google
+      try {
+        final GoogleSignIn googleSignIn = GoogleSignIn();
+        bool isSignedIn = await googleSignIn.isSignedIn();
+        if (isSignedIn) {
+          await googleSignIn.signOut();
+          print("✅ Đã đăng xuất khỏi Google");
+        } else {
+          print("ℹ️ Không cần đăng xuất Google (chưa đăng nhập)");
+        }
+      } catch (e) {
+        print("⚠️ Lỗi khi đăng xuất Google: $e");
+      }
+
+      // Xóa thông tin "Remember me" và thông tin đăng nhập đã lưu
+      context.read<AuthenticationBloc>().add(const LogoutEvent());
+      print("✅ Đã gửi yêu cầu xóa thông tin đăng nhập đã lưu");
+    } catch (e) {
+      print("❌ Lỗi khi đăng xuất: $e");
+    }
+    print("==== KẾT THÚC ĐĂNG XUẤT ====\n");
   }
 
   @override

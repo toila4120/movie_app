@@ -10,14 +10,38 @@ abstract class AuthenticationEvent extends Equatable {
 class AuthenticationLoginEvent extends AuthenticationEvent {
   final String email;
   final String password;
+  final bool rememberMe;
 
   const AuthenticationLoginEvent({
+    required this.email,
+    required this.password,
+    this.rememberMe = false,
+  });
+
+  @override
+  List<Object?> get props => [
+        email,
+        password,
+        rememberMe,
+      ];
+}
+
+class CheckSavedCredentialsEvent extends AuthenticationEvent {}
+
+class SaveRememberMeEvent extends AuthenticationEvent {
+  final bool rememberMe;
+  final String email;
+  final String password;
+
+  const SaveRememberMeEvent({
+    required this.rememberMe,
     required this.email,
     required this.password,
   });
 
   @override
   List<Object?> get props => [
+        rememberMe,
         email,
         password,
       ];
@@ -38,6 +62,7 @@ class AuthenticationRegisterEvent extends AuthenticationEvent {
 
   @override
   List<Object?> get props => [
+        name,
         email,
         password,
         passwordConfirm,
@@ -58,7 +83,16 @@ class AuthenticationForgotPasswordEvent extends AuthenticationEvent {
       ];
 }
 
-class AuthenticationGoogleLoginEvent extends AuthenticationEvent {}
+class AuthenticationGoogleLoginEvent extends AuthenticationEvent {
+  final bool rememberMe;
+
+  const AuthenticationGoogleLoginEvent({
+    this.rememberMe = false,
+  });
+
+  @override
+  List<Object?> get props => [rememberMe];
+}
 
 class LikeMovieEvent extends AuthenticationEvent {
   final String movieId;
@@ -110,18 +144,18 @@ class UpdateWatchedMovieEvent extends AuthenticationEvent {
       ];
 }
 
-class UpdateSubscriptionPlanEvent extends AuthenticationEvent {
-  final SubscriptionPlan subscriptionPlan;
+// class UpdateSubscriptionPlanEvent extends AuthenticationEvent {
+//   final SubscriptionPlan subscriptionPlan;
 
-  const UpdateSubscriptionPlanEvent({
-    required this.subscriptionPlan,
-  });
+//   const UpdateSubscriptionPlanEvent({
+//     required this.subscriptionPlan,
+//   });
 
-  @override
-  List<Object?> get props => [
-        subscriptionPlan,
-      ];
-}
+//   @override
+//   List<Object?> get props => [
+//         subscriptionPlan,
+//       ];
+// }
 
 class UpdateGenresEvent extends AuthenticationEvent {
   final List<String> genres;
@@ -134,4 +168,8 @@ class UpdateGenresEvent extends AuthenticationEvent {
   List<Object?> get props => [
         genres,
       ];
+}
+
+class LogoutEvent extends AuthenticationEvent {
+  const LogoutEvent();
 }

@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ExploreBloc()),
         BlocProvider(create: (context) => ProfileBloc()),
         BlocProvider(create: (context) => CategoriesBloc()),
-        BlocProvider(create: (context) => AuthenticationBloc()),
+        BlocProvider(create: (context) => getIt<AuthenticationBloc>()),
         BlocProvider(create: (context) => getIt<ChatBloc>()),
         BlocProvider(
           create: (context) => MiniPlayerBloc(

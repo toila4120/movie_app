@@ -14,18 +14,34 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isAuthSuccess = false; // Theo dõi trạng thái đăng nhập
   bool _isCategoriesLoaded = false; // Theo dõi trạng thái tải danh mục
+  bool _isDisposed = false;
 
   @override
   void dispose() {
+    _isDisposed = true;
+    // _emailController.dispose();
+    // _passwordController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
+    super.initState();
     if (context.read<CategoriesBloc>().state.categories.isNotEmpty) {
       _isCategoriesLoaded = true;
     }
-    super.initState();
+
+    // Check for saved credentials
+    context.read<AuthenticationBloc>().add(CheckSavedCredentialsEvent());
+  }
+
+  void _setTextFieldValues(String? email, String? password) {
+    if (!_isDisposed && mounted) {
+      setState(() {
+        if (email != null) _emailController.text = email;
+        if (password != null) _passwordController.text = password;
+      });
+    }
   }
 
   void _navigateIfReady(BuildContext context) {
@@ -47,6 +63,16 @@ class _LoginScreenState extends State<LoginScreen> {
             } else if (state.isLoading.isFinished && state.action.isLogin()) {
               _isAuthSuccess = true;
               _navigateIfReady(context);
+            }
+
+            // Fill in saved credentials if available
+            if (state.savedEmail != null && state.savedPassword != null) {
+              _setTextFieldValues(state.savedEmail, state.savedPassword);
+              if (mounted) {
+                setState(() {
+                  _isRememberMe = state.isRememberMe;
+                });
+              }
             }
           },
         ),
@@ -121,37 +147,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Row(
                     children: [
-                      SizedBox(
-                        height: 20.w,
-                        width: 20.w,
-                        child: Center(
-                          child: Transform.scale(
-                            scale: 20.w / 24,
-                            child: Checkbox(
-                              value: _isRememberMe,
-                              onChanged: (value) {
-                                setState(() {
-                                  _isRememberMe = value!;
-                                });
-                              },
-                              shape: const CircleBorder(),
-                              activeColor: AppColor.primary400,
-                              checkColor: AppColor.white,
-                              side: const BorderSide(
-                                color: AppColor.greyScale300,
-                                width: 1,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isRememberMe = !_isRememberMe;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              height: 20.w,
+                              width: 20.w,
+                              child: Center(
+                                child: Transform.scale(
+                                  scale: 20.w / 24,
+                                  child: Checkbox(
+                                    value: _isRememberMe,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _isRememberMe = value!;
+                                      });
+                                    },
+                                    shape: const CircleBorder(),
+                                    activeColor: AppColor.primary400,
+                                    checkColor: AppColor.white,
+                                    side: const BorderSide(
+                                      color: AppColor.greyScale300,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: AppPadding.superTiny),
-                      Text(
-                        'Remember me',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.greyScale500,
+                            SizedBox(width: AppPadding.superTiny),
+                            Text(
+                              'Remember me',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColor.greyScale500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -176,6 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             AuthenticationLoginEvent(
                               email: _emailController.text.trim(),
                               password: _passwordController.text.trim(),
+                              rememberMe: _isRememberMe,
                             ),
                           );
                     },

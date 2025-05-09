@@ -8,4 +8,11 @@ abstract class AuthRepository {
   Future<void> updateDisplayName(String name);
   Future<void> updateUser(UserEntity user);
   Future<UserEntity> getUser(String uid);
+
+  // Remember Me functionality
+  Future<void> saveUserCredentials(String email, String password);
+  Future<Map<String, String>?> getSavedCredentials();
+  Future<void> clearSavedCredentials();
+  Future<void> saveRememberMeStatus(bool rememberMe);
+  Future<bool> getRememberMeStatus();
 }

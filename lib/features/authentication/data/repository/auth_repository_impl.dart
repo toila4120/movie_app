@@ -1,3 +1,4 @@
+import 'package:movie_app/features/authentication/data/datasources/local/auth_local_data_source.dart';
 import 'package:movie_app/features/authentication/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:movie_app/features/authentication/data/model/user_model.dart';
 import 'package:movie_app/features/authentication/domain/entities/user_entity.dart';
@@ -5,8 +6,9 @@ import 'package:movie_app/features/authentication/domain/repository/auth_reposit
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDataSource localDataSource;
 
-  AuthRepositoryImpl(this.remoteDataSource);
+  AuthRepositoryImpl(this.remoteDataSource, this.localDataSource);
 
   @override
   Future<UserEntity> loginWithEmail(String email, String password) async {
@@ -74,5 +76,31 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  // Remember Me functionality
+  @override
+  Future<void> saveUserCredentials(String email, String password) async {
+    return await localDataSource.saveUserCredentials(email, password);
+  }
+
+  @override
+  Future<Map<String, String>?> getSavedCredentials() async {
+    return await localDataSource.getSavedCredentials();
+  }
+
+  @override
+  Future<void> clearSavedCredentials() async {
+    return await localDataSource.clearSavedCredentials();
+  }
+
+  @override
+  Future<void> saveRememberMeStatus(bool rememberMe) async {
+    return await localDataSource.saveRememberMeStatus(rememberMe);
+  }
+
+  @override
+  Future<bool> getRememberMeStatus() async {
+    return await localDataSource.getRememberMeStatus();
   }
 }

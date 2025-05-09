@@ -76,44 +76,74 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<UserModel> loginWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) {
-      throw Exception('Google Sign-In cancelled.');
-    }
+    print("\n==== BẮT ĐẦU ĐĂNG NHẬP GOOGLE ====");
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    final userCredential = await _auth.signInWithCredential(credential);
-    if (userCredential.user == null) {
-      throw Exception('Failed to sign in with Google: No user data returned.');
-    }
-    final userModel = UserModel.fromFirebaseUser(userCredential.user!);
-
-    // Lấy dữ liệu hiện có từ Firestore
-    final doc = await _firestore.collection('users').doc(userModel.uid).get();
-    if (doc.exists) {
-      return UserModel.fromJson(doc.data()!);
-    } else {
-      final newUserModel = UserModel(
-        uid: userModel.uid,
-        email: userModel.email,
-        name: userModel.name,
-        avatar: userModel.avatar,
-        subscriptionPlan:
-            SubscriptionPlan.basic,
-        likedMovies: userModel.likedMovies,
-        watchedMovies: userModel.watchedMovies,
+    try {
+      // Khởi tạo GoogleSignIn với clientId
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: ['email', 'profile'],
+        signInOption: SignInOption.standard,
       );
-      await _firestore.collection('users').doc(newUserModel.uid).set(
-            newUserModel.toJson(),
-            SetOptions(merge: true),
-          );
-      return newUserModel;
+
+      // Đảm bảo đăng xuất trước khi đăng nhập mới
+      try {
+        await googleSignIn.signOut();
+      } catch (e) {
+        print("ℹ️ Không cần đăng xuất Google (chưa đăng nhập)");
+      }
+
+      // Thực hiện đăng nhập
+      print("🔄 Bắt đầu quá trình đăng nhập Google...");
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        print("❌ Người dùng đã hủy đăng nhập Google");
+        throw Exception('Google Sign-In cancelled');
+      }
+
+      print("✅ Đã nhận thông tin tài khoản Google: ${googleUser.email}");
+
+      // Lấy thông tin xác thực
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Đăng nhập vào Firebase
+      print("🔄 Đăng nhập vào Firebase...");
+      final userCredential = await _auth.signInWithCredential(credential);
+
+      if (userCredential.user == null) {
+        throw Exception('Failed to sign in with Google: No user data returned');
+      }
+
+      print("✅ Đăng nhập Firebase thành công: ${userCredential.user!.email}");
+
+      // Kiểm tra và tạo/cập nhật thông tin người dùng trong Firestore
+      final doc = await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+
+      if (doc.exists) {
+        print("✅ Đã tìm thấy thông tin người dùng trong Firestore");
+        return UserModel.fromJson(doc.data()!);
+      } else {
+        print("🆕 Tạo thông tin người dùng mới trong Firestore");
+        final newUser = UserModel.fromFirebaseUser(userCredential.user!);
+        await _firestore.collection('users').doc(newUser.uid).set(
+              newUser.toJson(),
+              SetOptions(merge: true),
+            );
+        return newUser;
+      }
+    } catch (e) {
+      print("❌ Lỗi trong quá trình đăng nhập Google: $e");
+      throw Exception('Failed to sign in with Google: $e');
+    } finally {
+      print("==== KẾT THÚC ĐĂNG NHẬP GOOGLE ====\n");
     }
   }
 

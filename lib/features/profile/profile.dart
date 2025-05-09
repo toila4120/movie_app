@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/config/router/app_router.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
