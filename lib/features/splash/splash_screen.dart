@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/router/app_router.dart';
 import 'package:movie_app/core/constants/app_image.dart';
@@ -25,26 +26,30 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isHomeDataLoaded = false;
   bool _isCategoriesLoaded = false;
 
-  // Kiểm tra nếu đã sẵn sàng để chuyển màn hình
   void _checkNavigationReady() {
     print(
         "🔍 _isCheckedCredentials: $_isCheckedCredentials, _isHomeDataLoaded: $_isHomeDataLoaded, _isCategoriesLoaded: $_isCategoriesLoaded");
 
-    // Nếu không có đăng nhập tự động (đã kiểm tra xong) thì chuyển đến màn hình đăng nhập
-    if (!_isCheckedCredentials) {
-      navigateToLogin();
-      return;
-    }
-
-    // Nếu có người dùng đã đăng nhập và dữ liệu đã tải xong thì chuyển đến màn hình chính
-    if (_isHomeDataLoaded && _isCategoriesLoaded) {
-      context.go(AppRouter.splashLoginScreenPath);
-    }
+    Future.delayed(const Duration(seconds: 1), () {
+      // Thêm độ trễ 2 giây
+      if (!_isCheckedCredentials) {
+        navigateToLogin();
+        return;
+      }
+      if (_isHomeDataLoaded && _isCategoriesLoaded) {
+        // ignore: use_build_context_synchronously
+        context.go(AppRouter.splashLoginScreenPath);
+      }
+    });
   }
 
   void navigateToLogin() {
     print("🚀 Chuyển đến màn hình đăng nhập");
-    context.go(AppRouter.loginScreenPath);
+    Future.delayed(const Duration(seconds: 1), () {
+      // Thêm độ trễ 2 giây
+      // ignore: use_build_context_synchronously
+      context.go(AppRouter.loginScreenPath);
+    });
   }
 
   @override
@@ -138,6 +143,8 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset(
                 AppImage.movieLogo,
+                width: 300.w,
+                height: 300.w,
               ),
               const SizedBox(height: 24),
               const CircularProgressIndicator(),

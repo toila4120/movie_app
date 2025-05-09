@@ -15,10 +15,6 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
     super.initState();
     _selectedAvatarIndex = context.read<AppBloc>().state.userModel!.avatar;
 
-    // Preload all avatar images to improve performance
-    for (String avatarPath in AppAssets.avatars) {
-      precacheImage(AssetImage(avatarPath), context);
-    }
   }
 
   @override
