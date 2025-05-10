@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Login',
+                'Đăng nhập',
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w700,
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: AppPadding.large),
               AppTextField(
                 controller: _passwordController,
-                hintText: 'Password',
+                hintText: 'Mật khẩu',
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(AppPadding.small),
                   child: Image.asset(
@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(width: AppPadding.superTiny),
                             Text(
-                              'Remember me',
+                              'Ghi nhớ tôi',
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   Text(
-                    'Forgot password?',
+                    'Quên mật khẩu?',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -229,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           )
                         : Text(
-                            'Login',
+                            'Đăng nhập',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w700,
@@ -252,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(width: AppPadding.tiny),
                   Text(
-                    'Or',
+                    'Hoặc',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -276,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Don\'t have an account?',
+                    'Không có tài khoản?',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -288,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       context.push(AppRouter.registerScreenPath);
                     },
-                    text: 'Sign up',
+                    text: 'Đăng ký',
                     textStyle: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
