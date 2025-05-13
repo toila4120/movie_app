@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,6 +20,7 @@ import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_blo
 import 'package:movie_app/injection_container.dart';
 import 'package:movie_app/config/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'dart:io';
 
 void main() async {
@@ -45,7 +47,10 @@ void main() async {
 
   EnvValidator.validateEnv();
   setup();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  debugPaintSizeEnabled = true;
   Bloc.observer = const AppBlocObserver();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
