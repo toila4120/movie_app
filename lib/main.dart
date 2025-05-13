@@ -50,7 +50,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  debugPaintSizeEnabled = true;
+  debugPaintSizeEnabled = false;
   Bloc.observer = const AppBlocObserver();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

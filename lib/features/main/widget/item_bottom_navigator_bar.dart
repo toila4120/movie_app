@@ -34,15 +34,18 @@ class BottomNavigatorBarItem extends StatelessWidget {
               iconPath,
               width: 20.w,
               height: 20.w,
-              color: isActive ? AppColor.primary500 : AppColor.subsidiaryLight,
+              color: isActive
+                  ? AppColor.primary500
+                  : Theme.of(context).primaryColorDark,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
                 fontSize: 10.sp,
-                color:
-                    isActive ? AppColor.primary500 : AppColor.subsidiaryLight,
+                color: isActive
+                    ? AppColor.primary500
+                    : Theme.of(context).primaryColorDark,
                 fontWeight: FontWeight.w500,
               ),
             ),

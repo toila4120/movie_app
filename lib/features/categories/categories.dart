@@ -8,6 +8,7 @@ import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/constants/app_image.dart';
 import 'package:movie_app/core/core.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
+import 'package:movie_app/core/widget/src/base_scroll_view.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_state.dart';
 import 'package:movie_app/features/categories/presentation/widget/item_movie_shimer.dart';

@@ -64,12 +64,9 @@ class _ChattingScreenState extends State<ChattingScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildAppBar(),
-            // Debug panel widget (only in debug mode)
-            // if (_isDebugMode) _buildDebugPanel(),
             Expanded(
               child: BlocConsumer<ChatBloc, ChatState>(
                 listener: (context, state) {
-                  // Scroll to bottom when messages change
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     _scrollToBottom();
                   });

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
 import 'package:movie_app/core/utils/show_toast.dart';
+import 'package:movie_app/core/widget/src/base_scroll_view.dart';
 import 'package:movie_app/features/chatting/presentation/bloc/chat_bloc.dart';
 import 'package:movie_app/features/chatting/presentation/widgets/chat_bubble.dart';
 import 'package:movie_app/features/chatting/presentation/widgets/movie_recommendation_card.dart';

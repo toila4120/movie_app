@@ -16,23 +16,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       child: Column(
         children: [
           const AppHeader(
-            title: 'Categories',
+            title: 'Thể loại',
           ),
           Expanded(
-            child: ScrollConfiguration(
-              behavior: const DisableGlowBehavior(),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(
-                  top: AppPadding.superTiny,
-                  left: AppPadding.large,
-                  right: AppPadding.large,
-                  bottom: AppPadding.large,
-                ),
-                child: const Column(
-                  children: [
-                    CategoriesList(),
-                  ],
+            child: BaseScrollView(
+              child: ScrollConfiguration(
+                behavior: const DisableGlowBehavior(),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(
+                    top: AppPadding.superTiny,
+                    left: AppPadding.large,
+                    right: AppPadding.large,
+                    bottom: AppPadding.large,
+                  ),
+                  child: const Column(
+                    children: [
+                      CategoriesList(),
+                    ],
+                  ),
                 ),
               ),
             ),
