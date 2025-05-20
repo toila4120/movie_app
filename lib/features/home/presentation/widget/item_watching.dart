@@ -19,11 +19,13 @@ class ItemWatching extends StatelessWidget {
 
     return CustomAppButton(
       onPressed: () async {
-        context.read<MovieBloc>().add(FetchMovieDetailEvent(
-              slug: watchedMovie.movieId,
-            ));
+        final movieBloc = context.read<MovieBloc>();
+        movieBloc.add(FetchMovieDetailEvent(
+          slug: watchedMovie.movieId,
+        ));
         await Future.delayed(const Duration(milliseconds: 1000));
-        final movie = context.read<MovieBloc>().state.movie;
+        if (!context.mounted) return;
+        final movie = movieBloc.state.movie;
         if (movie != null) {
           final serverIndex = movie.episodes.indexWhere(
                     (server) => server.serverName == serverName,

@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
               showToast(context, message: state.error!);
             } else if (state.isLoading.isFinished && state.action.isLogin()) {
               _isAuthSuccess = true;
+              showToast(context, message: "Đăng nhập thành công");
               _navigateIfReady(context);
             }
 
@@ -89,216 +90,243 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ],
       child: AppContainer(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppPadding.large),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Đăng nhập',
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              SizedBox(height: AppPadding.large),
-              AppTextField(
-                controller: _emailController,
-                hintText: 'Email',
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(AppPadding.small),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Positioned(
                   child: Image.asset(
-                    AppImage.icEmail,
-                    height: 20.w,
-                    width: 20.w,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width,
+                    AppImage.backgroundLogin,
+                    fit: BoxFit.fill,
                   ),
                 ),
-              ),
-              SizedBox(height: AppPadding.large),
-              AppTextField(
-                controller: _passwordController,
-                hintText: 'Mật khẩu',
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(AppPadding.small),
-                  child: Image.asset(
-                    AppImage.icKey,
-                    height: 20.w,
-                    width: 20.w,
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withValues(alpha: 0.5),
+                    ),
                   ),
                 ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isObscureText = !_isObscureText;
-                    });
-                  },
-                  icon: Image.asset(
-                    _isObscureText ? AppImage.icEyeOff : AppImage.icEye,
-                    height: 20.w,
-                    width: 20.w,
-                  ),
-                ),
-                obscureText: _isObscureText,
-              ),
-              SizedBox(height: AppPadding.medium),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ],
+            ),
+            SizedBox(height: AppPadding.small),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.large),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Đăng nhập',
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: AppPadding.large),
+                  AppTextField(
+                    controller: _emailController,
+                    hintText: 'Email',
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(AppPadding.small),
+                      child: Image.asset(
+                        AppImage.icEmail,
+                        height: 20.w,
+                        width: 20.w,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: AppPadding.large),
+                  AppTextField(
+                    controller: _passwordController,
+                    hintText: 'Mật khẩu',
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(AppPadding.small),
+                      child: Image.asset(
+                        AppImage.icKey,
+                        height: 20.w,
+                        width: 20.w,
+                      ),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isObscureText = !_isObscureText;
+                        });
+                      },
+                      icon: Image.asset(
+                        _isObscureText ? AppImage.icEyeOff : AppImage.icEye,
+                        height: 20.w,
+                        width: 20.w,
+                      ),
+                    ),
+                    obscureText: _isObscureText,
+                  ),
+                  SizedBox(height: AppPadding.medium),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isRememberMe = !_isRememberMe;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height: 20.w,
-                              width: 20.w,
-                              child: Center(
-                                child: Transform.scale(
-                                  scale: 20.w / 24,
-                                  child: Checkbox(
-                                    value: _isRememberMe,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _isRememberMe = value!;
-                                      });
-                                    },
-                                    shape: const CircleBorder(),
-                                    activeColor: AppColor.primary400,
-                                    checkColor: AppColor.white,
-                                    side: const BorderSide(
-                                      color: AppColor.greyScale300,
-                                      width: 1,
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isRememberMe = !_isRememberMe;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 20.w,
+                                  width: 20.w,
+                                  child: Center(
+                                    child: Transform.scale(
+                                      scale: 20.w / 24,
+                                      child: Checkbox(
+                                        value: _isRememberMe,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRememberMe = value!;
+                                          });
+                                        },
+                                        shape: const CircleBorder(),
+                                        activeColor: AppColor.primary400,
+                                        checkColor: AppColor.white,
+                                        side: const BorderSide(
+                                          color: AppColor.greyScale300,
+                                          width: 1,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(width: AppPadding.superTiny),
+                                Text(
+                                  'Ghi nhớ tôi',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.greyScale500,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: AppPadding.superTiny),
-                            Text(
-                              'Ghi nhớ tôi',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColor.greyScale500,
-                              ),
-                            ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'Quên mật khẩu?',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.greyScale500,
                         ),
                       ),
                     ],
                   ),
-                  Text(
-                    'Quên mật khẩu?',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.greyScale500,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: AppPadding.large),
-              BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (context, state) {
-                  return CustomAppButton(
-                    padding: EdgeInsets.symmetric(vertical: AppPadding.medium),
-                    onPressed: () {
-                      context.read<AuthenticationBloc>().add(
-                            AuthenticationLoginEvent(
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text.trim(),
-                              rememberMe: _isRememberMe,
-                            ),
-                          );
+                  SizedBox(height: AppPadding.large),
+                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (context, state) {
+                      return CustomAppButton(
+                        padding:
+                            EdgeInsets.symmetric(vertical: AppPadding.medium),
+                        onPressed: () {
+                          context.read<AuthenticationBloc>().add(
+                                AuthenticationLoginEvent(
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
+                                  rememberMe: _isRememberMe,
+                                ),
+                              );
+                        },
+                        radius: AppBorderRadius.r8,
+                        backgroundColor: AppColor.primary500,
+                        child: state.isLoading.isLoading
+                            ? SizedBox(
+                                height: 16.w,
+                                width: 16.w,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeCap: StrokeCap.round,
+                                ),
+                              )
+                            : Text(
+                                'Đăng nhập',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColor.white,
+                                ),
+                              ),
+                      );
                     },
-                    radius: AppBorderRadius.r8,
-                    backgroundColor: AppColor.primary500,
-                    child: state.isLoading.isLoading
-                        ? SizedBox(
-                            height: 16.w,
-                            width: 16.w,
-                            child: const CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeCap: StrokeCap.round,
-                            ),
-                          )
-                        : Text(
-                            'Đăng nhập',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.white,
-                            ),
-                          ),
-                  );
-                },
-              ),
-              SizedBox(height: AppPadding.medium),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: Divider(
-                      thickness: 1,
-                      color: AppColor.greyScale200,
-                      height: 1,
-                    ),
                   ),
-                  SizedBox(width: AppPadding.tiny),
-                  Text(
-                    'Hoặc',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.greyScale500,
-                    ),
+                  SizedBox(height: AppPadding.medium),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        child: Divider(
+                          thickness: 1,
+                          color: AppColor.greyScale200,
+                          height: 1,
+                        ),
+                      ),
+                      SizedBox(width: AppPadding.tiny),
+                      Text(
+                        'Hoặc',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.greyScale500,
+                        ),
+                      ),
+                      SizedBox(width: AppPadding.tiny),
+                      const Expanded(
+                        child: Divider(
+                          thickness: 1,
+                          color: AppColor.greyScale200,
+                          height: 1,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: AppPadding.tiny),
-                  const Expanded(
-                    child: Divider(
-                      thickness: 1,
-                      color: AppColor.greyScale200,
-                      height: 1,
-                    ),
+                  SizedBox(height: AppPadding.medium),
+                  const ButtonLoginWithGoogle(),
+                  SizedBox(height: AppPadding.medium),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Không có tài khoản?',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.greyScale500,
+                        ),
+                      ),
+                      SizedBox(width: AppPadding.superTiny),
+                      CustomAppButton(
+                        onPressed: () {
+                          context.push(AppRouter.registerScreenPath);
+                        },
+                        text: 'Đăng ký',
+                        textStyle: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.primary500,
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: AppPadding.medium),
-              const ButtonLoginWithGoogle(),
-              SizedBox(height: AppPadding.medium),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Không có tài khoản?',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.greyScale500,
-                    ),
-                  ),
-                  SizedBox(width: AppPadding.superTiny),
-                  CustomAppButton(
-                    onPressed: () {
-                      context.push(AppRouter.registerScreenPath);
-                    },
-                    text: 'Đăng ký',
-                    textStyle: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.primary500,
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

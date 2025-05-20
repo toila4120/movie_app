@@ -37,4 +37,5 @@ abstract class AppImage {
   static const String loadingAnimation = "assets/images/loading.gif";
   static const String icChat = "assets/images/ic_chatting.png";
   static const String backgroundLogin = "assets/images/background_login.png";
+  static const String icHistory = "assets/images/ic_history.png";
 }

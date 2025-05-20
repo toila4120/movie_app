@@ -26,13 +26,11 @@ import 'dart:io';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Try to load .env file with robust error handling
   try {
     await dotenv.load(fileName: ".env");
     debugPrint("✅ .env file loaded successfully");
   } catch (e) {
     debugPrint("⚠️ Error loading .env file: $e");
-    // Create a backup .env with test key if not exists
     try {
       File envFile = File('.env');
       if (!await envFile.exists()) {
