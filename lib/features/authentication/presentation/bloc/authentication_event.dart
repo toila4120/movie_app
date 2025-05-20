@@ -173,3 +173,16 @@ class UpdateGenresEvent extends AuthenticationEvent {
 class LogoutEvent extends AuthenticationEvent {
   const LogoutEvent();
 }
+
+class RemoveWatchedMovieEvent extends AuthenticationEvent {
+  final String movieId;
+
+  const RemoveWatchedMovieEvent({
+    required this.movieId,
+  });
+
+  @override
+  List<Object?> get props => [
+        movieId,
+      ];
+}

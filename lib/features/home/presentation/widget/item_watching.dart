@@ -152,11 +152,30 @@ class ItemWatching extends StatelessWidget {
               ),
             ),
             SizedBox(width: AppPadding.tiny),
-            Image.asset(
-              AppImage.icRight,
-              width: 16.w,
-              height: 16.w,
-              color: Theme.of(context).primaryColorDark,
+            SizedBox(
+              height: 144.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomAppButton(
+                    onPressed: () {
+                      context.read<AuthenticationBloc>().add(
+                            RemoveWatchedMovieEvent(
+                              movieId: watchedMovie.movieId,
+                            ),
+                          );
+                    },
+                    child: const Icon(Icons.close_rounded),
+                  ),
+                  Image.asset(
+                    AppImage.icRight,
+                    width: 16.w,
+                    height: 16.w,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+                  const SizedBox.shrink()
+                ],
+              ),
             ),
           ],
         ),

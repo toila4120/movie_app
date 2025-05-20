@@ -45,6 +45,7 @@ class AuthenticationBloc
     on<CheckSavedCredentialsEvent>(_onCheckSavedCredentialsEvent);
     on<SaveRememberMeEvent>(_onSaveRememberMeEvent);
     on<LogoutEvent>(_onLogoutEvent);
+    on<RemoveWatchedMovieEvent>(_onRemoveWatchedMovieEvent);
   }
 
   Future<void> _onSaveRememberMeEvent(
@@ -638,11 +639,48 @@ class AuthenticationBloc
     LogoutEvent event,
     Emitter<AuthenticationState> emit,
   ) async {
-    // Xóa thông tin "Remember me" và thông tin đăng nhập đã lưu
     await _saveRememberMeStatusUseCase(false);
     await _saveUserCredentialsUseCase('', '');
 
     // Đặt lại trạng thái
     emit(AuthenticationState.init());
+  }
+
+  Future<void> _onRemoveWatchedMovieEvent(
+    RemoveWatchedMovieEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.user == null) {
+      emit(state.copyWith(
+        error: 'Người dùng chưa đăng nhập.',
+      ));
+      return;
+    }
+
+    final updatedWatchedMovies =
+        List<WatchedMovie>.from(state.user!.watchedMovies)
+          ..removeWhere((movie) => movie.movieId == event.movieId);
+
+    final updatedUser = UserModel(
+      uid: state.user!.uid,
+      email: state.user!.email,
+      name: state.user!.name,
+      avatar: state.user!.avatar,
+      subscriptionPlan: state.user!.subscriptionPlan,
+      likedMovies: state.user!.likedMovies,
+      watchedMovies: updatedWatchedMovies,
+      likedGenres: state.user!.likedGenres,
+    );
+
+    try {
+      final updateUserUseCase = getIt<UpdateUserUseCase>();
+      await updateUserUseCase(updatedUser);
+      emit(state.copyWith(
+        user: updatedUser,
+        action: AuthAction.none,
+      ));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
+    }
   }
 }
