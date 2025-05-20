@@ -39,7 +39,7 @@ class ButtonLoginWithGoogle extends StatelessWidget {
           ),
           SizedBox(width: AppPadding.tiny),
           Text(
-            'Login with Google',
+            'Đăng nhập với Google',
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w700,

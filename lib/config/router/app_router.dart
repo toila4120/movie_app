@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/router/app_navigator_observer.dart';
 import 'package:movie_app/features/authentication/authentication.dart';
+import 'package:movie_app/features/authentication/presentation/screen/forgot_password_screen.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/categories/presentation/screen/watched_movies_screen.dart';
 import 'package:movie_app/features/chatting/chatting.dart';
@@ -28,6 +29,9 @@ abstract class AppRouter {
   static const String playMoviePath = "/home_tab/movie_detail/play_movie";
   static const String _loginScreenName = 'login_screen';
   static const String loginScreenPath = '/login_screen';
+  static const String _forgotPasswordScreenName = 'forgot_password_screen';
+  static const String forgotPasswordScreenPath =
+      '/login_screen/forgot_password_screen';
   static const String _registerScreenName = 'register_screen';
   static const String registerScreenPath = '/register_screen';
   static const String _selectGenreScreenName = 'select_genre_screen';
@@ -269,6 +273,19 @@ abstract class AppRouter {
         name: _loginScreenName,
         path: loginScreenPath,
         builder: (context, state) => const LoginScreen(),
+        routes: [
+          GoRoute(
+            name: _forgotPasswordScreenName,
+            path: '/$_forgotPasswordScreenName',
+            pageBuilder: (context, state) {
+              return _buildPageWithDefaultTransition(
+                context: context,
+                state: state,
+                child: const ForgotPasswordScreen(),
+              );
+            },
+          ),
+        ],
       ),
       GoRoute(
         name: _registerScreenName,

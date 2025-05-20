@@ -218,12 +218,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      Text(
-                        'Quên mật khẩu?',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.greyScale500,
+                      CustomAppButton(
+                        onPressed: () {
+                          context.push(AppRouter.forgotPasswordScreenPath);
+                        },
+                        child: Text(
+                          'Quên mật khẩu?',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.greyScale500,
+                          ),
                         ),
                       ),
                     ],

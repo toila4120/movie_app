@@ -24,7 +24,6 @@ class _MovieState extends State<Movie> {
   Timer? _positionTimer;
   Duration _currentPosition = Duration.zero;
   AuthenticationBloc? _authBloc;
-  final bool _isDisposed = false;
   bool _isControllerInitialized = false;
 
   @override
@@ -36,12 +35,10 @@ class _MovieState extends State<Movie> {
   @override
   void initState() {
     super.initState();
-    // Đặt định hướng màn hình ngang
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    // Ẩn thanh trạng thái và thanh điều hướng
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     final server = widget.movie.episodes[widget.serverIndex];
@@ -51,8 +48,8 @@ class _MovieState extends State<Movie> {
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       autoInitialize: true,
-      autoPlay: true,
-      allowFullScreen: false, // Sửa thành true
+      autoPlay: false,
+      allowFullScreen: false,
       fullScreenByDefault: true,
       errorBuilder: (context, errorMessage) {
         return Center(
@@ -68,7 +65,7 @@ class _MovieState extends State<Movie> {
     _startTrackingPosition();
   }
 
-  void _restoreWatchedPosition() {
+  Future<void> _restoreWatchedPosition() async {
     final currentPositionDuration = Duration(seconds: widget.currentPosition);
     final authState =
         _authBloc?.state ?? context.read<AuthenticationBloc>().state;
@@ -93,30 +90,34 @@ class _MovieState extends State<Movie> {
     final initialPosition =
         widget.currentPosition > 0 ? currentPositionDuration : watchedDuration;
 
-    _videoPlayerController.initialize().then((_) {
-      final videoDuration = _videoPlayerController.value.duration;
-      if (initialPosition > videoDuration) {
-        _videoPlayerController.seekTo(Duration.zero);
-        _currentPosition = Duration.zero;
-      } else {
-        _videoPlayerController.seekTo(initialPosition);
-        _currentPosition = initialPosition;
-      }
-      // Kích hoạt chế độ toàn màn hình
-      _chewieController.enterFullScreen();
+    await _videoPlayerController.initialize();
+    final videoDuration = _videoPlayerController.value.duration;
+    if (initialPosition > videoDuration) {
+      _videoPlayerController.seekTo(Duration.zero);
+      _currentPosition = Duration.zero;
+    } else {
+      _videoPlayerController.seekTo(initialPosition);
+      _currentPosition = initialPosition;
+    }
+    _chewieController.enterFullScreen();
+    if (mounted) {
       setState(() {
         _isControllerInitialized = true;
       });
-    });
+    }
   }
 
   void _startTrackingPosition() {
     _positionTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      if (!mounted) return;
       if (_videoPlayerController.value.isPlaying) {
-        setState(() {
-          _currentPosition = _videoPlayerController.value.position;
-        });
-        _saveWatchedPosition();
+        final newPosition = _videoPlayerController.value.position;
+        if (newPosition != _currentPosition) {
+          setState(() {
+            _currentPosition = newPosition;
+          });
+          _saveWatchedPosition();
+        }
       }
     });
   }
@@ -144,52 +145,61 @@ class _MovieState extends State<Movie> {
   }
 
   @override
-  void dispose() {
-    if (_isDisposed) {
-      _videoPlayerController.pause();
-      _positionTimer?.cancel();
-      _chewieController.dispose();
-      _videoPlayerController.dispose();
-    }
-    super.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    // Khôi phục giao diện hệ thống
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
-        context.read<MiniPlayerBloc>().add(
-              ShowMiniPlayer(
-                movie: widget.movie,
-                controller: _videoPlayerController,
-                episodeIndex: widget.episodeIndex,
-                serverIndex: widget.serverIndex,
-                position: _currentPosition,
-                size: Size(
-                  MediaQuery.of(context).size.width,
-                  MediaQuery.of(context).size.height,
-                ),
-              ),
-            );
+
+        await SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+        await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+        await _videoPlayerController.pause();
+
         if (context.mounted) {
+          context.read<MiniPlayerBloc>().add(
+                ShowMiniPlayer(
+                  movie: widget.movie,
+                  controller: _videoPlayerController,
+                  episodeIndex: widget.episodeIndex,
+                  serverIndex: widget.serverIndex,
+                  position: _currentPosition,
+                  size: Size(
+                    MediaQuery.of(context).size.width,
+                    MediaQuery.of(context).size.height,
+                  ),
+                ),
+              );
           Navigator.of(context).pop();
         }
       },
       child: Scaffold(
         body: _isControllerInitialized
             ? Chewie(
-                controller: _chewieController) // Loại bỏ Column và AspectRatio
+                controller: _chewieController,
+              )
             : const Center(child: CircularProgressIndicator()),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _positionTimer?.cancel();
+    if (_isControllerInitialized &&
+        !context.read<MiniPlayerBloc>().state.isVisible) {
+      _videoPlayerController.pause();
+      _chewieController.dispose();
+      _videoPlayerController.dispose();
+    }
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
   }
 }

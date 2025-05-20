@@ -15,6 +15,7 @@ import 'package:movie_app/core/widget/src/base_scroll_view.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/categories/presentation/widget/item_movie_shimer.dart';
+import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_bloc.dart';
 import 'package:movie_app/features/profile/presentation/bloc/profile_bloc.dart';
 
 part 'presentation/screen/profile_screen.dart';

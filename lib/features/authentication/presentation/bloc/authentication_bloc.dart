@@ -36,7 +36,7 @@ class AuthenticationBloc
   ) : super(AuthenticationState.init()) {
     on<AuthenticationLoginEvent>(_onAuthencationLoginEvent);
     on<AuthenticationRegisterEvent>(_onAuthencationRegisterEvent);
-    // on<AuthenticationForgotPasswordEvent>(_onAuthencationForgotPasswordEvent);
+    on<AuthenticationForgotPasswordEvent>(_onAuthencationForgotPasswordEvent);
     on<AuthenticationGoogleLoginEvent>(_onAuthenticationGoogleLoginEvent);
     on<LikeMovieEvent>(_onLikeMovieEvent);
     on<UpdateWatchedMovieEvent>(_onUpdateWatchedMovieEvent);
@@ -351,57 +351,50 @@ class AuthenticationBloc
     }
   }
 
-  // Future<void> _onAuthencationForgotPasswordEvent(
-  //   AuthenticationForgotPasswordEvent event,
-  //   Emitter<AuthenticationState> emit,
-  // ) async {
-  //   if (state.isLoading == LoadingState.loading) {
-  //     return;
-  //   }
+  Future<void> _onAuthencationForgotPasswordEvent(
+    AuthenticationForgotPasswordEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.isLoading == LoadingState.loading) {
+      return;
+    }
 
-  //   emit(state.copyWith(isLoading: LoadingState.loading, error: null));
+    emit(state.copyWith(
+      isLoading: LoadingState.loading,
+      error: null,
+      action: AuthAction.forgotPassword,
+    ));
 
-  //   final email = event.email.trim();
-
-  //   if (email.isEmpty) {
-  //     emit(state.copyWith(
-  //       isLoading: LoadingState.error,
-  //       error: "Email can't be empty.",
-  //     ));
-  //     return;
-  //   }
-
-  //   if (!validateEmail(email)) {
-  //     emit(state.copyWith(
-  //       isLoading: LoadingState.error,
-  //       error: "Invalid email format.",
-  //     ));
-  //     return;
-  //   }
-
-  //   try {
-  //     final forgotPasswordUseCase = getIt<ForgotPasswordUseCase>();
-  //     await forgotPasswordUseCase(email);
-  //     emit(state.copyWith(
-  //       isLoading: LoadingState.finished,
-  //       isPasswordResetEmailSent: true,
-  //     ));
-  //   } on FirebaseAuthException catch (e) {
-  //     emit(state.copyWith(
-  //       isLoading: LoadingState.error,
-  //       error: e.code == 'user-not-found'
-  //           ? 'No user found for that email.'
-  //           : e.code == 'invalid-email'
-  //               ? 'Invalid email provided.'
-  //               : e.code,
-  //     ));
-  //   } catch (e) {
-  //     emit(state.copyWith(
-  //       isLoading: LoadingState.error,
-  //       error: e.toString(),
-  //     ));
-  //   }
-  // }
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: event.email,
+      );
+      emit(state.copyWith(
+        isLoading: LoadingState.finished,
+        action: AuthAction.forgotPassword,
+      ));
+    } on FirebaseAuthException catch (e) {
+      String message = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+      if (e.code == 'user-not-found') {
+        message = 'Không tìm thấy tài khoản với email này.';
+      } else if (e.code == 'invalid-email') {
+        message = 'Email không hợp lệ.';
+      } else if (e.code == 'too-many-requests') {
+        message = 'Quá nhiều yêu cầu. Vui lòng thử lại sau.';
+      }
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: message,
+        action: AuthAction.forgotPassword,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: 'Đã xảy ra lỗi. Vui lòng thử lại.',
+        action: AuthAction.forgotPassword,
+      ));
+    }
+  }
 
   Future<void> _onAuthenticationGoogleLoginEvent(
     AuthenticationGoogleLoginEvent event,

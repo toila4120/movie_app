@@ -30,21 +30,23 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
   void _onShowMiniPlayer(ShowMiniPlayer event, Emitter<MiniPlayerState> emit) {
     _positionTimer?.cancel();
 
+    final chewieController = ChewieController(
+      videoPlayerController: event.controller,
+      autoInitialize: false,
+      autoPlay: true,
+      looping: false,
+      showControls: false,
+      showControlsOnInitialize: false,
+      allowPlaybackSpeedChanging: false,
+      allowFullScreen: false,
+      allowMuting: false,
+    );
+
     emit(state.copyWith(
       isVisible: true,
       movie: event.movie,
       controller: event.controller,
-      chewieController: ChewieController(
-        videoPlayerController: event.controller,
-        autoInitialize: true,
-        autoPlay: true,
-        looping: false,
-        showControls: false,
-        showControlsOnInitialize: false,
-        allowPlaybackSpeedChanging: false,
-        allowFullScreen: false,
-        allowMuting: false,
-      ),
+      chewieController: chewieController,
       episodeIndex: event.episodeIndex,
       serverIndex: event.serverIndex,
       position: event.position,
@@ -61,7 +63,6 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
   void _onHideMiniPlayer(HideMiniPlayer event, Emitter<MiniPlayerState> emit) {
     _positionTimer?.cancel();
     state.controller?.pause();
-    state.controller?.dispose();
     state.chewieController?.dispose();
     emit(const MiniPlayerState());
   }
@@ -92,7 +93,6 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
 
     _positionTimer?.cancel();
     state.controller?.pause();
-    state.controller?.dispose();
     state.chewieController?.dispose();
     emit(const MiniPlayerState());
   }

@@ -10,6 +10,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   void signOut() async {
     print("\n==== BẮT ĐẦU ĐĂNG XUẤT ====");
+    context.read<MiniPlayerBloc>().add(HideMiniPlayer());
     try {
       // Đăng xuất khỏi Firebase
       await FirebaseAuth.instance.signOut();
