@@ -56,6 +56,11 @@ class MovieRemoteDatasourceImpl implements MovieRemoteDatasource {
         final movieJson = jsonData['movie'] as Map<String, dynamic>;
         movieJson['episodes'] = jsonData['episodes'];
 
+        // Đảm bảo tmdb object tồn tại
+        if (!movieJson.containsKey('tmdb')) {
+          movieJson['tmdb'] = {'vote_average': 0};
+        }
+
         return MovieModel.fromJson(movieJson);
       } else {
         throw Exception('Failed to fetch movie detail: ${response.statusCode}');
