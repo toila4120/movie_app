@@ -14,12 +14,19 @@ class ListMovie extends StatefulWidget {
 }
 
 class _ListMovieState extends State<ListMovie> {
+  final ScrollController _scrollController = ScrollController();
   List<String> categorySlug = [
     "hoat-hinh",
     "phim-bo",
     "phim-le",
     "tv-shows",
   ];
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,71 +40,109 @@ class _ListMovieState extends State<ListMovie> {
                 title: widget.title,
               ),
               Expanded(
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollInfo) {
-                    if (scrollInfo.metrics.pixels >=
-                            scrollInfo.metrics.maxScrollExtent - 200 &&
-                        state.loadingState != LoadingState.loading &&
-                        !state.hasReachedMax) {
-                      categorySlug.contains(widget.slug)
-                          ? context.read<MovieBloc>().add(
-                                FetchMovieByListEvent(
-                                  listSlug: widget.slug,
-                                  page: state.page + 1,
+                child: Stack(
+                  children: [
+                    ScrollConfiguration(
+                      behavior: const DisableGlowBehavior(),
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (ScrollNotification scrollInfo) {
+                          if (scrollInfo.metrics.pixels >=
+                                  scrollInfo.metrics.maxScrollExtent - 100 &&
+                              state.loadingState != LoadingState.loading) {
+                            categorySlug.contains(widget.slug)
+                                ? context.read<MovieBloc>().add(
+                                      FetchMovieByListEvent(
+                                        listSlug: widget.slug,
+                                        page: state.page + 1,
+                                      ),
+                                    )
+                                : widget.slug == 'phim-moi-cap-nhat-v3'
+                                    ? context.read<MovieBloc>().add(
+                                          FetchNewMoviesEvent(
+                                            page: state.page + 1,
+                                          ),
+                                        )
+                                    : context.read<MovieBloc>().add(
+                                          FetchMoviesByCategory(
+                                            categorySlug: widget.slug,
+                                            page: state.page + 1,
+                                          ),
+                                        );
+                            return true;
+                          }
+                          return false;
+                        },
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          physics: const BouncingScrollPhysics(),
+                          padding: EdgeInsets.only(
+                            top: AppPadding.superTiny,
+                            left: AppPadding.large,
+                            right: AppPadding.large,
+                            bottom: AppPadding.large,
+                          ),
+                          child: Column(
+                            children: [
+                              if (state.loadingState == LoadingState.loading &&
+                                  state.page == 1)
+                                const Center(
+                                  child: MovieShimmerList(),
+                                )
+                              else if (state.loadingState == LoadingState.error)
+                                Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        AppImage.imageNotFound,
+                                        width: 100.w,
+                                        height: 100.w,
+                                      ),
+                                      SizedBox(height: AppPadding.tiny),
+                                      Text(
+                                          "Đã có lỗi xảy ra: ${state.errorMessage}"),
+                                    ],
+                                  ),
+                                )
+                              else if (state.movies.isEmpty)
+                                const Center(
+                                  child: Text(
+                                    'Không có phim nào',
+                                  ),
+                                )
+                              else
+                                ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: state.movies.length,
+                                  itemBuilder: (context, index) {
+                                    final movie = state.movies[index];
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: AppPadding.tiny),
+                                      child: ItemMovie(
+                                        movieModel: movie,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              )
-                          : widget.slug == 'phim-moi-cap-nhat-v3'
-                              ? context.read<MovieBloc>().add(
-                                    FetchNewMoviesEvent(
-                                      page: state.page + 1,
-                                    ),
-                                  )
-                              : context.read<MovieBloc>().add(
-                                    FetchMoviesByCategory(
-                                      categorySlug: widget.slug,
-                                      page: state.page + 1,
-                                    ),
-                                  );
-                      return true;
-                    }
-                    return false;
-                  },
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(
-                      top: AppPadding.superTiny,
-                      left: AppPadding.large,
-                      right: AppPadding.large,
-                      bottom: AppPadding.large,
-                    ),
-                    itemCount: state.movies.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == state.movies.length) {
-                        if (state.loadingState == LoadingState.loading) {
-                          return Padding(
-                            padding: EdgeInsets.all(AppPadding.medium),
-                            child: const ItemMovieShimer(),
-                          );
-                        }
-                        if (state.hasReachedMax) {
-                          return Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(AppPadding.medium),
-                              child: const Text('Đã hết phim'),
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      }
-                      final movie = state.movies[index];
-                      return Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: AppPadding.tiny),
-                        child: ItemMovie(
-                          movieModel: movie,
+                              if (state.loadingState == LoadingState.loading &&
+                                  state.movies.isNotEmpty)
+                                Padding(
+                                  padding: EdgeInsets.all(AppPadding.medium),
+                                  child: const ItemMovieShimer(),
+                                ),
+                            ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                    ScrollToTopButton(
+                      scrollController: _scrollController,
+                      showOffsetThreshold: 100,
+                    ),
+                  ],
                 ),
               ),
             ],
