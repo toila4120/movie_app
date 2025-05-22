@@ -35,7 +35,7 @@ class _MovieState extends State<Movie> {
   @override
   void initState() {
     super.initState();
-    context.read<MiniPlayerBloc>().add(HideMiniPlayer());
+    _hideMiniPlayer();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -64,6 +64,10 @@ class _MovieState extends State<Movie> {
 
     _restoreWatchedPosition();
     _startTrackingPosition();
+  }
+
+  void _hideMiniPlayer() {
+    context.read<MiniPlayerBloc>().add(HideMiniPlayer());
   }
 
   Future<void> _restoreWatchedPosition() async {
