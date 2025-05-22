@@ -182,7 +182,12 @@ class _MovieDetailState extends State<MovieDetail> {
                                   SizedBox(width: AppPadding.medium),
                                   Expanded(
                                     child: CustomAppButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showToast(
+                                          context,
+                                          message: "Chức năng đang phát triển",
+                                        );
+                                      },
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(

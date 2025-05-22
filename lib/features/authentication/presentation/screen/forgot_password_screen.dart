@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/enum/loading_state.dart';
+import 'package:movie_app/core/utils/show_toast.dart';
 import 'package:movie_app/core/widget/widget.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 
@@ -31,7 +32,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    // _emailController.dispose();
     super.dispose();
   }
 
@@ -41,22 +42,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       listener: (context, state) {
         if (state.action.isForgotPassword()) {
           if (state.isLoading == LoadingState.loading) {
-            // Đang xử lý
-          } else if (state.error != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.error!),
-                backgroundColor: Colors.red,
-              ),
-            );
+            // Đang xử lý, không cần làm gì
+          } else if (state.isLoading == LoadingState.error &&
+              state.error != null) {
+            // Chỉ hiển thị lỗi khi có error và state là error
+            showToast(context, message: state.error!);
           } else if (state.isLoading == LoadingState.finished) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                    'Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư của bạn.'),
-                backgroundColor: Colors.green,
-              ),
-            );
+            showToast(context,
+                message:
+                    "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư của bạn.");
             Navigator.pop(context);
           }
         }
@@ -108,14 +102,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             vertical: AppPadding.medium,
                           ),
                           radius: AppBorderRadius.r16,
-                          backgroundColor: AppColor.blue,
+                          backgroundColor: AppColor.primary500,
                           textColor: Colors.white,
                           onPressed: state.isLoading == LoadingState.loading
                               ? null
                               : _resetPassword,
                           child: state.isLoading == LoadingState.loading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.white)
+                              ? SizedBox(
+                                  height: 16.w,
+                                  width: 16.w,
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeCap: StrokeCap.round,
+                                  ),
+                                )
                               : Text(
                                   'Gửi email đặt lại mật khẩu',
                                   style: TextStyle(

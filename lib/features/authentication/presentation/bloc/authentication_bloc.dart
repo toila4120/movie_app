@@ -359,6 +359,26 @@ class AuthenticationBloc
       return;
     }
 
+    final email = event.email.trim();
+
+    if (email.isEmpty) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: "Email không được để trống.",
+        action: AuthAction.forgotPassword,
+      ));
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      emit(state.copyWith(
+        isLoading: LoadingState.error,
+        error: "Email không đúng định dạng.",
+        action: AuthAction.forgotPassword,
+      ));
+      return;
+    }
+
     emit(state.copyWith(
       isLoading: LoadingState.loading,
       error: null,
@@ -366,8 +386,22 @@ class AuthenticationBloc
     ));
 
     try {
+      // Kiểm tra xem email có tồn tại trong hệ thống không
+      final methods =
+          // ignore: deprecated_member_use
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+      if (methods.isEmpty) {
+        emit(state.copyWith(
+          isLoading: LoadingState.error,
+          error: "Không tìm thấy tài khoản với email này.",
+          action: AuthAction.forgotPassword,
+        ));
+        return;
+      }
+
+      // Nếu email tồn tại, gửi email đặt lại mật khẩu
       await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: event.email,
+        email: email,
       );
       emit(state.copyWith(
         isLoading: LoadingState.finished,
@@ -375,9 +409,7 @@ class AuthenticationBloc
       ));
     } on FirebaseAuthException catch (e) {
       String message = 'Đã xảy ra lỗi. Vui lòng thử lại.';
-      if (e.code == 'user-not-found') {
-        message = 'Không tìm thấy tài khoản với email này.';
-      } else if (e.code == 'invalid-email') {
+      if (e.code == 'invalid-email') {
         message = 'Email không hợp lệ.';
       } else if (e.code == 'too-many-requests') {
         message = 'Quá nhiều yêu cầu. Vui lòng thử lại sau.';
