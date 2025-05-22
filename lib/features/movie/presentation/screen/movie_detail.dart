@@ -264,11 +264,29 @@ class _MovieDetailState extends State<MovieDetail> {
                                             ),
                                             child: Column(
                                               children: [
-                                                CircleAvatar(
-                                                  radius: 28.w,
-                                                  backgroundImage: NetworkImage(
-                                                    movieState
-                                                        .actor![index].image!,
+                                                Container(
+                                                  width: 56.w,
+                                                  height: 56.w,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey.shade300,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: ClipOval(
+                                                    child: Image.network(
+                                                      movieState.actor![index]
+                                                              .image ??
+                                                          '',
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return Icon(
+                                                          Icons.broken_image,
+                                                          size: 28.w,
+                                                          color: Colors
+                                                              .grey.shade600,
+                                                        );
+                                                      },
+                                                    ),
                                                   ),
                                                 ),
                                                 SizedBox(

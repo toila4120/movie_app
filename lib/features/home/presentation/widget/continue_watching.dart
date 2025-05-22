@@ -95,31 +95,14 @@ class _ItemFilmContinue extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(AppBorderRadius.r8.w),
-            child: CachedNetworkImage(
+            child: ProgressiveImage(
               key: ValueKey(watchedMovie.thumbUrl),
               imageUrl: watchedMovie.thumbUrl,
               height: 120.h,
               width: 172.w,
               fit: BoxFit.fill,
-              fadeInDuration: const Duration(milliseconds: 300),
-              fadeOutDuration: const Duration(milliseconds: 200),
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: Container(
-                  color: Colors.grey.shade300,
-                ),
-              ),
-              errorWidget: (context, url, error) => Container(
-                color: Colors.grey.shade300,
-                child: const Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    color: Colors.grey,
-                    size: 40,
-                  ),
-                ),
-              ),
+              memCacheWidth: 172,
+              memCacheHeight: 120,
             ),
           ),
           Positioned(

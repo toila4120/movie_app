@@ -47,35 +47,17 @@ class _BannerHomeState extends State<BannerHome> {
                                     color: Colors.grey.shade300,
                                   ),
                                 )
-                              : CachedNetworkImage(
+                              : ProgressiveImage(
                                   key: ValueKey(banner.thumbUrl),
                                   imageUrl: banner.thumbUrl,
                                   height: double.infinity,
                                   width: double.infinity,
                                   fit: BoxFit.fill,
-                                  placeholder: (context, url) =>
-                                      Shimmer.fromColors(
-                                    baseColor: Colors.grey.shade300,
-                                    highlightColor: Colors.grey.shade100,
-                                    child: Container(
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                    height: double.infinity,
-                                    width: double.infinity,
-                                    color: Colors.grey.shade300,
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.broken_image,
-                                        color: Colors.grey,
-                                        size: 40,
-                                      ),
-                                    ),
-                                  ),
+                                  memCacheWidth:
+                                      MediaQuery.of(context).size.width.toInt(),
+                                  memCacheHeight:
+                                      (MediaQuery.of(context).size.height * 0.3)
+                                          .toInt(),
                                 ),
                           Positioned(
                             bottom: 0,

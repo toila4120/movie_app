@@ -35,6 +35,7 @@ class _MovieState extends State<Movie> {
   @override
   void initState() {
     super.initState();
+    context.read<MiniPlayerBloc>().add(HideMiniPlayer());
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,

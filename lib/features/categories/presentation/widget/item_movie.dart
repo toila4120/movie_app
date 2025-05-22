@@ -54,33 +54,14 @@ class ItemMovie extends StatelessWidget {
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppBorderRadius.r16),
-                      child: CachedNetworkImage(
+                      child: ProgressiveImage(
                         key: ValueKey(normalizeImageUrl(movieModel.posterUrl)),
                         imageUrl: normalizeImageUrl(movieModel.posterUrl),
                         width: 120.w,
                         height: 144.w,
                         fit: BoxFit.fill,
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade100,
-                          child: Container(
-                            width: 120.w,
-                            height: 88.w,
-                            color: Colors.grey.shade300,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          width: 120.w,
-                          height: 88.w,
-                          color: Colors.grey.shade300,
-                          child: const Center(
-                            child: Icon(
-                              Icons.broken_image,
-                              color: Colors.grey,
-                              size: 40,
-                            ),
-                          ),
-                        ),
+                        memCacheWidth: 120,
+                        memCacheHeight: 144,
                       ),
                     ),
                   ),

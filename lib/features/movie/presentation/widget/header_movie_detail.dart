@@ -37,15 +37,15 @@ class HeaderMovieDetail extends StatelessWidget {
               ),
             );
           },
-          child: CachedNetworkImage(
+          child: ProgressiveImage(
             key: ValueKey(movie.thumbUrl),
             imageUrl: movie.thumbUrl,
             height: MediaQuery.of(context).size.height * 0.3,
             width: double.infinity,
             fit: BoxFit.fill,
-            fadeInDuration: const Duration(milliseconds: 300),
-            fadeOutDuration: const Duration(milliseconds: 200),
-            placeholder: (context, url) => Shimmer.fromColors(
+            memCacheWidth: MediaQuery.of(context).size.width.toInt(),
+            memCacheHeight: (MediaQuery.of(context).size.height * 0.3).toInt(),
+            placeholder: Shimmer.fromColors(
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.grey.shade100,
               child: Container(
@@ -54,7 +54,7 @@ class HeaderMovieDetail extends StatelessWidget {
                 color: Colors.grey.shade300,
               ),
             ),
-            errorWidget: (context, url, error) => Container(
+            errorWidget: Container(
               width: 120.w,
               height: 88.w,
               color: Colors.grey.shade300,

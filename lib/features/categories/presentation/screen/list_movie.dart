@@ -140,7 +140,7 @@ class _ListMovieState extends State<ListMovie> {
                     ),
                     ScrollToTopButton(
                       scrollController: _scrollController,
-                      showOffsetThreshold: 100,
+                      showOffsetThreshold: 150,
                     ),
                   ],
                 ),
