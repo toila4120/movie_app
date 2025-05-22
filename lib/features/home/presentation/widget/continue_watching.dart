@@ -44,7 +44,8 @@ class ContinueWatching extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const ClampingScrollPhysics(),
-                itemCount: watchedMovies.length,
+                itemCount:
+                    watchedMovies.length > 15 ? 15 : watchedMovies.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: index == 0
