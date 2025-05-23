@@ -13,6 +13,7 @@ import 'package:movie_app/features/categories/presentation/bloc/categories_event
 import 'package:movie_app/features/categories/presentation/bloc/categories_state.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:movie_app/injection_container.dart';
+import 'package:movie_app/core/utils/app_log.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isCategoriesLoaded = false;
 
   void _checkNavigationReady() {
-    print(
+    AppLog.debug(
         "🔍 _isCheckedCredentials: $_isCheckedCredentials, _isHomeDataLoaded: $_isHomeDataLoaded, _isCategoriesLoaded: $_isCategoriesLoaded");
 
     Future.delayed(const Duration(seconds: 1), () {
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToLogin() {
-    print("🚀 Chuyển đến màn hình đăng nhập");
+    AppLog.info("🚀 Chuyển đến màn hình đăng nhập");
     Future.delayed(const Duration(seconds: 1), () {
       // Thêm độ trễ 2 giây
       // ignore: use_build_context_synchronously
@@ -57,31 +58,53 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Debug thông tin đã lưu
-    try {
-      final localDataSource = getIt<AuthLocalDataSource>();
-      localDataSource.debugPrintSavedData();
-    } catch (e) {
-      print("❌ Lỗi khi debug thông tin đã lưu: $e");
-    }
+    _checkSavedLoginInfo();
 
     // Tải dữ liệu
     context.read<HomeBloc>().add(FetchMovieForBannerMovies());
     context.read<CategoriesBloc>().add(FetchCategories());
 
     // Kiểm tra thông tin đăng nhập đã lưu
-    print("🔄 Kiểm tra thông tin đăng nhập đã lưu");
-    context.read<AuthenticationBloc>().add(CheckSavedCredentialsEvent());
+    _checkLoginStatus();
 
     // Đặt một thời gian tối đa để chờ (để tránh trường hợp không phản hồi)
     Future.delayed(
       const Duration(seconds: 5),
       () {
         if (!_isCheckedCredentials) {
-          print("⏱️ Hết thời gian chờ - chuyển đến màn hình đăng nhập");
+          AppLog.info("⏱️ Hết thời gian chờ - chuyển đến màn hình đăng nhập");
           navigateToLogin();
         }
       },
     );
+  }
+
+  Future<void> _checkSavedLoginInfo() async {
+    try {
+      final localDataSource = getIt<AuthLocalDataSource>();
+      localDataSource.debugPrintSavedData();
+    } catch (e) {
+      AppLog.error("❌ Lỗi khi debug thông tin đã lưu: $e");
+    }
+  }
+
+  Future<void> _checkLoginStatus() async {
+    AppLog.info("🔄 Kiểm tra thông tin đăng nhập đã lưu");
+    context.read<AuthenticationBloc>().add(CheckSavedCredentialsEvent());
+    AppLog.info("⏱️ Hết thời gian chờ - chuyển đến màn hình đăng nhập");
+  }
+
+  Future<void> _handleLoginSuccess() async {
+    AppLog.info("✅ Đăng nhập thành công, chờ tải dữ liệu");
+    _checkNavigationReady();
+  }
+
+  void _handleStateChanges(dynamic state) {
+    if (state is HomeState) {
+      AppLog.debug("🏠 HomeState: loadingState=${state.loadingState}");
+    } else if (state is CategoriesState) {
+      AppLog.debug("📋 CategoriesState: loadingState=${state.loadingState}");
+    }
   }
 
   @override
@@ -90,31 +113,23 @@ class _SplashScreenState extends State<SplashScreen> {
       listeners: [
         BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
-            print(
+            AppLog.debug(
                 "🔐 AuthenticationState: isLoading=${state.isLoading}, user=${state.user != null ? 'Có' : 'Không'}, error=${state.error}");
 
-            if (state.isLoading != LoadingState.loading) {
-              setState(() {
-                _isCheckedCredentials = true;
-              });
-
-              // Nếu đăng nhập thành công, đánh dấu để chờ tải dữ liệu xong
-              if (state.user != null &&
-                  state.isLoading == LoadingState.finished) {
-                print("✅ Đăng nhập thành công, chờ tải dữ liệu");
-                _checkNavigationReady();
-              } else {
-                // Nếu không có người dùng hoặc đăng nhập lỗi, chuyển đến màn hình đăng nhập
-                print(
-                    "❌ Không có người dùng hoặc đăng nhập lỗi: ${state.error}");
-                navigateToLogin();
-              }
+            if (state.user != null &&
+                state.isLoading == LoadingState.finished) {
+              AppLog.info("✅ Đăng nhập thành công, chờ tải dữ liệu");
+              _handleLoginSuccess();
+            } else {
+              AppLog.error(
+                  "❌ Không có người dùng hoặc đăng nhập lỗi: ${state.error}");
+              navigateToLogin();
             }
           },
         ),
         BlocListener<HomeBloc, HomeState>(
           listener: (context, state) {
-            print("🏠 HomeState: loadingState=${state.loadingState}");
+            _handleStateChanges(state);
             if (state.loadingState.isFinished || state.loadingState.isError) {
               setState(() {
                 _isHomeDataLoaded = true;
@@ -125,7 +140,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
         BlocListener<CategoriesBloc, CategoriesState>(
           listener: (context, state) {
-            print("📋 CategoriesState: loadingState=${state.loadingState}");
+            _handleStateChanges(state);
             if (state.loadingState == LoadingState.finished ||
                 state.loadingState == LoadingState.error) {
               setState(() {

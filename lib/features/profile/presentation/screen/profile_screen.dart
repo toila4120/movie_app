@@ -9,12 +9,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   void signOut() async {
-    print("\n==== BẮT ĐẦU ĐĂNG XUẤT ====");
+    AppLog.info("\n==== BẮT ĐẦU ĐĂNG XUẤT ====");
     context.read<MiniPlayerBloc>().add(HideMiniPlayer());
     try {
       // Đăng xuất khỏi Firebase
       await FirebaseAuth.instance.signOut();
-      print("✅ Đã đăng xuất khỏi Firebase");
+      AppLog.info("✅ Đã đăng xuất khỏi Firebase");
 
       // Đăng xuất khỏi Google
       try {
@@ -22,21 +22,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         bool isSignedIn = await googleSignIn.isSignedIn();
         if (isSignedIn) {
           await googleSignIn.signOut();
-          print("✅ Đã đăng xuất khỏi Google");
+          AppLog.info("✅ Đã đăng xuất khỏi Google");
         } else {
-          print("ℹ️ Không cần đăng xuất Google (chưa đăng nhập)");
+          AppLog.info("ℹ️ Không cần đăng xuất Google (chưa đăng nhập)");
         }
       } catch (e) {
-        print("⚠️ Lỗi khi đăng xuất Google: $e");
+        AppLog.error("⚠️ Lỗi khi đăng xuất Google: $e");
       }
 
       // Xóa thông tin "Remember me" và thông tin đăng nhập đã lưu
       context.read<AuthenticationBloc>().add(const LogoutEvent());
-      print("✅ Đã gửi yêu cầu xóa thông tin đăng nhập đã lưu");
+      AppLog.info("✅ Đã gửi yêu cầu xóa thông tin đăng nhập đã lưu");
     } catch (e) {
-      print("❌ Lỗi khi đăng xuất: $e");
+      AppLog.error("❌ Lỗi khi đăng xuất: $e");
     }
-    print("==== KẾT THÚC ĐĂNG XUẤT ====\n");
+    AppLog.info("==== KẾT THÚC ĐĂNG XUẤT ====\n");
   }
 
   @override
@@ -57,11 +57,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Nếu userModel chưa được tải, lấy uid từ AuthenticationBloc
     final authState = context.read<AuthenticationBloc>().state;
     if (authState.user != null) {
-      print(
+      AppLog.info(
           "ProfileScreen: Tải dữ liệu người dùng với uid ${authState.user!.uid}");
       context.read<AppBloc>().add(FetchUserEvent(uid: authState.user!.uid));
     } else {
-      print("ProfileScreen: Người dùng chưa đăng nhập, không thể tải dữ liệu");
+      AppLog.warning(
+          "ProfileScreen: Người dùng chưa đăng nhập, không thể tải dữ liệu");
       // Nếu không có user, chuyển về màn hình đăng nhập
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) {
@@ -87,6 +88,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
+          AppLog.debug(
+              "ProfileScreen: isLoading=${state.isLoading}, user=${state.userModel != null ? 'Có' : 'Không'}");
+
           // Kiểm tra nếu userModel là null, hiển thị màn hình loading hoặc placeholder
           if (state.userModel == null) {
             return AppContainer(

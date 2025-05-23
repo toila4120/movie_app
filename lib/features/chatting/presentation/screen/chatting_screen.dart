@@ -11,26 +11,19 @@ class _ChattingScreenState extends State<ChattingScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool _isDebugMode = true;
-  bool _hasBlocError = false;
+  final bool _hasBlocError = false;
   String? _errorMessage;
 
   @override
   void initState() {
     super.initState();
-    // Debug print
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint("ChattingScreen initialized");
-      try {
-        final chatBloc = context.read<ChatBloc>();
-        debugPrint("ChatBloc state: ${chatBloc.state}");
-      } catch (e) {
-        setState(() {
-          _hasBlocError = true;
-          // _errorMessage = e.toString();
-        });
-        debugPrint("ERROR accessing ChatBloc: $e");
-      }
-    });
+    AppLog.debug("ChattingScreen initialized");
+    try {
+      final chatBloc = context.read<ChatBloc>();
+      AppLog.debug("ChatBloc state: ${chatBloc.state}");
+    } catch (e) {
+      AppLog.error("ERROR accessing ChatBloc: $e");
+    }
   }
 
   @override
@@ -294,7 +287,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
           context.read<ChatBloc>().add(SendMessageEvent(text));
           _messageController.clear();
         } catch (e) {
-          debugPrint("ERROR sending message: $e");
+          AppLog.error("ERROR sending message: $e");
           showToast(context, message: "Lỗi: $e");
         }
       },
@@ -369,7 +362,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                             .add(SendMessageEvent(value.trim()));
                         _messageController.clear();
                       } catch (e) {
-                        debugPrint("ERROR submitting message: $e");
+                        AppLog.error("ERROR submitting message: $e");
                         showToast(context, message: "Lỗi: $e");
                       }
                     }
@@ -394,7 +387,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                   .add(SendMessageEvent(message));
                               _messageController.clear();
                             } catch (e) {
-                              debugPrint("ERROR sending message: $e");
+                              AppLog.error("ERROR sending message: $e");
                               showToast(context, message: "Lỗi: $e");
                             }
                           }

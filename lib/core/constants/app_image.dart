@@ -38,4 +38,5 @@ abstract class AppImage {
   static const String icChat = "assets/images/ic_chatting.png";
   static const String backgroundLogin = "assets/images/background_login.png";
   static const String icHistory = "assets/images/ic_history.png";
+  static const String defaultAvatar = "assets/avatar/default_avatar.png";
 }

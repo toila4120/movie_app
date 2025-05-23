@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/app_bloc_observer.dart';
 import 'package:movie_app/config/theme/theme.dart';
 import 'package:movie_app/core/utils/env_validator.dart';
+import 'package:movie_app/core/utils/app_log.dart';
 import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
@@ -28,18 +29,18 @@ void main() async {
 
   try {
     await dotenv.load(fileName: ".env");
-    debugPrint("✅ .env file loaded successfully");
+    AppLog.info("✅ .env file loaded successfully");
   } catch (e) {
-    debugPrint("⚠️ Error loading .env file: $e");
+    AppLog.error("⚠️ Error loading .env file: $e");
     try {
       File envFile = File('.env');
       if (!await envFile.exists()) {
         await envFile.writeAsString('GEMINI_API_KEY=test_key');
-        debugPrint("✅ Created fallback .env file");
+        AppLog.info("✅ Created fallback .env file");
         await dotenv.load(fileName: ".env");
       }
     } catch (e) {
-      debugPrint("⚠️ Couldn't create fallback .env file: $e");
+      AppLog.error("⚠️ Couldn't create fallback .env file: $e");
     }
   }
 

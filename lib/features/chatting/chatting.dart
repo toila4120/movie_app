@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/config/theme/theme.dart';
+import 'package:movie_app/core/utils/app_log.dart';
 import 'package:movie_app/core/utils/disable_glow_behavior.dart';
 import 'package:movie_app/core/utils/show_toast.dart';
 import 'package:movie_app/features/chatting/presentation/bloc/chat_bloc.dart';

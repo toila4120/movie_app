@@ -37,7 +37,9 @@ class ContainerItem extends StatelessWidget {
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w700,
-              color: isSelected ? AppColor.white : AppColor.primary500,
+              color: isSelected
+                  ? AppColor.white
+                  : Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),
