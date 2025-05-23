@@ -183,9 +183,14 @@ class _MovieDetailState extends State<MovieDetail> {
                                   Expanded(
                                     child: CustomAppButton(
                                       onPressed: () {
-                                        showToast(
-                                          context,
-                                          message: "Chức năng đang phát triển",
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isDismissible: true,
+                                          isScrollControlled: true,
+                                          backgroundColor: AppColor.transparent,
+                                          builder: (context) {
+                                            return const DownloadBottomSheet();
+                                          },
                                         );
                                       },
                                       child: Container(
