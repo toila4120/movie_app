@@ -391,10 +391,10 @@ class _ChattingScreenState extends State<ChattingScreen> {
                               showToast(context, message: "Lỗi: $e");
                             }
                           }
-                          showToast(
-                            context,
-                            message: "Chức năng này chỉ dùng cho tk gold",
-                          );
+                          // showToast(
+                          //   context,
+                          //   message: "Chức năng này chỉ dùng cho tk gold",
+                          // );
                         },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),

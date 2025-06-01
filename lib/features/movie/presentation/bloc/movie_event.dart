@@ -57,3 +57,10 @@ class FetchNewMoviesEvent extends MovieEvent {
         page,
       ];
 }
+
+class ClearMovieStateEvent extends MovieEvent {
+  const ClearMovieStateEvent();
+
+  @override
+  List<Object?> get props => [];
+}

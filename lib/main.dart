@@ -12,6 +12,7 @@ import 'package:movie_app/features/authentication/presentation/bloc/authenticati
 import 'package:movie_app/core/bloc/app_bloc.dart';
 import 'package:movie_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:movie_app/features/chatting/presentation/bloc/chat_bloc.dart';
+import 'package:movie_app/features/download/presentation/bloc/download_bloc.dart';
 import 'package:movie_app/features/explore/presentation/bloc/explore_bloc.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:movie_app/features/mini_player/presentation/widget/mini_player.dart';
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
             authenticationBloc: context.read<AuthenticationBloc>(),
           ),
         ),
+        BlocProvider(create: (context) => getIt<DownloadBloc>()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(411, 467),

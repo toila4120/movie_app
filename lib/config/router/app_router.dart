@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_app/config/router/app_navigator_observer.dart';
 import 'package:movie_app/features/authentication/authentication.dart';
 import 'package:movie_app/features/authentication/presentation/screen/forgot_password_screen.dart';
+import 'package:movie_app/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:movie_app/features/categories/categories.dart';
 import 'package:movie_app/features/categories/presentation/screen/watched_movies_screen.dart';
 import 'package:movie_app/features/chatting/chatting.dart';
@@ -14,6 +15,15 @@ import 'package:movie_app/features/movie/movie.dart';
 import 'package:movie_app/features/profile/profile.dart';
 import 'package:movie_app/features/splash/login_next_screen.dart';
 import 'package:movie_app/features/splash/splash_screen.dart';
+import 'package:movie_app/features/download/presentation/bloc/download_bloc.dart';
+import 'package:movie_app/features/download/presentation/widgets/downloaded_movies_page.dart';
+import 'package:movie_app/features/download/presentation/widgets/downloaded_episodes_page.dart';
+import 'package:movie_app/features/download/presentation/widgets/download_episodes_page.dart';
+import 'package:movie_app/features/download/presentation/widgets/offline_video_player_page.dart';
+import 'package:movie_app/features/download/di/download_injection.dart';
+import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/features/download/presentation/widgets/offline_video_helper.dart';
 
 abstract class AppRouter {
   static const String _baseRoute = '/';
@@ -52,6 +62,21 @@ abstract class AppRouter {
   static const String exploreScreenPath = '/explore_tab';
   static const String _watchedMovieScreenName = 'watched_movie_screen';
   static const String watchedMovieScreenPath = '/home_tab/watched_movie_screen';
+
+  static const String _downloadedMoviesScreenName = 'downloaded_movies_screen';
+  static const String downloadedMoviesScreenPath =
+      '/profile_tab/downloaded_movies_screen';
+  static const String _downloadedEpisodesScreenName =
+      'downloaded_episodes_screen';
+  static const String downloadedEpisodesScreenPath =
+      '/profile_tab/downloaded_movies_screen/downloaded_episodes_screen';
+  static const String _offlineVideoPlayerScreenName =
+      'offline_video_player_screen';
+  static const String offlineVideoPlayerScreenPath =
+      '/profile_tab/downloaded_movies_screen/offline_video_player_screen';
+  static const String _downloadEpisodesScreenName = 'download_episodes_screen';
+  static const String downloadEpisodesScreenPath =
+      '/home_tab/movie_detail/download_episodes_screen';
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -176,13 +201,62 @@ abstract class AppRouter {
                           pageBuilder: (context, state) {
                             final extra =
                                 state.extra as Map<String, dynamic>? ?? {};
-                            final movie = extra['movie'] as MovieEntity;
-                            final episodeIndex =
+                            final movie = extra['movie'] as MovieEntity?;
+
+                            // Validate movie không null
+                            if (movie == null) {
+                              return _buildPageWithDefaultTransition(
+                                context: context,
+                                state: state,
+                                child: Scaffold(
+                                  body: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text('Dữ liệu phim không hợp lệ'),
+                                        ElevatedButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('Quay lại'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+
+                            int episodeIndex =
                                 extra['episodeIndex'] as int? ?? 0;
-                            final serverIndex =
-                                extra['serverIndex'] as int? ?? 0;
+                            int serverIndex = extra['serverIndex'] as int? ?? 0;
                             final currentPosition =
                                 extra['currentPosition'] as int? ?? 0;
+
+                            // Validate bounds
+                            if (movie.episodes.isEmpty) {
+                              serverIndex = 0;
+                              episodeIndex = 0;
+                            } else {
+                              if (serverIndex >= movie.episodes.length) {
+                                serverIndex = 0;
+                              }
+
+                              final selectedServer =
+                                  movie.episodes[serverIndex];
+                              if (selectedServer.serverData.isEmpty) {
+                                episodeIndex = 0;
+                              } else if (episodeIndex >=
+                                  selectedServer.serverData.length) {
+                                episodeIndex =
+                                    selectedServer.serverData.length - 1;
+                              }
+
+                              if (episodeIndex < 0) {
+                                episodeIndex = 0;
+                              }
+                            }
+
                             return _buildPageWithDefaultTransition(
                               context: context,
                               state: state,
@@ -191,6 +265,25 @@ abstract class AppRouter {
                                 episodeIndex: episodeIndex,
                                 serverIndex: serverIndex,
                                 currentPosition: currentPosition,
+                              ),
+                            );
+                          },
+                        ),
+                        GoRoute(
+                          name: _downloadEpisodesScreenName,
+                          path: '/$_downloadEpisodesScreenName',
+                          pageBuilder: (context, state) {
+                            final movie = OfflineVideoHelper.tempMovie;
+
+                            return _buildPageWithDefaultTransition(
+                              context: context,
+                              state: state,
+                              child: BlocProvider(
+                                create: (context) =>
+                                    downloadGetIt<DownloadBloc>(),
+                                child: DownloadEpisodesPage(
+                                  movie: movie,
+                                ),
                               ),
                             );
                           },
@@ -262,7 +355,75 @@ abstract class AppRouter {
                       state: state,
                       child: const LikeMovieScreen(),
                     ),
-                  )
+                  ),
+                  GoRoute(
+                    name: _downloadedMoviesScreenName,
+                    path: '/$_downloadedMoviesScreenName',
+                    pageBuilder: (context, state) {
+                      return _buildPageWithDefaultTransition(
+                        context: context,
+                        state: state,
+                        child: BlocProvider(
+                          create: (context) => downloadGetIt<DownloadBloc>(),
+                          child: const DownloadedMoviesPage(),
+                        ),
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        name: _downloadedEpisodesScreenName,
+                        path: '/$_downloadedEpisodesScreenName',
+                        pageBuilder: (context, state) {
+                          final movieName = OfflineVideoHelper.tempMovieName ??
+                              'Unknown Movie';
+                          final episodes =
+                              OfflineVideoHelper.tempEpisodes ?? [];
+
+                          return _buildPageWithDefaultTransition(
+                            context: context,
+                            state: state,
+                            child: DownloadedEpisodesPage(
+                              movieName: movieName,
+                              episodes: episodes,
+                            ),
+                          );
+                        },
+                        routes: [
+                          GoRoute(
+                            name: _offlineVideoPlayerScreenName,
+                            path: '/$_offlineVideoPlayerScreenName',
+                            pageBuilder: (context, state) {
+                              final episode = OfflineVideoHelper.tempEpisode!;
+                              final allEpisodes =
+                                  OfflineVideoHelper.tempPlaylist ?? [];
+                              final currentIndex =
+                                  OfflineVideoHelper.tempCurrentIndex;
+
+                              return _buildPageWithDefaultTransition(
+                                context: context,
+                                state: state,
+                                child: MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider.value(
+                                      value: context.read<MiniPlayerBloc>(),
+                                    ),
+                                    BlocProvider.value(
+                                      value: context.read<AuthenticationBloc>(),
+                                    ),
+                                  ],
+                                  child: OfflineVideoPlayerPage(
+                                    episode: episode,
+                                    allEpisodes: allEpisodes,
+                                    currentIndex: currentIndex,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],

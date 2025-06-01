@@ -19,6 +19,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<FetchMovieDetailEvent>(_onFetchMovieDetail);
     on<FetchMovieByListEvent>(_onFetchMovieByList);
     on<FetchNewMoviesEvent>(_onFetchNewMovies);
+    on<ClearMovieStateEvent>(_onClearMovieState);
   }
 
   Future<void> _onFetchMoviesByCategory(
@@ -132,5 +133,14 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         errorMessage: e.toString(),
       ));
     }
+  }
+
+  void _onClearMovieState(
+      ClearMovieStateEvent event, Emitter<MovieState> emit) {
+    emit(state.copyWith(
+      movie: null,
+      loadingState: LoadingState.pure,
+      errorMessage: null,
+    ));
   }
 }

@@ -19,29 +19,105 @@ class ItemWatching extends StatelessWidget {
 
     return CustomAppButton(
       onPressed: () async {
-        final movieBloc = context.read<MovieBloc>();
-        movieBloc.add(FetchMovieDetailEvent(
-          slug: watchedMovie.movieId,
-        ));
-        await Future.delayed(const Duration(milliseconds: 1000));
+        // Prevent multiple taps
         if (!context.mounted) return;
-        final movie = movieBloc.state.movie;
-        if (movie != null) {
-          final serverIndex = movie.episodes.indexWhere(
-                    (server) => server.serverName == serverName,
-                  ) >=
-                  0
-              ? movie.episodes
-                  .indexWhere((server) => server.serverName == serverName)
-              : 0;
-          context.push(AppRouter.playMoviePath, extra: {
-            'movie': movie,
-            'episodeIndex': latestEpisode - 1,
-            'serverIndex': serverIndex,
-            'currentPosition': watchedMovie
-                    .watchedEpisodes[latestEpisode]?.duration.inSeconds ??
-                0,
-          });
+
+        try {
+          final movieBloc = context.read<MovieBloc>();
+
+          // Clear movie state trước khi fetch movie mới để tránh conflict
+          movieBloc.add(const ClearMovieStateEvent());
+
+          // Fetch movie detail mới
+          movieBloc.add(FetchMovieDetailEvent(
+            slug: watchedMovie.movieId,
+          ));
+
+          // Đợi cho đến khi movie được load xong
+          await for (final state in movieBloc.stream) {
+            if (state.loadingState == LoadingState.finished &&
+                state.movie != null) {
+              final movie = state.movie!;
+
+              // Validate dữ liệu trước khi navigation
+              if (movie.episodes.isEmpty) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Phim này không có tập nào để xem')),
+                  );
+                }
+                return;
+              }
+
+              // Tìm server index phù hợp
+              int serverIndex = 0;
+              if (serverName != 'Unknown') {
+                final foundIndex = movie.episodes.indexWhere(
+                  (server) => server.serverName == serverName,
+                );
+                if (foundIndex >= 0) {
+                  serverIndex = foundIndex;
+                }
+              }
+
+              // Validate server index
+              if (serverIndex >= movie.episodes.length) {
+                serverIndex = 0;
+              }
+
+              // Validate episode index
+              int episodeIndex = latestEpisode - 1;
+              if (episodeIndex < 0) {
+                episodeIndex = 0;
+              }
+
+              final selectedServer = movie.episodes[serverIndex];
+              if (episodeIndex >= selectedServer.serverData.length) {
+                episodeIndex = selectedServer.serverData.isNotEmpty
+                    ? selectedServer.serverData.length - 1
+                    : 0;
+              }
+
+              // Validate lần cuối trước khi navigation
+              if (selectedServer.serverData.isEmpty) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Server này không có tập nào để xem')),
+                  );
+                }
+                return;
+              }
+
+              if (context.mounted) {
+                context.push(AppRouter.playMoviePath, extra: {
+                  'movie': movie,
+                  'episodeIndex': episodeIndex,
+                  'serverIndex': serverIndex,
+                  'currentPosition': watchedMovie
+                          .watchedEpisodes[latestEpisode]?.duration.inSeconds ??
+                      0,
+                });
+              }
+              break;
+            } else if (state.loadingState == LoadingState.error) {
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          'Lỗi tải phim: ${state.errorMessage ?? 'Unknown error'}')),
+                );
+              }
+              break;
+            }
+          }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Có lỗi xảy ra: $e')),
+            );
+          }
         }
       },
       child: Container(

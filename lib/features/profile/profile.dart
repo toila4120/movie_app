@@ -18,6 +18,11 @@ import 'package:movie_app/features/categories/presentation/widget/item_movie_shi
 import 'package:movie_app/features/mini_player/presentation/bloc/mini_player_bloc.dart';
 import 'package:movie_app/features/profile/presentation/bloc/profile_bloc.dart';
 
+// Download module imports
+import 'package:movie_app/features/download/presentation/bloc/download_bloc.dart';
+import 'package:movie_app/features/download/presentation/widgets/downloaded_movies_page.dart';
+import 'package:movie_app/features/download/di/download_injection.dart';
+
 part 'presentation/screen/profile_screen.dart';
 part 'presentation/screen/choose_avatar_screen.dart';
 part 'presentation/screen/like_movie_screen.dart';

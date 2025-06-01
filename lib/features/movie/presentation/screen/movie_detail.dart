@@ -124,6 +124,40 @@ class _MovieDetailState extends State<MovieDetail> {
                                   Expanded(
                                     child: CustomAppButton(
                                       onPressed: () {
+                                        // Validate trước khi navigation
+                                        if (movie.episodes.isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Phim này không có tập nào để xem')),
+                                          );
+                                          return;
+                                        }
+
+                                        if (_selectedServerIndex >=
+                                            movie.episodes.length) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Server không hợp lệ')),
+                                          );
+                                          return;
+                                        }
+
+                                        final selectedServer = movie
+                                            .episodes[_selectedServerIndex];
+                                        if (selectedServer.serverData.isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Server này không có tập nào để xem')),
+                                          );
+                                          return;
+                                        }
+
                                         final latestEpisodeIndex = watchedMovie
                                                 .watchedEpisodes.keys.isNotEmpty
                                             ? watchedMovie.watchedEpisodes.keys
@@ -131,11 +165,20 @@ class _MovieDetailState extends State<MovieDetail> {
                                                         a > b ? a : b) -
                                                 1
                                             : 0;
+
+                                        // Validate episode index
+                                        final validEpisodeIndex =
+                                            latestEpisodeIndex >= 0 &&
+                                                    latestEpisodeIndex <
+                                                        selectedServer
+                                                            .serverData.length
+                                                ? latestEpisodeIndex
+                                                : 0;
+
                                         context.push(AppRouter.playMoviePath,
                                             extra: {
                                               'movie': movie,
-                                              'episodeIndex':
-                                                  latestEpisodeIndex,
+                                              'episodeIndex': validEpisodeIndex,
                                               'serverIndex':
                                                   _selectedServerIndex,
                                             });
@@ -425,6 +468,44 @@ class _MovieDetailState extends State<MovieDetail> {
                                           ),
                                           CustomAppButton(
                                             onPressed: () {
+                                              // Validate bounds trước khi navigation
+                                              if (_selectedServerIndex >=
+                                                  movie.episodes.length) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'Server không hợp lệ')),
+                                                );
+                                                return;
+                                              }
+
+                                              final selectedServer =
+                                                  movie.episodes[
+                                                      _selectedServerIndex];
+                                              if (index >=
+                                                  selectedServer
+                                                      .serverData.length) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'Tập phim không hợp lệ')),
+                                                );
+                                                return;
+                                              }
+
+                                              if (selectedServer
+                                                  .serverData.isEmpty) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'Server này không có tập nào để xem')),
+                                                );
+                                                return;
+                                              }
+
                                               context.push(
                                                   AppRouter.playMoviePath,
                                                   extra: {

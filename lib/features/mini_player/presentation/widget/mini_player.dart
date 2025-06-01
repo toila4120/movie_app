@@ -16,6 +16,7 @@ class MiniPlayer extends StatelessWidget {
             state.chewieController == null) {
           return const SizedBox.shrink();
         }
+
         final screenSize = MediaQuery.of(context).size;
 
         double adjustedDx = state.miniPlayerPosition.dx.clamp(

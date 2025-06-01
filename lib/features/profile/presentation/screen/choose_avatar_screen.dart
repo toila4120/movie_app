@@ -14,7 +14,6 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
   void initState() {
     super.initState();
     _selectedAvatarIndex = context.read<AppBloc>().state.userModel!.avatar;
-
   }
 
   @override
@@ -89,7 +88,7 @@ class _ChooseAvatarScreenState extends State<ChooseAvatarScreen> {
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
-                            color: AppColor.greyScale900,
+                            // color: AppColor.greyScale900,
                           ),
                         ),
                         SizedBox(height: AppPadding.medium),

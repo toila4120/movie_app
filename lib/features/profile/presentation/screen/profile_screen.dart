@@ -331,44 +331,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
-                      // SizedBox(height: AppPadding.large),
-                      // CustomAppButton(
-                      //   onPressed: () {},
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.start,
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Image.asset(
-                      //             AppImage.icDownload,
-                      //             width: 20.w,
-                      //             height: 20.w,
-                      //             cacheWidth: 40,
-                      //             cacheHeight: 40,
-                      //           ),
-                      //           SizedBox(width: AppPadding.small),
-                      //           Text(
-                      //             "Phim đã tải",
-                      //             style: TextStyle(
-                      //               fontSize: 16.sp,
-                      //               fontWeight: FontWeight.w500,
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       Image.asset(
-                      //         AppImage.icRight,
-                      //         width: 20.w,
-                      //         height: 20.w,
-                      //         color: Theme.of(context).primaryColorDark,
-                      //         cacheWidth: 40,
-                      //         cacheHeight: 40,
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
+                      SizedBox(height: AppPadding.large),
+                      CustomAppButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) =>
+                                    downloadGetIt<DownloadBloc>(),
+                                child: const DownloadedMoviesPage(),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  AppImage.icDownload,
+                                  width: 20.w,
+                                  height: 20.w,
+                                  cacheWidth: 40,
+                                  cacheHeight: 40,
+                                ),
+                                SizedBox(width: AppPadding.small),
+                                Text(
+                                  "Phim đã tải",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Image.asset(
+                              AppImage.icRight,
+                              width: 20.w,
+                              height: 20.w,
+                              color: Theme.of(context).primaryColorDark,
+                              cacheWidth: 40,
+                              cacheHeight: 40,
+                            )
+                          ],
+                        ),
+                      ),
                       SizedBox(height: AppPadding.large),
                       CustomAppButton(
                         onPressed: () {

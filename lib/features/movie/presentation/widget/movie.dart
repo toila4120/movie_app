@@ -24,12 +24,14 @@ class _MovieState extends State<Movie> {
   Timer? _positionTimer;
   Duration _currentPosition = Duration.zero;
   AuthenticationBloc? _authBloc;
+  MiniPlayerBloc? _miniPlayerBloc;
   bool _isControllerInitialized = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _authBloc = context.read<AuthenticationBloc>();
+    _miniPlayerBloc = context.read<MiniPlayerBloc>();
   }
 
   @override
@@ -42,7 +44,20 @@ class _MovieState extends State<Movie> {
     ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
+    // Validate dữ liệu trước khi khởi tạo video player
+    if (widget.movie.episodes.isEmpty ||
+        widget.serverIndex >= widget.movie.episodes.length) {
+      _showErrorAndGoBack('Dữ liệu phim không hợp lệ');
+      return;
+    }
+
     final server = widget.movie.episodes[widget.serverIndex];
+    if (server.serverData.isEmpty ||
+        widget.episodeIndex >= server.serverData.length) {
+      _showErrorAndGoBack('Tập phim không tồn tại');
+      return;
+    }
+
     final episode = server.serverData[widget.episodeIndex];
     _videoPlayerController =
         VideoPlayerController.networkUrl(Uri.parse(episode.linkM3u8));
@@ -67,13 +82,35 @@ class _MovieState extends State<Movie> {
   }
 
   void _hideMiniPlayer() {
-    context.read<MiniPlayerBloc>().add(HideMiniPlayer());
+    if (mounted) {
+      context.read<MiniPlayerBloc>().add(HideMiniPlayer());
+    }
+  }
+
+  void _showErrorAndGoBack(String message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message)),
+        );
+        // Thêm delay nhỏ trước khi pop để tránh navigation conflict
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted && context.mounted) {
+            Navigator.of(context).pop();
+          }
+        });
+      }
+    });
   }
 
   Future<void> _restoreWatchedPosition() async {
     final currentPositionDuration = Duration(seconds: widget.currentPosition);
-    final authState =
-        _authBloc?.state ?? context.read<AuthenticationBloc>().state;
+
+    // Sử dụng saved reference hoặc kiểm tra mounted trước khi access context
+    final authState = _authBloc?.state ??
+        (mounted ? context.read<AuthenticationBloc>().state : null);
+
+    if (authState == null) return;
     final watchedMovies = authState.user?.watchedMovies ?? [];
     final watchedMovie = watchedMovies.firstWhere(
       (m) => m.movieId == widget.movie.slug,
@@ -164,21 +201,29 @@ class _MovieState extends State<Movie> {
 
         await _videoPlayerController.pause();
 
-        if (context.mounted) {
-          context.read<MiniPlayerBloc>().add(
-                ShowMiniPlayer(
-                  movie: widget.movie,
-                  controller: _videoPlayerController,
-                  episodeIndex: widget.episodeIndex,
-                  serverIndex: widget.serverIndex,
-                  position: _currentPosition,
-                  size: Size(
-                    MediaQuery.of(context).size.width,
-                    MediaQuery.of(context).size.height,
-                  ),
+        if (mounted && context.mounted) {
+          // Use saved reference để tránh context.read() khi widget disposed
+          if (_miniPlayerBloc != null) {
+            _miniPlayerBloc!.add(
+              ShowMiniPlayer(
+                movie: widget.movie,
+                controller: _videoPlayerController,
+                episodeIndex: widget.episodeIndex,
+                serverIndex: widget.serverIndex,
+                position: _currentPosition,
+                size: Size(
+                  MediaQuery.of(context).size.width,
+                  MediaQuery.of(context).size.height,
                 ),
-              );
-          Navigator.of(context).pop();
+              ),
+            );
+          }
+
+          // Thêm delay nhỏ trước khi pop để tránh navigation conflict
+          await Future.delayed(const Duration(milliseconds: 50));
+          if (mounted && context.mounted) {
+            Navigator.of(context).pop();
+          }
         }
       },
       child: Scaffold(
@@ -194,12 +239,16 @@ class _MovieState extends State<Movie> {
   @override
   void dispose() {
     _positionTimer?.cancel();
-    if (_isControllerInitialized &&
-        !context.read<MiniPlayerBloc>().state.isVisible) {
+
+    // Sử dụng saved reference thay vì context.read() để tránh lỗi deactivated widget
+    final isMiniPlayerVisible = _miniPlayerBloc?.state.isVisible ?? false;
+
+    if (_isControllerInitialized && !isMiniPlayerVisible) {
       _videoPlayerController.pause();
       _chewieController.dispose();
       _videoPlayerController.dispose();
     }
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
